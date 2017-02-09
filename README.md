@@ -1,2 +1,0 @@
-# Eventus-Android
-Android
