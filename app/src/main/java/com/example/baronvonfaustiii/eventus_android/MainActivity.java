@@ -1,5 +1,6 @@
 package com.example.baronvonfaustiii.eventus_android;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity
                 // Do something in response to button click
                 EditText userNameField = (EditText)findViewById((R.id.UsernameField));
                 userNameField.setText("Signing you in");
-
+                startActivity(new Intent(MainActivity.this, SignedInLandingPage.class));
 
             }
         });
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity
                 // If the event is a key-down event on the "enter" button
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER))
-                { 
+                {
                     // Perform action on key press
                    userNameField.setText("Signing you in");
 
