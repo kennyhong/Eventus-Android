@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#00ff00"
     tools:context="com.example.baronvonfaustiii.eventus_android.MainActivity">
 
     <Button
@@ -15,7 +16,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/OK_Button"
-        android:background="@drawable/chevronarrow"
+        android:background="@drawable/newchevronarrow"
         android:layout_marginEnd="48dp"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true" />
@@ -30,5 +31,17 @@
         android:layout_alignBaseline="@+id/OK_Button"
         android:layout_alignBottom="@+id/OK_Button"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/OK_Button" />
+        android:layout_toStartOf="@+id/OK_Button"
+        />
+
+    <TextView
+        android:text="Eventus"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="15dp"
+        android:id="@+id/EventusLabel"
+        android:textSize="30sp"
+        android:textColor="#ffffff"
+        android:layout_above="@+id/OK_Button"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>
