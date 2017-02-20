@@ -16,5 +16,153 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/SignoutButton" />
+        android:id="@+id/SignoutButton" /><![CDATA[
+
+    />
+
+    ]]>
+
+    <TextView
+        android:text="Your Events"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:id="@+id/YourEventsLabel"
+        android:layout_alignBaseline="@+id/SignoutButton"
+        android:layout_alignBottom="@+id/SignoutButton"
+        android:layout_toStartOf="@+id/SignoutButton"
+        android:textSize="24sp"
+        android:layout_marginEnd="19dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/YourEventsLabel"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                    android:text="ListItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_alignParentTop="false"
+                    android:layout_alignParentEnd="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:id="@+id/ListItemButton1" />
+
+            <Button
+                android:text="ListItem"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/button12"/>
+
+            <Button
+                android:text="ListItem"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/button11"/>
+
+            <Button
+                android:text="ListItem"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/button10"/>
+
+            <Button
+                android:text="ListItem"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/button9"/>
+
+            <Button
+                android:text="ListItem"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/button8"/>
+
+            <Button
+                android:text="ListItem"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/button7"/>
+
+            <Button
+                android:text="ListItem"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/button6"/>
+
+            <Button
+                android:text="ListItem"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/button5"/>
+
+            <Button
+                android:text="ListItem"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/button4"/>
+
+            <Button
+                android:text="ListItem"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/button3"/>
+
+            <Button
+                android:text="ListItem"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:id="@+id/button2"/>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

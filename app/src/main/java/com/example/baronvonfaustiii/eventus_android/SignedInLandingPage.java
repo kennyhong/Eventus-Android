@@ -15,6 +15,15 @@ public class SignedInLandingPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signed_in_landing_page);
 
+        setupListeners();
+        initializeList();
+
+
+
+    }
+
+    public void setupListeners()
+    {
         Button signOutButton = (Button)findViewById(R.id.SignoutButton);
 
         signOutButton.setOnClickListener(new View.OnClickListener()
@@ -28,8 +37,12 @@ public class SignedInLandingPage extends AppCompatActivity {
 
             }
         });
-
-
-
     }
+
+    public void initializeList()
+    {
+        // this is where data is pulled, and used to populate the main list view of this activity
+    }
+
+
 }
