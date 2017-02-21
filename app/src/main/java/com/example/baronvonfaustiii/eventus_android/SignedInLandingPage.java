@@ -27,7 +27,6 @@ public class SignedInLandingPage extends AppCompatActivity
         initializeList();
 
 
-
     }
 
     public void setupListeners()
@@ -83,6 +82,31 @@ public class SignedInLandingPage extends AppCompatActivity
         // this is where data is pulled, and used to populate the main list view of this activity
 
         // consider sorting items based on date, IE closest to happen appears near the top
+
+        // Each event in the list needs to link to its associated event page, with all of its service information etc
+
+        LinearLayout scrollLayout = (LinearLayout)findViewById(R.id.LinearScrollLayout);
+
+        for(int i = 0; i < scrollLayout.getChildCount(); i++)
+        {
+            Button temp = (Button)scrollLayout.getChildAt(i);
+
+            temp.setOnClickListener(new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    // Link up events to event pages
+
+                    // for now, links to an empty Event page.
+
+                    startActivity(new Intent(SignedInLandingPage.this, ViewEventActivity.class));
+
+                }
+            });
+
+        }
+
+
     }
 
 

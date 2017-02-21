@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-                android:background="#00ff00"
+                android:background="#46BD79"
     tools:context="com.example.baronvonfaustiii.eventus_android.SignedInLandingPage">
 
     <Button
@@ -35,12 +35,23 @@
         android:textSize="24sp"
         android:layout_marginEnd="19dp"/>
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="13dp"
+        android:id="@+id/addNewEventButton"
+        android:elevation="0dp"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/YourEventsLabel"
+        android:id="@+id/MainEventList"
+        android:layout_below="@+id/addNewEventButton"
         android:layout_alignParentStart="true"
-        android:id="@+id/MainEventList">
+        android:layout_marginTop="14dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,15 +110,5 @@
                 android:id="@+id/button2"/>
         </LinearLayout>
     </ScrollView>
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="13dp"
-        android:id="@+id/addNewEventButton"
-        android:elevation="0dp"/>
 
 </RelativeLayout>
