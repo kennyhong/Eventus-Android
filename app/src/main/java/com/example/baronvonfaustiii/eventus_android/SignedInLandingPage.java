@@ -55,12 +55,12 @@ public class SignedInLandingPage extends AppCompatActivity
 
                 // For now, simply add another button to the view
 
-                Button newEventButton = createNewEventButton();
+                createNewEventButton();
 
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                //LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-               LinearLayout scrollLayout = (LinearLayout)findViewById(R.id.LinearScrollLayout);  // mainEventList.findViewById(R.id.LinearScrollLayout).ad .addView(newEventButton); // takes a new view as a parameter
-               scrollLayout.addView(newEventButton,lp);
+              // LinearLayout scrollLayout = (LinearLayout)findViewById(R.id.LinearScrollLayout);  // mainEventList.findViewById(R.id.LinearScrollLayout).ad .addView(newEventButton); // takes a new view as a parameter
+               //scrollLayout.addView(newEventButton,lp);
 
             }
         });
@@ -68,13 +68,32 @@ public class SignedInLandingPage extends AppCompatActivity
 
     }
 
-    public Button createNewEventButton()
+    public void createNewEventButton()
     {
         // set basic event button defaults here
         Button result = new Button(this);
         result.setText("Fresh Event");
 
-        return result;
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout scrollLayout = (LinearLayout)findViewById(R.id.LinearScrollLayout);  // mainEventList.findViewById(R.id.LinearScrollLayout).ad .addView(newEventButton); // takes a new view as a parameter
+
+
+        result.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                // Link up events to event pages
+
+                // for now, links to an empty Event page.
+
+                startActivity(new Intent(SignedInLandingPage.this, ViewEventActivity.class));
+
+            }
+        });
+
+        scrollLayout.addView(result,lp);
+
+        //return result;
     }
 
     public void initializeList()
