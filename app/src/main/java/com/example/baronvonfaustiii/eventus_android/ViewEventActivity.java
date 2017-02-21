@@ -37,7 +37,7 @@ public class ViewEventActivity extends AppCompatActivity
         });
 
 
-        ImageButton addButton = (ImageButton)findViewById((R.id.addNewEventButton));
+        ImageButton addButton = (ImageButton)findViewById((R.id.addNewServiceButton));
 
         addButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
@@ -64,6 +64,9 @@ public class ViewEventActivity extends AppCompatActivity
         // later this can be used for actually assembling the service object maybe
         TextView result = new TextView(this);
         result.setText("New Service Added");
+        result.setBackgroundColor(-1);
+        result.setTextSize(24f);
+        result.setTextColor((0xff000000));
         return result;
     }
 

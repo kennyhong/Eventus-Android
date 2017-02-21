@@ -123,13 +123,13 @@
         app:srcCompat="@android:drawable/ic_input_add"
         android:layout_alignTop="@+id/yourServicesTextView"
         android:layout_toEndOf="@+id/DescriptionTextView"
-        android:id="@+id/imageButton"/>
+        android:id="@+id/addNewServiceButton"/>
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/button_onoff_indicator_on"
-        android:layout_alignBottom="@+id/imageButton"
+        android:layout_alignBottom="@+id/addNewServiceButton"
         android:layout_toStartOf="@+id/titleTextView"
         android:id="@+id/removeServiceButton"
         android:layout_alignTop="@+id/yourServicesTextView"/>
