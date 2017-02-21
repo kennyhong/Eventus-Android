@@ -22,6 +22,7 @@ public class RunUnitTests extends TestSuite
         //suite.addTestSuite(GameTest.class);
         System.out.println("Starting Object tests");
         suite.addTestSuite(ExampleUnitTest.class);
+        suite.addTestSuite(CountServicesTest.class);
         System.out.println("Finished Object tests");
 
     }
