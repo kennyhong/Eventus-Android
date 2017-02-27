@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#46BD79"
-    tools:context="com.example.baronvonfaustiii.eventus_android.ViewEventActivity">
+    tools:context="com.example.baronvonfaustiii.eventus_android.ui.ViewEventActivity">
 
     <Button
         android:text="Back"
@@ -30,7 +30,7 @@
         android:layout_marginTop="18dp"
         android:textSize="18sp"
         android:textColor="#ffffff"
-        android:id="@+id/DescriptionTextView"/>
+        android:id="@+id/descriptionTextView"/>
 
     <TextView
         android:text="Location: "
@@ -63,7 +63,7 @@
         android:text="Estimated Cost: "
         android:layout_width="1000dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/DescriptionTextView"
+        android:layout_below="@+id/descriptionTextView"
         android:layout_toStartOf="@+id/titleTextView"
         android:layout_marginTop="14dp"
         android:textColor="#ffffff"

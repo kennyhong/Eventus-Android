@@ -1,4 +1,4 @@
-package com.example.baronvonfaustiii.eventus_android;
+package com.example.baronvonfaustiii.eventus_android.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,22 +8,43 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import org.w3c.dom.Text;
+
+import com.example.baronvonfaustiii.eventus_android.R;
+import com.example.baronvonfaustiii.eventus_android.model.Event;
 
 public class ViewEventActivity extends AppCompatActivity
 {
+    public static final String EXTRA_EVENT = "event";
+
+    private TextView eventName;
+    private TextView eventDescription;
+    private Event event;
+
     boolean editMode = false;
     boolean removeServiceMode = false;
-    LinearLayout scrollLayout = null ;
+    LinearLayout scrollLayout = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_event);
+        eventName = (TextView)findViewById(R.id.titleTextView);
+        eventDescription = (TextView)findViewById(R.id.descriptionTextView);
+
+        if(savedInstanceState == null){
+            event = getIntent().getParcelableExtra(EXTRA_EVENT);
+        } else {
+            event = savedInstanceState.getParcelable(EXTRA_EVENT);
+        }
+
+        if(event != null) {
+            eventName.setText(event.getName());
+            eventDescription.setText(event.getDescription());
+        }
+
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
         setupListeners();
-        populateEventFields();
     }
 
     public void setupListeners()
@@ -35,11 +56,20 @@ public class ViewEventActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 // Do something in response to button click
-                startActivity(new Intent(ViewEventActivity.this, SignedInLandingPage.class));
+                setResult(RESULT_CANCELED);
+                finish();
 
             }
         });
 
+//        Button saveButton = (Button)findViewById(R.id.saveButton);
+//
+//        saveButton.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//                // Do something in response to button click
+//
+//            }
+//        });
 
         ImageButton addButton = (ImageButton)findViewById((R.id.addNewServiceButton));
 
@@ -152,12 +182,4 @@ public class ViewEventActivity extends AppCompatActivity
 
         //return result;
     }
-
-
-    public void populateEventFields()
-    {
-        // Fill in the objects of this activity with corresponding event data
-        // dynamic non stub
-    }
-
 }

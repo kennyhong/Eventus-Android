@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
                 android:background="#46BD79"
-    tools:context="com.example.baronvonfaustiii.eventus_android.SignedInLandingPage">
+    tools:context="com.example.baronvonfaustiii.eventus_android.ui.SignedInLandingPage">
 
     <Button
         android:text="Signout"
@@ -18,12 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/SignoutButton" /><![CDATA[
-
-    />
-
-    ]]>
-
+        android:id="@+id/SignoutButton" />
     <TextView
         android:text="Your Events"
         android:layout_width="150dp"
@@ -38,77 +33,84 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_input_add"
+        android:src="@android:drawable/ic_input_add"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
+        android:layout_gravity="top|start"
         android:layout_marginStart="13dp"
         android:id="@+id/addNewEventButton"
         android:elevation="0dp"/>
 
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/MainEventList"
-        android:layout_below="@+id/addNewEventButton"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="14dp">
+        android:layout_below="@+id/addNewEventButton">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/LinearScrollLayout">
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--android:id="@+id/LinearScrollLayout">-->
 
-            <Button
-                    android:text="ListItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_alignParentTop="false"
-                    android:layout_alignParentEnd="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:id="@+id/ListItemButton1" />
+            <!--<ListView-->
+                <!--android:id="@android:id/list"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:drawSelectorOnTop="false">-->
+            <!--</ListView>-->
+            <!--<Button-->
+                    <!--android:text="ListItem"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:layout_alignParentTop="false"-->
+                    <!--android:layout_alignParentEnd="false"-->
+                    <!--android:focusable="false"-->
+                    <!--android:focusableInTouchMode="false"-->
+                    <!--android:id="@+id/ListItemButton1" />-->
 
-            <Button
-                android:text="ListItem"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_alignParentTop="false"
-                android:layout_alignParentEnd="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:id="@+id/button5"/>
+            <!--<Button-->
+                <!--android:text="ListItem"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_alignParentTop="false"-->
+                <!--android:layout_alignParentEnd="false"-->
+                <!--android:focusable="false"-->
+                <!--android:focusableInTouchMode="false"-->
+                <!--android:id="@+id/button5"/>-->
 
-            <Button
-                android:text="ListItem"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_alignParentTop="false"
-                android:layout_alignParentEnd="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:id="@+id/button4"/>
+            <!--<Button-->
+                <!--android:text="ListItem"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_alignParentTop="false"-->
+                <!--android:layout_alignParentEnd="false"-->
+                <!--android:focusable="false"-->
+                <!--android:focusableInTouchMode="false"-->
+                <!--android:id="@+id/button4"/>-->
 
-            <Button
-                android:text="ListItem"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_alignParentTop="false"
-                android:layout_alignParentEnd="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:id="@+id/button3"/>
+            <!--<Button-->
+                <!--android:text="ListItem"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_alignParentTop="false"-->
+                <!--android:layout_alignParentEnd="false"-->
+                <!--android:focusable="false"-->
+                <!--android:focusableInTouchMode="false"-->
+                <!--android:id="@+id/button3"/>-->
 
-            <Button
-                android:text="ListItem"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_alignParentTop="false"
-                android:layout_alignParentEnd="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:id="@+id/button2"/>
-        </LinearLayout>
-    </ScrollView>
+            <!--<Button-->
+                <!--android:text="ListItem"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_alignParentTop="false"-->
+                <!--android:layout_alignParentEnd="false"-->
+                <!--android:focusable="false"-->
+                <!--android:focusableInTouchMode="false"-->
+                <!--android:id="@+id/button2"/>-->
+        <!--</LinearLayout>-->
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
