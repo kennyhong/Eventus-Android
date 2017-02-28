@@ -31,7 +31,8 @@ public class ViewEventActivity extends AppCompatActivity
         eventName = (TextView)findViewById(R.id.titleTextView);
         eventDescription = (TextView)findViewById(R.id.descriptionTextView);
 
-        if(savedInstanceState == null){
+        if(savedInstanceState == null)
+        {
             event = getIntent().getParcelableExtra(EXTRA_EVENT);
         } else {
             event = savedInstanceState.getParcelable(EXTRA_EVENT);
