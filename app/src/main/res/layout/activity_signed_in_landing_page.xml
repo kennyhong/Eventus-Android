@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_signed_in_landing_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#46BD79"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+                android:background="#46BD79"
     tools:context="com.example.baronvonfaustiii.eventus_android.ui.SignedInLandingPage">
 
     <Button
-        android:id="@+id/SignoutButton"
+        android:text="Signout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:text="Signout" />
-
+        android:layout_alignParentEnd="true"
+        android:id="@+id/SignoutButton" />
     <TextView
-        android:id="@+id/YourEventsLabel"
+        android:text="Your Events"
         android:layout_width="150dp"
         android:layout_height="40dp"
+        android:id="@+id/YourEventsLabel"
         android:layout_alignBaseline="@+id/SignoutButton"
         android:layout_alignBottom="@+id/SignoutButton"
-        android:layout_marginEnd="19dp"
         android:layout_toStartOf="@+id/SignoutButton"
-        android:text="Your Events"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_marginEnd="19dp"/>
 
     <ImageButton
-        android:id="@+id/addNewEventButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:src="@android:drawable/ic_input_add"
         android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
         android:layout_gravity="top|start"
         android:layout_marginStart="13dp"
-        android:elevation="0dp"
-        android:src="@android:drawable/ic_input_add" />
+        android:id="@+id/addNewEventButton"
+        android:elevation="0dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -49,6 +49,68 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/addNewEventButton">
 
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--android:id="@+id/LinearScrollLayout">-->
+
+            <!--<ListView-->
+                <!--android:id="@android:id/list"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:drawSelectorOnTop="false">-->
+            <!--</ListView>-->
+            <!--<Button-->
+                    <!--android:text="ListItem"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:layout_alignParentTop="false"-->
+                    <!--android:layout_alignParentEnd="false"-->
+                    <!--android:focusable="false"-->
+                    <!--android:focusableInTouchMode="false"-->
+                    <!--android:id="@+id/ListItemButton1" />-->
+
+            <!--<Button-->
+                <!--android:text="ListItem"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_alignParentTop="false"-->
+                <!--android:layout_alignParentEnd="false"-->
+                <!--android:focusable="false"-->
+                <!--android:focusableInTouchMode="false"-->
+                <!--android:id="@+id/button5"/>-->
+
+            <!--<Button-->
+                <!--android:text="ListItem"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_alignParentTop="false"-->
+                <!--android:layout_alignParentEnd="false"-->
+                <!--android:focusable="false"-->
+                <!--android:focusableInTouchMode="false"-->
+                <!--android:id="@+id/button4"/>-->
+
+            <!--<Button-->
+                <!--android:text="ListItem"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_alignParentTop="false"-->
+                <!--android:layout_alignParentEnd="false"-->
+                <!--android:focusable="false"-->
+                <!--android:focusableInTouchMode="false"-->
+                <!--android:id="@+id/button3"/>-->
+
+            <!--<Button-->
+                <!--android:text="ListItem"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_alignParentTop="false"-->
+                <!--android:layout_alignParentEnd="false"-->
+                <!--android:focusable="false"-->
+                <!--android:focusableInTouchMode="false"-->
+                <!--android:id="@+id/button2"/>-->
+        <!--</LinearLayout>-->
     </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

@@ -7,6 +7,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.baronvonfaustiii.eventus_android.R;
 import com.example.baronvonfaustiii.eventus_android.model.Event;
@@ -20,6 +23,8 @@ public class CreateEventActivity extends AppCompatActivity {
 
     public static final String EXTRA_EVENT = "event";
 
+    boolean removeServiceMode = false;
+    LinearLayout scrollLayout;
     private Event event;
     private EditText inputEventName;
     private EditText inputEventDescription;
@@ -29,6 +34,7 @@ public class CreateEventActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+        scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
         setupListeners();
     }
 
@@ -58,6 +64,114 @@ public class CreateEventActivity extends AppCompatActivity {
 
         inputEventName = (EditText)findViewById(R.id.eventNameEditText);
         inputEventDescription = (EditText)findViewById(R.id.eventDescriptionEditText);
+
+        ImageButton addServiceButton = (ImageButton)findViewById((R.id.addServiceButton));
+
+        addServiceButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                // Do something in response to button click
+
+                // Begin new Dialog actions for adding a new event
+
+                // For now, simply add another button to the view
+                turnOffRemoveServiceMode();
+                // TextView newServiceButton =
+                createNewServiceTextView();
+
+                //LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);  // mainEventList.findViewById(R.id.LinearScrollLayout).ad .addView(newEventButton); // takes a new view as a parameter
+                //scrollLayout.addView(newServiceButton, lp);
+            }
+        });
+
+        ImageButton removeServiceButton = (ImageButton)findViewById((R.id.removeServiceButton));
+
+        removeServiceButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                // Do something in response to button click
+
+                //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
+
+                if(removeServiceMode)
+                {// then turn it off
+                    turnOffRemoveServiceMode();
+                }
+                else
+                {// turn it on
+
+                    if(scrollLayout.getChildCount() > 0)
+                    {
+                        removeServiceMode = true;
+                        for(int i = 0 ; i < scrollLayout.getChildCount(); i++)
+                        {
+                            TextView temp = (TextView) scrollLayout.getChildAt(i);
+                            temp.setBackgroundColor(0xCCff0066);
+
+                        }
+                    }
+
+                }
+
+
+            }
+        });
+    }
+
+    public void turnOffRemoveServiceMode()
+    {
+        //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
+
+        removeServiceMode = false;
+
+        for(int i = 0 ; i < scrollLayout.getChildCount(); i++)
+        {
+            TextView temp = (TextView) scrollLayout.getChildAt(i);
+            temp.setBackgroundColor(-1);
+
+        }
+    }
+
+    public void createNewServiceTextView()
+    {// later this also may take parameter values from this field or elsewhere for creating the services stuff
+        // later this can be used for actually assembling the service object maybe
+
+        //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
+
+        TextView result = new TextView(this);
+        result.setText("New Service Added");
+        result.setBackgroundColor(-1);
+        result.setTextSize(24f);
+        result.setTextColor((0xff000000));
+        result.setClickable(true);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        scrollLayout.addView(result, lp);
+
+        result.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                // Do something in response to button click
+
+
+                // make sure that there are elements to remove
+
+                if(removeServiceMode)
+                {// then remove this service,
+                    // for now just delete the item, later, add a confirm dialog etc.
+                    scrollLayout.removeView(v);
+                    turnOffRemoveServiceMode();
+                }
+                else
+                {// turn it on
+                    // do nothing for now, later view details of that service
+
+                }
+
+
+            }
+        });
+
+        //return result;
     }
 
     @Override
@@ -97,4 +211,11 @@ public class CreateEventActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    // Possibly use this instead of going back to the SignedInLandingPage Activity?
+    public void cancel(View view) {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
 }
