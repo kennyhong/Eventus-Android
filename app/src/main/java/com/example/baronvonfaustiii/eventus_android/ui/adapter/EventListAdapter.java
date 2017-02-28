@@ -22,7 +22,6 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private final Context context;
     private final ArrayList<Event> events;
-//    private OnItemClickedListener mOnItemClickListener;
 
     public EventListAdapter(Context context, ArrayList<Event> events) {
         this.context = context;
@@ -60,10 +59,6 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         notifyDataSetChanged();
     }
 
-//    public void setOnItemClickListener(OnItemClickedListener listener) {
-//        this.mOnItemClickListener = listener;
-//    }
-
     class EventViewHolder extends RecyclerView.ViewHolder {
 //        private final View view;
         private final TextView textName;
@@ -71,7 +66,6 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public EventViewHolder(View v){
             super(v);
-//            this.view = v;
             this.textName = (TextView) v.findViewById(R.id.eventItemName);
             this.textDescription = (TextView) v.findViewById(R.id.eventItemDescription);
             v.setOnClickListener(new View.OnClickListener() {
@@ -88,9 +82,5 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             textName.setText(event.getName());
             textDescription.setText((event.getDescription()));
         }
-    }
-
-    public interface OnItemClickedListener {
-        void onItemClick(Event event);
     }
 }

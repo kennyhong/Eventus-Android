@@ -2,8 +2,9 @@ package com.example.baronvonfaustiii.eventus_android.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Pair;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Bailey on 2/26/2017.
@@ -11,9 +12,8 @@ import java.util.ArrayList;
 
 public class Event implements Parcelable{
 
-    private ArrayList<Service> services;
-    private String description;
     private String name;
+    private String description;
 
     public Event(){
     }
@@ -21,13 +21,11 @@ public class Event implements Parcelable{
     protected Event(Parcel in){
         this.name = in.readString();
         this.description = in.readString();
-        this.services = in.readArrayList(ArrayList.class.getClassLoader());
     }
 
-    public Event(ArrayList<Service> services, String description, String name) {
-        this.services = services;
-        this.description = description;
+    public Event(String name, String description) {
         this.name = name;
+        this.description = description;
     }
 
     public void setDescription(String description){
@@ -47,7 +45,6 @@ public class Event implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
         dest.writeString(this.description);
-        dest.writeList(this.services);
     }
 
     @Override
