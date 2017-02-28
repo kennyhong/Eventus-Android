@@ -8,10 +8,39 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.baronvonfaustiii.eventus_android.MainActivity">
+    android:background="#46BD79"
+    tools:context="com.example.baronvonfaustiii.eventus_android.ui.MainActivity">
+
+    <Button
+        android:text=""
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/OK_Button"
+        android:background="@drawable/newchevronarrow"
+        android:layout_marginEnd="48dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/UsernameField"
+        android:inputType="textPersonName"
+        android:layout_alignBaseline="@+id/OK_Button"
+        android:layout_alignBottom="@+id/OK_Button"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/OK_Button"
+        android:hint="Enter username here:" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Eventus"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="15dp"
+        android:id="@+id/EventusLabel"
+        android:textSize="30sp"
+        android:textColor="#ffffff"
+        android:layout_above="@+id/OK_Button"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

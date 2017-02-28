@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Eventus_Android</string>
+    <string name="error_field_empty">Error: Field Empty</string>
 </resources>
