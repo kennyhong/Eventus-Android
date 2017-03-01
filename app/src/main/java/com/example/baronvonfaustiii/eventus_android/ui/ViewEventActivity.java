@@ -1,11 +1,15 @@
 package com.example.baronvonfaustiii.eventus_android.ui;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.baronvonfaustiii.eventus_android.R;
@@ -21,6 +25,7 @@ public class ViewEventActivity extends AppCompatActivity
 
     boolean editMode = false;
     boolean removeServiceMode = false;
+    boolean editOn = false;
     LinearLayout scrollLayout = null;
 
     @Override
@@ -70,6 +75,63 @@ public class ViewEventActivity extends AppCompatActivity
 //
 //            }
 //        });
+
+        ImageButton editButton = (ImageButton)findViewById(R.id.editButton);
+        editButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v)
+            {
+                // Do something in response to button click
+                if(editOn)
+                {
+                    forceKeyboardClose();
+                    editOn = false;
+                    TextView title = (TextView)findViewById(R.id.titleTextView);
+                    //title.setTextIsSelectable(true);
+                    title.setOnClickListener(new View.OnClickListener()
+                    {
+                        public void onClick(View v)
+                        {
+                            TextView title = (TextView)findViewById(R.id.titleTextView);
+                            // Do something in response to button click
+                            title.setCursorVisible(false);
+                            title.setFocusableInTouchMode(false);
+                          //  title.setInputType(InputType.);
+                            title.setFocusable(false);
+                           //RelativeLayout view = (RelativeLayout)findViewById(R.id.activity_view_event);
+                            //view.
+                            forceKeyboardClose();
+                           // title.requestFocus(); //to trigger the soft input
+                            //title.setText("");
+                        }
+                    });
+                }
+                else
+                {
+                    forceKeyboardClose();
+                    editOn = true;
+                    TextView title = (TextView)findViewById(R.id.titleTextView);
+                    //title.setTextIsSelectable(true);
+                    title.setOnClickListener(new View.OnClickListener()
+                    {
+                        public void onClick(View v)
+                        {
+                            TextView title = (TextView)findViewById(R.id.titleTextView);
+                            // Do something in response to button click
+                            title.setCursorVisible(true);
+                            title.setFocusableInTouchMode(true);
+                            title.setInputType(InputType.TYPE_CLASS_TEXT);
+                            title.requestFocus(); //to trigger the soft input
+                            title.setText("");
+                        }
+                    });
+
+
+                }
+
+
+            }
+        });
+
 
         ImageButton addButton = (ImageButton)findViewById((R.id.addNewServiceButton));
 
@@ -125,6 +187,13 @@ public class ViewEventActivity extends AppCompatActivity
 
 
     }
+
+    public void forceKeyboardClose()
+    {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+    }
+
 
     public void turnOffRemoveServiceMode()
     {

@@ -126,4 +126,14 @@
         android:layout_below="@+id/estimatedCostTextView"
         android:layout_toEndOf="@+id/locationTextView"/>
 
+    <TextView
+        android:text=""
+        android:textColor="#ffffff"
+        android:textSize= "18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/descriptionTextView"
+        android:layout_alignStart="@+id/titleTextView"
+        android:id="@+id/EventLocation"/>
+
 </RelativeLayout>
