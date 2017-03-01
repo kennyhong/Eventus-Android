@@ -1,7 +1,9 @@
 package com.example.baronvonfaustiii.eventus_android.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,10 +37,10 @@ public class SignedInLandingPage extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signed_in_landing_page);
         context = this;
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
+        this.recyclerView = (RecyclerView) findViewById(R.id.eventList_Viewer);
+        this.recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        this.recyclerView.setLayoutManager(linearLayoutManager);
 
         // This is the call we're making to our back-end api. Just working with local data for now...
         try {
@@ -113,13 +115,13 @@ public class SignedInLandingPage extends Activity {
                 // Begin new Dialog actions for adding a new event
 
                 // For now, simply add another button to the view
-//                generateNewEventDialog();
+                generateNewEventDialog();
 
                 //createNewEventButton();
 
                 // For now, we want to just start up a create event activity
-                Intent intent = new Intent(context, CreateEventActivity.class);
-                startActivityForResult(intent, REQUEST_ADD_EVENT);
+                //Intent intent = new Intent(context, CreateEventActivity.class);
+                //startActivityForResult(intent, REQUEST_ADD_EVENT);
 
                 //LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
@@ -131,87 +133,94 @@ public class SignedInLandingPage extends Activity {
 
 
 
-//    public void generateNewEventDialog() {
-//        boolean result = true;
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(SignedInLandingPage.this);
-//
-//        //builder.setMessage("Create an empty new event, or \n select a prefab for some suggested \n services to be a part of the new event");
-//        builder.setTitle("Create a New Event");
-//        final String[] eventPrefabList = new String[5];
-//        // just some samples for now
-//
-//        eventPrefabList[0] = "Empty Event-Default";
-//        eventPrefabList[1] = "BBQ";
-//        eventPrefabList[2] = "After-hours warehouse party";
-//        eventPrefabList[3] = "Wedding";
-//        eventPrefabList[4] = "Cancel-None";
-//
-//
-//        builder.setItems(eventPrefabList, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // create new event of this type
-//                        if (which <= 3) {
-//                            createNewEventButton(eventPrefabList[which], which);
-//                        }
-//                    }
-//                }
-//        );
-//
-//
-//        // Add the buttons
-//           /*
-//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int id)
-//            {
-//                // User clicked OK button
-//                //createNewEventButton();
-//                //result = true;
-//            }
-//        });
-//        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int id)
-//            {
-//                // User cancelled the dialog
-//            }
-//        });
-//
-//             */
-//
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
-//
-//    }
+    public void generateNewEventDialog()
+    {
+        boolean result = true;
 
-//    public void createNewEventButton(String eventName, int prefabID) {
-//
-//        //use the prefabID for building a prefab event......
-//        // feed information into the new event page, so that it has some services already in its list,
-//        // that just need some confirmation and choices made etc.
-//
-//        // set basic event button defaults here
-//        Button result = new Button(this);
-//        result.setText(eventName);
-//
-//        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-////        LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.LinearScrollLayout);  // mainEventList.findViewById(R.id.LinearScrollLayout).ad .addView(newEventButton); // takes a new view as a parameter
-//
-//
+      AlertDialog.Builder builder = new AlertDialog.Builder(SignedInLandingPage.this);
+
+        //builder.setMessage("Create an empty new event, or \n select a prefab for some suggested \n services to be a part of the new event");
+        builder.setTitle("Create a New Event");
+        final String[] eventPrefabList = new String[5];
+       // just some samples for now
+
+        eventPrefabList[0] = "Empty Event-Default";
+        eventPrefabList[1] = "BBQ";
+        eventPrefabList[2] = "After-hours warehouse party";
+        eventPrefabList[3] = "Wedding";
+        eventPrefabList[4] = "Cancel-None";
+
+
+        builder.setItems(eventPrefabList, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // create new event of this type
+                        if (which <= 3)
+                        {
+                            createNewEventButton(eventPrefabList[which], which);
+                        }
+                    }
+                }
+        );
+
+
+        // Add the buttons
+           /*
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                // User clicked OK button
+                //createNewEventButton();
+                //result = true;
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id)
+            {
+               // User cancelled the dialog
+            }
+        });
+
+             */
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    public void createNewEventButton(String eventName, int prefabID)
+    {
+
+        //use the prefabID for building a prefab event......
+        // feed information into the new event page, so that it has some services already in its list,
+        // that just need some confirmation and choices made etc.
+
+        // set basic event button defaults here
+        //Button result = new Button(this);
+        //result.setText(eventName);
+
+      //  RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
+    //    RecyclerView scrollLayout = (RecyclerView) findViewById(R.id.eventList_Viewer);  // mainEventList.findViewById(R.id.LinearScrollLayout).ad .addView(newEventButton); // takes a new view as a parameter
+
+
 //        result.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                // Link up events to event pages
-//
-//                // for now, links to an empty Event page.
-//
-//                startActivity(new Intent(SignedInLandingPage.this, CreateEventActivity.class));
-//
+  //          public void onClick(View v) {
+                // Link up events to event pages
+
+                // for now, links to an empty Event page.
+
+                Intent intent = new Intent(context, CreateEventActivity.class);
+                startActivityForResult(intent, REQUEST_ADD_EVENT);
+
+                //startActivity(new Intent(SignedInLandingPage.this, CreateEventActivity.class));
+
 //            }
 //        });
-//
-////        scrollLayout.addView(result, lp);
-//
-//    }
+
+        //eventListAdapter.add(result);
+        //scrollLayout.addView(result, lp);
+
+    }
 
 //    public void initializeList() {
 //        // this is where data is pulled, and used to populate the main list view of this activity
