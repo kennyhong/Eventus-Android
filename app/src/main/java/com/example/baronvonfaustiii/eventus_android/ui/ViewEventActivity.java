@@ -1,9 +1,11 @@
 package com.example.baronvonfaustiii.eventus_android.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -61,8 +63,9 @@ public class ViewEventActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 // Do something in response to button click
-                setResult(RESULT_CANCELED);
-                finish();
+                //setResult(RESULT_CANCELED);
+               // finish();
+                save(v);
 
             }
         });
@@ -251,4 +254,64 @@ public class ViewEventActivity extends AppCompatActivity
 
         //return result;
     }
-}
+
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(EXTRA_EVENT, event);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Add more to this if we have to.
+    }
+
+    public void save(View view)
+    {
+        if (event == null) {
+            event = new Event();
+        }
+
+        TextView title = (TextView)findViewById(R.id.titleTextView);
+        TextView description = (TextView)findViewById((R.id.descriptionTextView));
+
+        String eventName = title.getText().toString();
+        String eventDescription = description.getText().toString();
+
+        //if (TextUtils.isEmpty(eventName)) {
+        //    inputEventName.setError(getString(R.string.error_field_empty));
+       //     inputEventName.requestFocus();
+       // } else if(TextUtils.isEmpty((eventDescription))) {
+       //     inputEventDescription.setError(getString(R.string.error_field_empty));
+      //      inputEventDescription.requestFocus();
+      //  } else {
+          //  inputEventName.setError(null);
+            event.setName(eventName);
+            event.setDescription(eventDescription);
+
+//            // Write this in for later
+//            saveServices();
+            Intent intent = getIntent();
+            intent.putExtra(EXTRA_EVENT, event);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+
+
+    // Possibly use this instead of going back to the SignedInLandingPage Activity?
+    public void cancel(View view)
+    {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
+
+    }
+
+
+
+
+

@@ -90,6 +90,12 @@ public class SignedInLandingPage extends Activity {
         if (requestCode == REQUEST_ADD_EVENT && data != null) {
             if (resultCode == RESULT_OK) {
                 Event event = data.getParcelableExtra(CreateEventActivity.EXTRA_EVENT);
+
+                if(event == null)
+                {
+                     event = data.getParcelableExtra(ViewEventActivity.EXTRA_EVENT);
+                }
+
                 eventListAdapter.add(event);
             }
         }
