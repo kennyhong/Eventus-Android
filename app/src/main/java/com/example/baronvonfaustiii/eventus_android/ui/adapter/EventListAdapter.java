@@ -22,6 +22,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private final Context context;
     private final ArrayList<Event> events;
+    private static final int REQUEST_ADD_EVENT = 1;
 
     public EventListAdapter(Context context, ArrayList<Event> events) {
         this.context = context;
@@ -74,6 +75,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     Intent intent = new Intent(context, ViewEventActivity.class);
                     intent.putExtra(ViewEventActivity.EXTRA_EVENT, events.get(getAdapterPosition()));
                     context.startActivity(intent);
+                    //context.start startActivityForResult(intent,REQUEST_ADD_EVENT);
                 }
             });
         }
