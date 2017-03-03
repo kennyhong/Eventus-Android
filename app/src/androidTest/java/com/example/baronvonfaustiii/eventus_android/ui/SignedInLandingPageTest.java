@@ -33,7 +33,7 @@ public class SignedInLandingPageTest {
         onView(withId(R.id.YourEventsLabel)).check(matches(isDisplayed()));
         onView(withId(R.id.SignoutButton)).check(matches(isDisplayed()));
         onView(withId(R.id.addNewEventButton)).check(matches(isDisplayed()));
-        onView(withId(R.id.recycler_view)).check(matches(isDisplayed()));
+        onView(withId(R.id.eventList_Viewer)).check(matches(isDisplayed()));
     }
 
     @Test
