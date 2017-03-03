@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_view_event"
     android:layout_width="match_parent"
@@ -12,6 +13,81 @@
     android:background="#46BD79"
     tools:context="com.example.baronvonfaustiii.eventus_android.ui.ViewEventActivity">
 
+    <Button
+        android:text="Back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/backButton"/>
+
+    <TextView
+        android:text="Place your short description here: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/locationTextView"
+        android:layout_alignStart="@+id/locationTextView"
+        android:layout_marginTop="18dp"
+        android:textSize="18sp"
+        android:textColor="#ffffff"
+        android:id="@+id/descriptionTextView"/>
+
+    <TextView
+        android:text="Location: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#ffffff"
+        android:id="@+id/locationTextView"
+        android:layout_below="@+id/backButton"
+        android:layout_alignParentStart="true"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/yourServicesTextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="22dp"
+        android:id="@+id/ServiceScrollView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/ServiceScrollLinearLayout">
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:text="Estimated Cost: "
+        android:layout_width="1000dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/descriptionTextView"
+        android:layout_toStartOf="@+id/titleTextView"
+        android:layout_marginTop="14dp"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:id="@+id/estimatedCostTextView"
+        android:layout_alignParentEnd="true"/>
+
+    <Button
+        android:text="See Receipt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/estimatedCostTextView"
+        android:layout_toEndOf="@+id/yourServicesTextView"
+        android:id="@+id/receiptButton"
+        android:layout_alignStart="@+id/backButton"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_manage"
+        android:id="@+id/editButton"
+        android:layout_above="@+id/locationTextView"
+        android:layout_alignParentStart="true"/>
+
     <TextView
         android:text="TitleHere"
         android:layout_width="wrap_content"
@@ -22,23 +98,32 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
 
-    <Button
-        android:text="Back"
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/backButton"
-        android:layout_alignBottom="@+id/titleTextView"
-        android:layout_alignParentStart="true" />
+        app:srcCompat="@android:drawable/button_onoff_indicator_on"
+        android:id="@+id/removeServiceButton"
+        android:layout_alignTop="@+id/yourServicesTextView"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/addNewServiceButton"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:id="@+id/addNewServiceButton"
+        android:layout_alignTop="@+id/yourServicesTextView"
+        android:layout_alignParentEnd="true"/>
 
     <TextView
-        android:text="Place your short description here: "
+        android:text="Your Services: "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:textSize="18sp"
         android:textColor="#ffffff"
-        android:id="@+id/descriptionTextView"
-        android:layout_below="@+id/titleTextView"
-        android:layout_alignParentStart="true" />
+        android:textSize="30sp"
+        android:id="@+id/yourServicesTextView"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/estimatedCostTextView"
+        android:layout_toEndOf="@+id/locationTextView"/>
 
 </RelativeLayout>
