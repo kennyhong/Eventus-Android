@@ -15,8 +15,6 @@ import com.example.baronvonfaustiii.eventus_android.R;
 import com.example.baronvonfaustiii.eventus_android.model.Event;
 import com.example.baronvonfaustiii.eventus_android.model.Service;
 
-import java.util.ArrayList;
-
 /**
  * Created by Bailey on 2/26/2017.
  */

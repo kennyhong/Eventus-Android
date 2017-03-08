@@ -59,20 +59,28 @@ public class ViewEventActivity extends AppCompatActivity
         setupListeners();
     }
 
+    /*
+
+
+
+     */
+
     public void setupListeners()
     {
-        Button btn;
+//        Button btn;
         for(Service service : event.getServices()) {
-            btn = new Button(this);
-            btn.setText(service.getName());
-            btn.setOnClickListener(new View.OnClickListener() {
-               public void onClick(View v) {
-                   startActivity(new Intent(ViewEventActivity.this, ViewServiceActivity.class));
-               }
-            });
-            listLayout.addView(btn);
-            int index = listLayout.indexOfChild(btn);
-            btn.setTag(Integer.toString(index));
+            System.out.println("Services are happening!");
+//            btn = new Button(this);
+//            btn.setText(service.getName());
+//            btn.setOnClickListener(new View.OnClickListener() {
+//               public void onClick(View v) {
+//                   startActivity(new Intent(ViewEventActivity.this, ViewServiceActivity.class));
+//               }
+//            });
+//            listLayout.addView(btn);
+//            int index = listLayout.indexOfChild(btn);
+//            btn.setTag(Integer.toString(index));
+            createNewServiceTextView();
         }
 
 
