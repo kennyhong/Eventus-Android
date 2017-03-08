@@ -269,6 +269,7 @@ public class ViewEventActivity extends AppCompatActivity
                 else
                 {// turn it on
                     // do nothing for now, later view details of that service
+                    startActivity(new Intent(ViewEventActivity.this, ViewServiceActivity.class));
                 }
             }
         });

@@ -165,7 +165,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 else
                 {// turn it on
                     // do nothing for now, later view details of that service
-
+                    startActivity(new Intent(CreateEventActivity.this, ViewServiceActivity.class));
                 }
 
 

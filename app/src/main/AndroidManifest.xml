@@ -20,6 +20,7 @@
         <activity android:name=".ui.SignedInLandingPage" />
         <activity android:name=".ui.ViewEventActivity" />
         <activity android:name=".ui.CreateEventActivity" />
+        <activity android:name=".ui.ViewServiceActivity" />
     </application>
 
 </manifest>
