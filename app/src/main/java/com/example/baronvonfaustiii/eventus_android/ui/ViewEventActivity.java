@@ -1,6 +1,7 @@
 package com.example.baronvonfaustiii.eventus_android.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -9,11 +10,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.baronvonfaustiii.eventus_android.R;
 import com.example.baronvonfaustiii.eventus_android.model.Event;
+import com.example.baronvonfaustiii.eventus_android.model.Service;
+
+import java.util.ArrayList;
 
 public class ViewEventActivity extends AppCompatActivity
 {
@@ -21,12 +24,13 @@ public class ViewEventActivity extends AppCompatActivity
 
     private TextView eventName;
     private TextView eventDescription;
+    private ArrayList<Service> eventServices;
     private Event event;
 
-    boolean editMode = false;
     boolean removeServiceMode = false;
     boolean editOn = false;
     LinearLayout scrollLayout = null;
+    LinearLayout listLayout = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,14 +50,32 @@ public class ViewEventActivity extends AppCompatActivity
         if(event != null) {
             eventName.setText(event.getName());
             eventDescription.setText(event.getDescription());
+            eventServices = event.getServices();
         }
 
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
+        listLayout = new LinearLayout(this);
+        listLayout.setOrientation(LinearLayout.HORIZONTAL);
         setupListeners();
     }
 
     public void setupListeners()
     {
+        Button btn;
+        for(Service service : event.getServices()) {
+            btn = new Button(this);
+            btn.setText(service.getName());
+            btn.setOnClickListener(new View.OnClickListener() {
+               public void onClick(View v) {
+                   startActivity(new Intent(ViewEventActivity.this, ViewServiceActivity.class));
+               }
+            });
+            listLayout.addView(btn);
+            int index = listLayout.indexOfChild(btn);
+            btn.setTag(Integer.toString(index));
+        }
+
+
         Button backButton = (Button)findViewById(R.id.backButton);
 
         backButton.setOnClickListener(new View.OnClickListener()
@@ -143,8 +165,8 @@ public class ViewEventActivity extends AppCompatActivity
 
                 // For now, simply add another button to the view
                 turnOffRemoveServiceMode();
-                // TextView newServiceButton =
                 createNewServiceTextView();
+                // TextView newServiceButton =
 
                 //LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
@@ -229,10 +251,7 @@ public class ViewEventActivity extends AppCompatActivity
         result.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 // Do something in response to button click
-
-
                 // make sure that there are elements to remove
-
                 if(removeServiceMode)
                 {// then remove this service,
                     // for now just delete the item, later, add a confirm dialog etc.
@@ -242,13 +261,9 @@ public class ViewEventActivity extends AppCompatActivity
                 else
                 {// turn it on
                     // do nothing for now, later view details of that service
-
                 }
-
-
             }
         });
-
         //return result;
     }
 }

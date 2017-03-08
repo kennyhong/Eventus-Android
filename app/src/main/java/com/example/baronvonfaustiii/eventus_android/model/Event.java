@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,18 +15,29 @@ public class Event implements Parcelable{
 
     private String name;
     private String description;
+    private ArrayList<Service> services;
 
     public Event(){
+        name = "";
+        description = "";
+        services = new ArrayList<Service>();
     }
 
     protected Event(Parcel in){
-        this.name = in.readString();
-        this.description = in.readString();
+        this();
+        readFromParcel(in);
     }
 
-    public Event(String name, String description) {
+    private void readFromParcel(Parcel in) {
+        this.name = in.readString();
+        this.description = in.readString();
+        in.readTypedList(services, Service.CREATOR);
+    }
+
+    public Event(String name, String description, ArrayList<Service> services) {
         this.name = name;
         this.description = description;
+        this.services = services;
     }
 
     public void setDescription(String description){
@@ -41,10 +53,15 @@ public class Event implements Parcelable{
         return name;
     }
 
+    public ArrayList<Service> getServices() {
+        return services;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
         dest.writeString(this.description);
+        dest.writeTypedList(this.services);
     }
 
     @Override
