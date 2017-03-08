@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -45,6 +46,8 @@ public class SignedInLandingPage extends Activity {
         // This is the call we're making to our back-end api. Just working with local data for now...
         try {
             output = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events").get();
+//            Log.e("Response: ", "" + output);
+            parseJSON(output);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -76,6 +79,168 @@ public class SignedInLandingPage extends Activity {
         recyclerView.setAdapter(eventListAdapter);
 
         setupListeners();
+    }
+
+    // The JSON object format is as follows:
+    /*
+
+{
+   "meta":null,
+   "data":[
+      {
+         "id":1,
+         "name":"Dance",
+         "description":"Dance Revolution",
+         "date":"1000-01-01 00:00:00",
+         "created_at":"2017-03-04 06:02:48",
+         "updated_at":"2017-03-04 06:02:48",
+         "services":[
+            {
+               "id":1,
+               "name":"Movie Magic",
+               "cost":150,
+               "created_at":"2017-03-04 06:13:45",
+               "updated_at":"2017-03-04 06:13:45",
+               "service_tags":[
+                  {
+                     "id":1,
+                     "name":"Lighting",
+                     "created_at":"2017-03-04 06:12:57",
+                     "updated_at":"2017-03-04 06:12:57"
+                  },
+                  {
+                     "id":2,
+                     "name":"Cameras",
+                     "created_at":"2017-03-04 06:13:10",
+                     "updated_at":"2017-03-04 06:13:10"
+                  },
+                  {
+                     "id":3,
+                     "name":"Action",
+                     "created_at":"2017-03-04 06:13:14",
+                     "updated_at":"2017-03-04 06:13:14"
+                  }
+               ]
+            },
+            {
+               "id":2,
+               "name":"Disney Magic",
+               "cost":140,
+               "created_at":"2017-03-04 06:14:16",
+               "updated_at":"2017-03-04 06:14:16",
+               "service_tags":[
+                  {
+                     "id":1,
+                     "name":"Lighting",
+                     "created_at":"2017-03-04 06:12:57",
+                     "updated_at":"2017-03-04 06:12:57"
+                  },
+                  {
+                     "id":3,
+                     "name":"Action",
+                     "created_at":"2017-03-04 06:13:14",
+                     "updated_at":"2017-03-04 06:13:14"
+                  }
+               ]
+            },
+            {
+               "id":3,
+               "name":"Magic the Gathering",
+               "cost":200,
+               "created_at":"2017-03-04 06:14:31",
+               "updated_at":"2017-03-04 06:14:31",
+               "service_tags":[
+                  {
+                     "id":2,
+                     "name":"Cameras",
+                     "created_at":"2017-03-04 06:13:10",
+                     "updated_at":"2017-03-04 06:13:10"
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         "id":3,
+         "name":"Kieran",
+         "description":"Here's your event, man",
+         "date":"1000-01-01 00:00:00",
+         "created_at":"2017-03-04 06:03:27",
+         "updated_at":"2017-03-04 06:03:27",
+         "services":[
+            {
+               "id":1,
+               "name":"Movie Magic",
+               "cost":150,
+               "created_at":"2017-03-04 06:13:45",
+               "updated_at":"2017-03-04 06:13:45",
+               "service_tags":[
+                  {
+                     "id":1,
+                     "name":"Lighting",
+                     "created_at":"2017-03-04 06:12:57",
+                     "updated_at":"2017-03-04 06:12:57"
+                  },
+                  {
+                     "id":2,
+                     "name":"Cameras",
+                     "created_at":"2017-03-04 06:13:10",
+                     "updated_at":"2017-03-04 06:13:10"
+                  },
+                  {
+                     "id":3,
+                     "name":"Action",
+                     "created_at":"2017-03-04 06:13:14",
+                     "updated_at":"2017-03-04 06:13:14"
+                  }
+               ]
+            },
+            {
+               "id":3,
+               "name":"Magic the Gathering",
+               "cost":200,
+               "created_at":"2017-03-04 06:14:31",
+               "updated_at":"2017-03-04 06:14:31",
+               "service_tags":[
+                  {
+                     "id":2,
+                     "name":"Cameras",
+                     "created_at":"2017-03-04 06:13:10",
+                     "updated_at":"2017-03-04 06:13:10"
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         "id":4,
+         "name":"New event",
+         "description":"This is a new event!",
+         "date":"1000-01-01 00:00:00",
+         "created_at":"2017-03-08 02:01:52",
+         "updated_at":"2017-03-08 02:01:52",
+         "services":[
+
+         ]
+      },
+      {
+         "id":5,
+         "name":"jeff test",
+         "description":"jeft test desc",
+         "date":"2017-03-07 20:32:12",
+         "created_at":"2017-03-08 02:32:54",
+         "updated_at":"2017-03-08 02:32:54",
+         "services":[
+
+         ]
+      }
+   ],
+   "error":null
+}
+
+     */
+    public void parseJSON(String data) {
+
     }
 
     @Override

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.baronvonfaustiii.eventus_android.R;
 import com.example.baronvonfaustiii.eventus_android.model.Event;
+import com.example.baronvonfaustiii.eventus_android.model.Service;
 
 /**
  * Created by Bailey on 2/26/2017.
@@ -202,13 +203,29 @@ public class CreateEventActivity extends AppCompatActivity {
             inputEventName.setError(null);
             event.setName(eventName);
             event.setDescription(eventDescription);
-
-//            // Write this in for later
-//            saveServices();
+            //If layout is empty, don't add anything to services, else, add services.
+            if(scrollLayout.getChildCount() > 0) {
+                saveServices(event);
+            }
+            for (Service service : event.getServices()) {
+                System.out.println(service.getName());
+            }
             Intent intent = getIntent();
             intent.putExtra(EXTRA_EVENT, event);
             setResult(RESULT_OK, intent);
             finish();
+        }
+    }
+
+    private void saveServices(Event event) {
+        String tempText;
+        Service tempService;
+        for(int i = 0 ; i < scrollLayout.getChildCount(); i++)
+        {
+            TextView temp = (TextView) scrollLayout.getChildAt(i);
+            tempText = temp.getText().toString();
+            tempService = new Service(tempText, "description");
+            event.getServices().add(tempService);
         }
     }
 

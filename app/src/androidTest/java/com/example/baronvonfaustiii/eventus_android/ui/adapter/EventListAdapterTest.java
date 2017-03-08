@@ -27,6 +27,7 @@ import android.support.annotation.Nullable;
 import android.view.Display;
 
 import com.example.baronvonfaustiii.eventus_android.model.Event;
+import com.example.baronvonfaustiii.eventus_android.model.Service;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,13 +48,15 @@ import static org.junit.Assert.*;
 public class EventListAdapterTest {
 
     private ArrayList<Event> events;
+    private ArrayList<Service> services;
 
     @Before
     public void setUp() throws Exception {
         events = new ArrayList<>();
-        Event event1 = new Event("Party", "Parteh Tiem!");
-        Event event2 = new Event("BBQ", "Just a chill time with friends!");
-        Event event3 = new Event("Wedding", "Come celebrate the good times, with Mr. and Mrs. NewlyWed");
+        services = new ArrayList<>();
+        Event event1 = new Event("Party", "Parteh Tiem!", services);
+        Event event2 = new Event("BBQ", "Just a chill time with friends!", services);
+        Event event3 = new Event("Wedding", "Come celebrate the good times, with Mr. and Mrs. NewlyWed", services);
         events.add(event1);
         events.add(event2);
         events.add(event3);
@@ -62,9 +65,9 @@ public class EventListAdapterTest {
     @Test
     public void refresh() throws Exception {
         ArrayList<Event> newEvents = new ArrayList<>();
-        Event event1 = new Event("Better Party", "Come watch us have more fun than that other guy!");
-        Event event2 = new Event("Better BBQ", "We're more chill!!");
-        Event event3 = new Event("Better Wedding", "We're fancier than Mr. and Mrs. NewlyWed, come join the NewlyWedz!");
+        Event event1 = new Event("Better Party", "Come watch us have more fun than that other guy!", services);
+        Event event2 = new Event("Better BBQ", "We're more chill!!", services);
+        Event event3 = new Event("Better Wedding", "We're fancier than Mr. and Mrs. NewlyWed, come join the NewlyWedz!", services);
         newEvents.add(event1);
         newEvents.add(event2);
         newEvents.add(event3);
@@ -77,7 +80,7 @@ public class EventListAdapterTest {
 
     @Test
     public void add() throws Exception {
-        Event newEvent = new Event("Fundraiser", "Join us in raising money for the people!");
+        Event newEvent = new Event("Fundraiser", "Join us in raising money for the people!", services);
         events.add(newEvent);
         assertEquals(events.get(3).equals(newEvent), true);
         assertEquals(events.size(), 4);
@@ -85,8 +88,8 @@ public class EventListAdapterTest {
 
     @Test
     public void remove() throws Exception {
-        Event event1 = new Event("Party", "Parteh Tiem!");
-        Event event2 = new Event("BBQ", "Just a chill time with friends!");
+        Event event1 = new Event("Party", "Parteh Tiem!", services);
+        Event event2 = new Event("BBQ", "Just a chill time with friends!", services);
         events.remove(0);
         assertEquals(events.size() == 2, true);
         assertEquals(!events.get(0).equals(event1), true);
