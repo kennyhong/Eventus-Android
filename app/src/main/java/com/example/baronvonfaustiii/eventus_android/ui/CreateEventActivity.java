@@ -1,10 +1,13 @@
 package com.example.baronvonfaustiii.eventus_android.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,6 +32,7 @@ public class CreateEventActivity extends AppCompatActivity {
     private Event event;
     private EditText inputEventName;
     private EditText inputEventDescription;
+    private boolean keyboardAltOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,6 +41,12 @@ public class CreateEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_event);
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
         setupListeners();
+    }
+
+    public void forceKeyboardClose()
+    {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
     public void setupListeners()
@@ -53,6 +63,10 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
+        //eventDescriptionEditText
+        //eventNameEditText
+
+
         Button saveButton = (Button)findViewById(R.id.saveButton);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +79,88 @@ public class CreateEventActivity extends AppCompatActivity {
 
         inputEventName = (EditText)findViewById(R.id.eventNameEditText);
         inputEventDescription = (EditText)findViewById(R.id.eventDescriptionEditText);
+
+// Should set up listeners so that the keyboard will close when the enter key is pressed.
+        inputEventDescription.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER))
+                {
+                    System.out.println("Keyboard should close now.");
+                    // close the keyboard
+                    forceKeyboardClose();
+                }
+
+                return true;
+            }
+        });
+
+        inputEventName.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER) )
+                {
+                    // close the keyboard
+                    forceKeyboardClose();
+                }
+        return true;
+            }
+        });
+
+
+        // More close keyboard checks
+/*
+        signIn.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                // Do something in response to button click
+                String userNameFieldText = userNameField.getText().toString();
+                if(TextUtils.isEmpty(userNameFieldText)) {
+                    userNameField.setError(getString(R.string.error_field_empty));
+                    userNameField.requestFocus();
+                } else {
+                    userNameField.setError(null);
+                    userNameField.setText("Signing you in");
+                    startActivity(new Intent(MainActivity.this, SignedInLandingPage.class));
+                }
+
+            }
+        });
+    */
+
+
+
+
+        inputEventDescription.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                // Do something in response to button click
+                String userNameFieldText = inputEventDescription.getText().toString();
+                if(TextUtils.isEmpty(userNameFieldText)) {
+                    // do nothing, input still needed
+                } else {
+                    if(keyboardAltOpen)
+                    {
+                        keyboardAltOpen = false;
+                    }
+                    else
+                    {
+                        forceKeyboardClose();
+                        keyboardAltOpen = true;
+                    }
+                }
+
+            }
+        });
+        ////////////////////////////////////
 
         ImageButton addServiceButton = (ImageButton)findViewById((R.id.addServiceButton));
 
