@@ -23,7 +23,7 @@ public class ViewServiceActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_service);
         serviceName = (TextView)findViewById(R.id.titleTextView);
-        serviceDescription = (TextView)findViewById(R.id.descriptionTextView);
+        serviceDescription = (TextView)findViewById(R.id.descriptionTag);
 
         if(savedInstanceState == null)
         {
