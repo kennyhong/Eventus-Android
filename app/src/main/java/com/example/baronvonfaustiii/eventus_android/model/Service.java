@@ -40,6 +40,16 @@ public class Service implements Parcelable{
         this.serviceTags = serviceTags;
     }
 
+    public Service(int id, String name, int cost, String createdAt, String updatedAt){ //remove part this later
+        this.id = id;
+        this.name = name;
+        this.cost = cost;
+        this.description = "Empty"; //remove this later
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.serviceTags = new ArrayList<ServiceTag>();
+    }
+
     protected Service(Parcel in) {
         this();// Might not need this?
         readFromParcel(in);
