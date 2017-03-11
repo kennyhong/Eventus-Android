@@ -14,9 +14,6 @@ import com.example.baronvonfaustiii.eventus_android.ui.ViewEventActivity;
 
 import java.util.ArrayList;
 
-/**
- * Created by Bailey on 2/26/2017.
- */
 
 public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

@@ -16,10 +16,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by Bailey on 2/25/2017.
- */
-
 public class JSONFunctions extends AsyncTask<String, Void, String> {
 
     protected void onPreExecute() {

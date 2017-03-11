@@ -90,23 +90,11 @@ public class SignedInLandingPage extends Activity {
 
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Do something in response to button click
-
                 // Begin new Dialog actions for adding a new event
 
                 // For now, simply add another button to the view
                 generateNewEventDialog();
 
-                //createNewEventButton();
-
-                // For now, we want to just start up a create event activity
-                //Intent intent = new Intent(context, CreateEventActivity.class);
-                //startActivityForResult(intent, REQUEST_ADD_EVENT);
-
-                //LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                // LinearLayout scrollLayout = (LinearLayout)findViewById(R.id.LinearScrollLayout);  // mainEventList.findViewById(R.id.LinearScrollLayout).ad .addView(newEventButton); // takes a new view as a parameter
-                //scrollLayout.addView(newEventButton,lp);
             }
         });
     }
@@ -147,26 +135,6 @@ public class SignedInLandingPage extends Activity {
                 }
         );
 
-
-        // Add the buttons
-           /*
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id)
-            {
-                // User clicked OK button
-                //createNewEventButton();
-                //result = true;
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id)
-            {
-               // User cancelled the dialog
-            }
-        });
-
-             */
-
         dialog = builder.create();
         dialog.show();
 
@@ -174,63 +142,15 @@ public class SignedInLandingPage extends Activity {
 
     public void createNewEventButton(String eventName, int prefabID)
     {
-
         //use the prefabID for building a prefab event......
         // feed information into the new event page, so that it has some services already in its list,
         // that just need some confirmation and choices made etc.
-
-        // set basic event button defaults here
-        //Button result = new Button(this);
-        //result.setText(eventName);
-
-      //  RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT);
-    //    RecyclerView scrollLayout = (RecyclerView) findViewById(R.id.eventList_Viewer);  // mainEventList.findViewById(R.id.LinearScrollLayout).ad .addView(newEventButton); // takes a new view as a parameter
-
-
-//        result.setOnClickListener(new View.OnClickListener() {
-  //          public void onClick(View v) {
-                // Link up events to event pages
 
                 // for now, links to an empty Event page.
 
                 Intent intent = new Intent(context, CreateEventActivity.class);
                 startActivityForResult(intent, REQUEST_ADD_EVENT);
 
-                //startActivity(new Intent(SignedInLandingPage.this, CreateEventActivity.class));
-
-//            }
-//        });
-
-        //eventListAdapter.add(result);
-        //scrollLayout.addView(result, lp);
-
     }
 
-//    public void initializeList() {
-//        // this is where data is pulled, and used to populate the main list view of this activity
-//
-//        // consider sorting items based on date, IE closest to happen appears near the top
-//
-//        // Each event in the list needs to link to its associated event page, with all of its service information etc
-//
-//        LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.LinearScrollLayout);
-//
-//        for (int i = 0; i < scrollLayout.getChildCount(); i++) {
-//            Button temp = (Button) scrollLayout.getChildAt(i);
-//
-//            temp.setOnClickListener(new View.OnClickListener() {
-//                public void onClick(View v) {
-//                    // Link up events to event pages
-//
-//                    // for now, links to an empty Event page.
-//
-//                    startActivity(new Intent(SignedInLandingPage.this, ViewEventActivity.class));
-//
-//                }
-//            });
-//
-//        }
-//
-//
-//    }
 }

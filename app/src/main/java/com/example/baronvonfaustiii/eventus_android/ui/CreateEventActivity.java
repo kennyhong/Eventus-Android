@@ -63,10 +63,6 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
-        //eventDescriptionEditText
-        //eventNameEditText
-
-
         Button saveButton = (Button)findViewById(R.id.saveButton);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -115,28 +111,6 @@ public class CreateEventActivity extends AppCompatActivity {
 
 
         // More close keyboard checks
-/*
-        signIn.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                // Do something in response to button click
-                String userNameFieldText = userNameField.getText().toString();
-                if(TextUtils.isEmpty(userNameFieldText)) {
-                    userNameField.setError(getString(R.string.error_field_empty));
-                    userNameField.requestFocus();
-                } else {
-                    userNameField.setError(null);
-                    userNameField.setText("Signing you in");
-                    startActivity(new Intent(MainActivity.this, SignedInLandingPage.class));
-                }
-
-            }
-        });
-    */
-
-
-
 
         inputEventDescription.setOnClickListener(new View.OnClickListener()
         {
@@ -160,25 +134,14 @@ public class CreateEventActivity extends AppCompatActivity {
 
             }
         });
-        ////////////////////////////////////
 
         ImageButton addServiceButton = (ImageButton)findViewById((R.id.addServiceButton));
 
         addServiceButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                // Do something in response to button click
-
                 // Begin new Dialog actions for adding a new event
-
-                // For now, simply add another button to the view
                 turnOffRemoveServiceMode();
-                // TextView newServiceButton =
                 createNewServiceTextView();
-
-                //LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);  // mainEventList.findViewById(R.id.LinearScrollLayout).ad .addView(newEventButton); // takes a new view as a parameter
-                //scrollLayout.addView(newServiceButton, lp);
             }
         });
 
@@ -186,10 +149,6 @@ public class CreateEventActivity extends AppCompatActivity {
 
         removeServiceButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                // Do something in response to button click
-
-                //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
-
                 if(removeServiceMode)
                 {// then turn it off
                     turnOffRemoveServiceMode();
@@ -204,36 +163,28 @@ public class CreateEventActivity extends AppCompatActivity {
                         {
                             TextView temp = (TextView) scrollLayout.getChildAt(i);
                             temp.setBackgroundColor(0xCCff0066);
-
                         }
                     }
 
                 }
-
-
             }
         });
     }
 
     public void turnOffRemoveServiceMode()
     {
-        //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
-
         removeServiceMode = false;
 
         for(int i = 0 ; i < scrollLayout.getChildCount(); i++)
         {
             TextView temp = (TextView) scrollLayout.getChildAt(i);
             temp.setBackgroundColor(-1);
-
         }
     }
 
     public void createNewServiceTextView()
     {// later this also may take parameter values from this field or elsewhere for creating the services stuff
         // later this can be used for actually assembling the service object maybe
-
-        //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
 
         TextView result = new TextView(this);
         result.setText("New Service Added");
@@ -247,11 +198,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
         result.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                // Do something in response to button click
-
-
                 // make sure that there are elements to remove
-
                 if(removeServiceMode)
                 {// then remove this service,
                     // for now just delete the item, later, add a confirm dialog etc.
@@ -260,15 +207,10 @@ public class CreateEventActivity extends AppCompatActivity {
                 }
                 else
                 {// turn it on
-                    // do nothing for now, later view details of that service
                     startActivity(new Intent(CreateEventActivity.this, ViewServiceActivity.class));
                 }
-
-
             }
         });
-
-        //return result;
     }
 
     @Override

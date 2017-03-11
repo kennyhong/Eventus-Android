@@ -10,10 +10,6 @@ import com.example.baronvonfaustiii.eventus_android.ui.adapter.EventListAdapterT
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-/**
- * Created by Bailey on 2/27/2017.
- */
-
 // Runs all unit tests.
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
