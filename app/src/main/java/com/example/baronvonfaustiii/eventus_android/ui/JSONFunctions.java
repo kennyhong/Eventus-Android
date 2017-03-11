@@ -16,9 +16,6 @@ import java.net.URL;
 
 public class JSONFunctions extends AsyncTask<String, Void, String> {
 
-    // For handling exceptions
-    private Exception exception;
-
     protected void onPreExecute() {
         //Do Nothing For Now...
         Log.e("Response", "Pre-response to our db call");
@@ -51,9 +48,6 @@ public class JSONFunctions extends AsyncTask<String, Void, String> {
 
     protected void onPostExecute(String response) {
         // Check to see if we got some valid data back
-        // If not, respond with an error
-        // Else, populate the fields with the possible data
-        // POPULATE LIST HERE
         if (response == null) {
             response = "THERE WAS AN ERROR";
         }

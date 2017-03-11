@@ -11,7 +11,7 @@ public class Event implements Parcelable{
 
     private int id;
     private String name;
-    private String description; //remove this later
+    private String description;
     private String date;
     private String createdAt;
     private String updatedAt;

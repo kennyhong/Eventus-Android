@@ -8,24 +8,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.baronvonfaustiii.eventus_android.R;
 import com.example.baronvonfaustiii.eventus_android.model.Event;
-import com.example.baronvonfaustiii.eventus_android.model.Service;
-import com.example.baronvonfaustiii.eventus_android.model.ServiceTag;
+import com.example.baronvonfaustiii.eventus_android.model.ServerData;
 import com.example.baronvonfaustiii.eventus_android.ui.adapter.EventListAdapter;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class SignedInLandingPage extends Activity {
 
@@ -36,9 +27,9 @@ public class SignedInLandingPage extends Activity {
     private EventListAdapter eventListAdapter;
     private LinearLayoutManager linearLayoutManager;
     private Context context;
+    private ServerData serverData;
     private ArrayList<Event> events;
     private Event event;
-    private String output;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,25 +41,8 @@ public class SignedInLandingPage extends Activity {
         linearLayoutManager = new LinearLayoutManager(this);
         this.recyclerView.setLayoutManager(linearLayoutManager);
 
-        // This is the call we're making to our back-end api. Just working with local data for now...
-        try {
-            output = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events").get();
-//            Log.e("Response: ", "" + output);
-            if(output!=null){
-                parseJSON(output);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        // Now we do something with output to format it into a List<Events>
-        // output -> events
-        // Either this way, OR on postExecute (in the JSONFunctions.java file) we can try using postExecute to format
-        // our data into something we can use for events
+        serverData = new ServerData();
+        events = serverData.getEvents();
 
         if (savedInstanceState == null) {
             event = getIntent().getParcelableExtra(EXTRA_EVENT);
@@ -77,130 +51,9 @@ public class SignedInLandingPage extends Activity {
         }
 
         eventListAdapter = new EventListAdapter(this, events);
-//        // Maybe keep this?
-//        eventListAdapter.setOnItemClickListener(new EventListAdapter.OnItemClickedListener() {
-//            @Override
-//            public void onItemClick(Event event) {
-//                // Set up so we:
-//                // 1) Get the count of the items in our EventListAdapter
-//                // 2) Set up onClickListeners for each item in our EventListAdapter
-//            }
-//        });
         recyclerView.setAdapter(eventListAdapter);
 
         setupListeners();
-    }
-
-    // The JSON object format is as follows:
-    /*
-
-{
-   "meta":null,
-   "data":[
-      {
-         "id":1,
-         "name":"Dance",
-         "description":"Dance Revolution",
-         "date":"1000-01-01 00:00:00",
-         "created_at":"2017-03-04 06:02:48",
-         "updated_at":"2017-03-04 06:02:48",
-         "services":[
-            {
-               "id":1,
-               "name":"Movie Magic",
-               "cost":150,
-               "created_at":"2017-03-04 06:13:45",
-               "updated_at":"2017-03-04 06:13:45",
-               "service_tags":[
-                  {
-                     "id":1,
-                     "name":"Lighting",
-                     "created_at":"2017-03-04 06:12:57",
-                     "updated_at":"2017-03-04 06:12:57"
-                  }
-               ]
-            }
-         ]
-      }
-   ],
-   "error":null
-}
-     */
-    public void parseJSON(String data) throws JSONException {
-        // Create a new eventList to be added to adapter
-        events = new ArrayList<>();
-        JSONObject json = new JSONObject(data);
-        String meta = json.getString("meta"); // Possibly do stuff with this?
-        String error = json.getString("error"); // Possibly do stuff with this?
-        JSONArray jsonEvents = json.getJSONArray("data");
-        System.out.println("LENGTH: "+jsonEvents.length());
-        JSONObject jsonServices;
-        JSONObject jsonServiceTags;
-        JSONObject jsonEventParse;
-        JSONArray jsonServicesArray;
-        JSONArray jsonServiceTagsArray;
-
-        // Data needed for Event object
-        Event newEvent;
-        int eventId;
-        String eventName;
-        String eventDescription;
-        String eventDate;
-        String eventCreatedAt;
-        String eventUpdatedAt;
-        ArrayList<Service> services;
-
-        // Data needed for Service object
-        Service service;
-        int serviceId;
-        String serviceName;
-        int serviceCost;
-        String serviceCreatedAt;
-        String serviceUpdatedAt;
-        ArrayList<ServiceTag> serviceTags;
-
-        // Data needed for serviceTags
-        ServiceTag serviceTag;
-        int serviceTagId;
-        String serviceTagName;
-        String serviceTagCreatedAt;
-        String serviceTagUpdatedAt;
-
-        for(int i = 0; i < jsonEvents.length(); i++) {
-            // Grab the Event JSON object and parse it into separate Event parts
-            jsonEventParse = jsonEvents.getJSONObject(i);
-            eventId = jsonEventParse.getInt("id");
-            eventName = jsonEventParse.getString("name");
-            eventDescription = jsonEventParse.getString("name");
-            eventDate = jsonEventParse.getString("date");
-            eventCreatedAt = jsonEventParse.getString("created_at");
-            eventUpdatedAt = jsonEventParse.getString("updated_at");
-            jsonServicesArray = jsonEventParse.getJSONArray("services");
-            services = new ArrayList<Service>();
-            for(int j = 0; j < jsonServicesArray.length(); j++) {
-                jsonServices = jsonServicesArray.getJSONObject(j);
-                serviceId = jsonServices.getInt("id");
-                serviceName = jsonServices.getString("name");
-                serviceCost = jsonServices.getInt("cost");
-                serviceCreatedAt = jsonServices.getString("created_at");
-                serviceUpdatedAt = jsonServices.getString("updated_at");
-                jsonServiceTagsArray = jsonServices.getJSONArray("service_tags"); //Type mismatch, has to be a JSONArray
-                serviceTags = new ArrayList<ServiceTag>();
-                for(int k = 0; k < jsonServiceTagsArray.length(); k++) {
-                    jsonServiceTags = jsonServiceTagsArray.getJSONObject(k);
-                    serviceTagId = jsonServiceTags.getInt("id");
-                    serviceTagName = jsonServiceTags.getString("name");
-                    serviceTagCreatedAt = jsonServiceTags.getString("created_at");
-                    serviceTagUpdatedAt = jsonServiceTags.getString("updated_at");
-                    serviceTag = new ServiceTag(serviceTagId, serviceTagName, serviceTagCreatedAt, serviceTagUpdatedAt);
-                    serviceTags.add(serviceTag);
-                }
-                service = new Service(serviceId, serviceName, serviceCost, serviceCreatedAt, serviceUpdatedAt, serviceTags);
-                services.add(service);
-            }
-            newEvent = new Event(eventId, eventName, eventDescription, eventDate, eventCreatedAt, eventUpdatedAt, services);
-            events.add(newEvent);
-        }
     }
 
     @Override
