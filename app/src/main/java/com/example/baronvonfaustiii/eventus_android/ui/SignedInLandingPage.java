@@ -30,6 +30,8 @@ public class SignedInLandingPage extends Activity {
     private ServerData serverData;
     private ArrayList<Event> events;
     private Event event;
+    private AlertDialog.Builder builder;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,13 +111,16 @@ public class SignedInLandingPage extends Activity {
         });
     }
 
-
+    public AlertDialog getDialog()
+    {
+        return dialog;
+    }
 
     public void generateNewEventDialog()
     {
         boolean result = true;
 
-      AlertDialog.Builder builder = new AlertDialog.Builder(SignedInLandingPage.this);
+        builder = new AlertDialog.Builder(SignedInLandingPage.this);
 
         //builder.setMessage("Create an empty new event, or \n select a prefab for some suggested \n services to be a part of the new event");
         builder.setTitle("Create a New Event");
@@ -135,6 +140,7 @@ public class SignedInLandingPage extends Activity {
                         // create new event of this type
                         if (which <= 3)
                         {
+                            System.out.println("---------------------------"+ which);
                             createNewEventButton(eventPrefabList[which], which);
                         }
                     }
@@ -161,7 +167,7 @@ public class SignedInLandingPage extends Activity {
 
              */
 
-        AlertDialog dialog = builder.create();
+        dialog = builder.create();
         dialog.show();
 
     }

@@ -15,9 +15,6 @@ import java.util.ArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created by Bailey on 2/27/2017.
- */
 @RunWith(AndroidJUnit4.class)
 public class EventTest {
 

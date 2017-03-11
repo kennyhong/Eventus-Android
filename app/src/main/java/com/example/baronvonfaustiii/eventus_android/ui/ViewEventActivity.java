@@ -68,8 +68,11 @@ public class ViewEventActivity extends AppCompatActivity
     public void setupListeners()
     {
 //        Button btn;
-        for(Service service : event.getServices()) {
-            System.out.println("Services are happening!");
+
+        if(event != null)
+        {
+            for(Service service : event.getServices()) {
+                System.out.println("Services are happening!");
 //            btn = new Button(this);
 //            btn.setText(service.getName());
 //            btn.setOnClickListener(new View.OnClickListener() {
@@ -80,9 +83,9 @@ public class ViewEventActivity extends AppCompatActivity
 //            listLayout.addView(btn);
 //            int index = listLayout.indexOfChild(btn);
 //            btn.setTag(Integer.toString(index));
-            createNewServiceTextView();
+                createNewServiceTextView();
+            }
         }
-
 
         Button backButton = (Button)findViewById(R.id.backButton);
 
