@@ -16,6 +16,7 @@ public class ServerData {
     ArrayList<ServiceTag> serviceTags;
     String requestCode;
     String serverInfo;
+    String data;
 
     public ServerData() {
         requestCode = "GET";
@@ -24,17 +25,18 @@ public class ServerData {
         getAllServiceTagsRequest();
     }
 
-    public ServerData(String url, String requestCode) {
+    public ServerData(String requestCode, String data) {
         this.requestCode = requestCode;
+        this.data = data;
         if(requestCode.equals("POST")) {
-            postRequest();
+            postRequest(data);
         }
         getAllEventsRequest();
     }
 
-    public void postRequest() {
+    public void postRequest(String data) {
         try {
-            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events", "POST").get();
+            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events", "POST", data).get();
             getAllEventsRequest();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -140,7 +142,7 @@ public class ServerData {
                 jsonEventParse = jsonEvents.getJSONObject(i);
                 eventId = jsonEventParse.getInt("id");
                 eventName = jsonEventParse.getString("name");
-                eventDescription = jsonEventParse.getString("name");
+                eventDescription = jsonEventParse.getString("description");
                 eventDate = jsonEventParse.getString("date");
                 eventCreatedAt = jsonEventParse.getString("created_at");
                 eventUpdatedAt = jsonEventParse.getString("updated_at");
@@ -178,6 +180,8 @@ public class ServerData {
         JSONObject json = new JSONObject(data);
         JSONArray jsonServicesArray = json.getJSONArray("data");
         JSONObject jsonServices;
+        JSONArray jsonServiceTagsArray;
+        JSONObject jsonServiceTags;
         String meta = json.getString("meta");
         String error = json.getString("error");
 
@@ -188,6 +192,14 @@ public class ServerData {
         int serviceCost;
         String serviceCreatedAt;
         String serviceUpdatedAt;
+        ArrayList<ServiceTag> serviceTags;
+
+        // Data needed for serviceTags
+        ServiceTag serviceTag;
+        int serviceTagId;
+        String serviceTagName;
+        String serviceTagCreatedAt;
+        String serviceTagUpdatedAt;
 
         if(!error.equals(null)) {
             for(int i = 0; i < jsonServicesArray.length(); i++) {
@@ -197,7 +209,18 @@ public class ServerData {
                 serviceCost = jsonServices.getInt("cost");
                 serviceCreatedAt = jsonServices.getString("created_at");
                 serviceUpdatedAt = jsonServices.getString("updated_at");
-                service = new Service(serviceId, serviceName, serviceCost, serviceCreatedAt, serviceUpdatedAt);
+                jsonServiceTagsArray = jsonServices.getJSONArray("service_tags");
+                serviceTags = new ArrayList<ServiceTag>();
+                for (int j = 0; j < jsonServiceTagsArray.length(); j++) {
+                    jsonServiceTags = jsonServiceTagsArray.getJSONObject(j);
+                    serviceTagId = jsonServiceTags.getInt("id");
+                    serviceTagName = jsonServiceTags.getString("name");
+                    serviceTagCreatedAt = jsonServiceTags.getString("created_at");
+                    serviceTagUpdatedAt = jsonServiceTags.getString("updated_at");
+                    serviceTag = new ServiceTag(serviceTagId, serviceTagName, serviceTagCreatedAt, serviceTagUpdatedAt);
+                    serviceTags.add(serviceTag);
+                }
+                service = new Service(serviceId, serviceName, serviceCost, serviceCreatedAt, serviceUpdatedAt, serviceTags);
                 services.add(service);
             }
         }

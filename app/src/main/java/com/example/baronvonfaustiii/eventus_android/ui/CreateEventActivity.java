@@ -16,7 +16,13 @@ import android.widget.TextView;
 
 import com.example.baronvonfaustiii.eventus_android.R;
 import com.example.baronvonfaustiii.eventus_android.model.Event;
+import com.example.baronvonfaustiii.eventus_android.model.ServerData;
 import com.example.baronvonfaustiii.eventus_android.model.Service;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Date;
 
 /**
  * Created by Bailey on 2/26/2017.
@@ -33,6 +39,7 @@ public class CreateEventActivity extends AppCompatActivity {
     private EditText inputEventName;
     private EditText inputEventDescription;
     private boolean keyboardAltOpen = false;
+    private ServerData serverData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -73,7 +80,11 @@ public class CreateEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Do something in response to button click
-                save(view);
+                try {
+                    save(view);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -283,7 +294,9 @@ public class CreateEventActivity extends AppCompatActivity {
         // Add more to this if we have to.
     }
 
-    public void save(View view) {
+    public void save(View view) throws JSONException {
+        JSONObject json = new JSONObject();
+        String data;
         if (event == null) {
             event = new Event();
         }
@@ -299,13 +312,15 @@ public class CreateEventActivity extends AppCompatActivity {
             inputEventName.setError(null);
             event.setName(eventName);
             event.setDescription(eventDescription);
+            json.put("name", eventName);
+            json.put("description", eventDescription);
+            json.put("date", "1000-01-01 00:00:00");
             //If layout is empty, don't add anything to services, else, add services.
             if(scrollLayout.getChildCount() > 0) {
-                saveServices(event);
+                saveServices(event, json);
             }
-            for (Service service : event.getServices()) {
-                System.out.println(service.getName());
-            }
+            data = json.toString();
+            serverData = new ServerData("POST", data);
             Intent intent = getIntent();
             intent.putExtra(EXTRA_EVENT, event);
             setResult(RESULT_OK, intent);
@@ -313,7 +328,7 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
-    private void saveServices(Event event) {
+    private void saveServices(Event event, JSONObject json) {
         String tempText;
         Service tempService;
         for(int i = 0 ; i < scrollLayout.getChildCount(); i++)
