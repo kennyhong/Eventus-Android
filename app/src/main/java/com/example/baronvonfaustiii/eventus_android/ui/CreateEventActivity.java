@@ -53,6 +53,12 @@ public class CreateEventActivity extends AppCompatActivity {
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
+    public Event getEvent()
+    {
+        return event;
+    }
+
+
     public void setupListeners()
     {
         Button backButton = (Button)findViewById(R.id.backButton);
@@ -82,6 +88,24 @@ public class CreateEventActivity extends AppCompatActivity {
         });
 
         inputEventName = (EditText)findViewById(R.id.eventNameEditText);
+
+
+        inputEventName.setOnKeyListener(new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER) )
+                {
+                    // close the keyboard
+                    forceKeyboardClose();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         inputEventDescription = (EditText)findViewById(R.id.eventDescriptionEditText);
 
 // Should set up listeners so that the keyboard will close when the enter key is pressed.
@@ -96,26 +120,13 @@ public class CreateEventActivity extends AppCompatActivity {
                     System.out.println("Keyboard should close now.");
                     // close the keyboard
                     forceKeyboardClose();
+                    return true;
                 }
 
-                return true;
+                return false;
             }
         });
 
-        inputEventName.setOnKeyListener(new View.OnKeyListener()
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // If the event is a key-down event on the "enter" button
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER) )
-                {
-                    // close the keyboard
-                    forceKeyboardClose();
-                }
-        return true;
-            }
-        });
 
 
         // More close keyboard checks

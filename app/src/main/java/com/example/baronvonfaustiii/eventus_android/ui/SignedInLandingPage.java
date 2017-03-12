@@ -70,7 +70,9 @@ public class SignedInLandingPage extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_ADD_EVENT && data != null)
         {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK)
+            {
+                System.out.println("Adding new");
                 Event event = data.getParcelableExtra(CreateEventActivity.EXTRA_EVENT);
                 eventListAdapter.add(event);
             }
@@ -81,10 +83,23 @@ public class SignedInLandingPage extends Activity {
             Event event = data.getParcelableExtra(ViewEventActivity.EXTRA_EVENT);
             eventListAdapter.remove(event);
             // now update the server
-            
+
+
+        }
+        if(requestCode == 2 && resultCode == RESULT_OK)
+        {// then we just need to update the event
+            System.out.println("Updating");
+
+
 
         }
     }
+
+    public Event getEvent()
+    {
+        return event ;
+    }
+
 
     public void setupListeners() {
         Button signOutButton = (Button) findViewById(R.id.SignoutButton);
