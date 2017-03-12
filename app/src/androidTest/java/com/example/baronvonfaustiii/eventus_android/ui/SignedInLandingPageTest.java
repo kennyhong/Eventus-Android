@@ -80,6 +80,8 @@ public class SignedInLandingPageTest {
             {
                 // check to see if the createEventActivity fields pop up, and if so, populate and save.
                 // Now, populate name field
+
+
                 onView(withId(R.id.eventNameEditText))
                         .perform(typeText(name), closeSoftKeyboard());
 
