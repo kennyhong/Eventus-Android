@@ -82,6 +82,11 @@ public class SignedInLandingPage extends Activity {
             System.out.println("Deleting Event from System");
             Event event = data.getParcelableExtra(ViewEventActivity.EXTRA_EVENT);
             eventListAdapter.remove(event);
+            serverData = new ServerData();
+            events = serverData.getEvents();
+            eventListAdapter.refresh(events);
+
+            setupListeners();
             // now update the server
 
 

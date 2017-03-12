@@ -29,14 +29,28 @@ public class ServerData {
         this.requestCode = requestCode;
         this.data = data;
         if(requestCode.equals("POST")) {
-            postRequest(data);
+            postRequest(requestCode, data);
+        } else if(requestCode.equals("PUT")) {
+//            putRequest(requestCode, data);
+        } else if (requestCode.equals("DELETE")) {
+            deleteRequest(requestCode, data);
         }
-        getAllEventsRequest();
     }
 
-    public void postRequest(String data) {
+    public void deleteRequest(String requestCode, String data) {
         try {
-            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events", "POST", data).get();
+            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+data, requestCode).get();
+            getAllEventsRequest();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void postRequest(String requestCode, String data) {
+        try {
+            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events", requestCode, data).get();
             getAllEventsRequest();
         } catch (InterruptedException e) {
             e.printStackTrace();
