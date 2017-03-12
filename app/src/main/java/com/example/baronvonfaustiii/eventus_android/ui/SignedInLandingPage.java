@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class SignedInLandingPage extends Activity {
 
     private static final int REQUEST_ADD_EVENT = 1;
+    private static final int REQUEST_DELETE_EVENT = 5;
     public static final String EXTRA_EVENT = "event";
 
     private RecyclerView recyclerView;
@@ -67,11 +68,18 @@ public class SignedInLandingPage extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_ADD_EVENT && data != null) {
+        if (requestCode == REQUEST_ADD_EVENT && data != null)
+        {
             if (resultCode == RESULT_OK) {
                 Event event = data.getParcelableExtra(CreateEventActivity.EXTRA_EVENT);
                 eventListAdapter.add(event);
             }
+        }
+        if(resultCode == REQUEST_DELETE_EVENT)
+        {
+            System.out.println("Deleting Event from System");
+            Event event = data.getParcelableExtra(ViewEventActivity.EXTRA_EVENT);
+            eventListAdapter.remove(event);
         }
     }
 

@@ -59,30 +59,14 @@ public class ViewEventActivity extends AppCompatActivity
         setupListeners();
     }
 
-    /*
-
-
-
-     */
-
     public void setupListeners()
     {
-//        Button btn;
 
         if(event != null)
         {
             for(Service service : event.getServices()) {
                 System.out.println("Services are happening!");
-//            btn = new Button(this);
-//            btn.setText(service.getName());
-//            btn.setOnClickListener(new View.OnClickListener() {
-//               public void onClick(View v) {
-//                   startActivity(new Intent(ViewEventActivity.this, ViewServiceActivity.class));
-//               }
-//            });
-//            listLayout.addView(btn);
-//            int index = listLayout.indexOfChild(btn);
-//            btn.setTag(Integer.toString(index));
+
                 createNewServiceTextView();
             }
         }
@@ -100,14 +84,28 @@ public class ViewEventActivity extends AppCompatActivity
             }
         });
 
-//        Button saveButton = (Button)findViewById(R.id.saveButton);
-//
-//        saveButton.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                // Do something in response to button click
-//
-//            }
-//        });
+        // Initialize delete button visibility etc.
+        // Initially it is not visible, but will be once the edit button has been pressed
+       final Button deleteButton = (Button)findViewById(R.id.deleteButton);
+        deleteButton.setVisibility(View.GONE);
+
+
+        deleteButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v)
+            {
+                if(editOn)
+                {
+                    // then you need to send the code back to delete this event
+
+                    Intent intent = getIntent();
+                    intent.putExtra(EXTRA_EVENT, event);
+                    setResult(5, intent);
+                    finish();
+
+                }
+
+            }
+        });
 
         ImageButton editButton = (ImageButton)findViewById(R.id.editButton);
         editButton.setOnClickListener(new View.OnClickListener(){
@@ -118,7 +116,14 @@ public class ViewEventActivity extends AppCompatActivity
                 {
                     forceKeyboardClose();
                     editOn = false;
+
+                    // Remove the delete button from view
+                    deleteButton.setVisibility(View.GONE);
+
+
+
                     TextView title = (TextView)findViewById(R.id.titleTextView);
+                    // allow for the title to be updated. @ TO DO , this needs to patching up
                     //title.setTextIsSelectable(true);
                     title.setOnClickListener(new View.OnClickListener()
                     {
@@ -130,8 +135,6 @@ public class ViewEventActivity extends AppCompatActivity
                             title.setFocusableInTouchMode(false);
                           //  title.setInputType(InputType.);
                             title.setFocusable(false);
-                           //RelativeLayout view = (RelativeLayout)findViewById(R.id.activity_view_event);
-                            //view.
                             forceKeyboardClose();
                            // title.requestFocus(); //to trigger the soft input
                             //title.setText("");
@@ -140,6 +143,9 @@ public class ViewEventActivity extends AppCompatActivity
                 }
                 else
                 {
+                    // Make deleting the event possible
+                    deleteButton.setVisibility(View.VISIBLE);
+
                     forceKeyboardClose();
                     editOn = true;
                     TextView title = (TextView)findViewById(R.id.titleTextView);
@@ -177,12 +183,7 @@ public class ViewEventActivity extends AppCompatActivity
                 // For now, simply add another button to the view
                 turnOffRemoveServiceMode();
                 createNewServiceTextView();
-                // TextView newServiceButton =
 
-                //LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);  // mainEventList.findViewById(R.id.LinearScrollLayout).ad .addView(newEventButton); // takes a new view as a parameter
-                //scrollLayout.addView(newServiceButton, lp);
             }
         });
 

@@ -24,9 +24,6 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
-/**
- * Created by Bailey on 2/26/2017.
- */
 
 
 public class CreateEventActivity extends AppCompatActivity {
