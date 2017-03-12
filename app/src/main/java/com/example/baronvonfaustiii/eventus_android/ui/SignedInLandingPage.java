@@ -75,11 +75,14 @@ public class SignedInLandingPage extends Activity {
                 eventListAdapter.add(event);
             }
         }
-        if(resultCode == REQUEST_DELETE_EVENT)
-        {
+        if(requestCode == 2 && resultCode == REQUEST_DELETE_EVENT)
+        {// then it is returning from a view event , and the event needs to be deleted.
             System.out.println("Deleting Event from System");
             Event event = data.getParcelableExtra(ViewEventActivity.EXTRA_EVENT);
             eventListAdapter.remove(event);
+            // now update the server
+            
+
         }
     }
 

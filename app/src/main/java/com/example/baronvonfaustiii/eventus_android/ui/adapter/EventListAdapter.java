@@ -1,5 +1,6 @@
 package com.example.baronvonfaustiii.eventus_android.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -70,7 +71,7 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ViewEventActivity.class);
                     intent.putExtra(ViewEventActivity.EXTRA_EVENT, events.get(getAdapterPosition()));
-                    context.startActivity(intent);
+                    ((Activity)context).startActivityForResult(intent,2);
                 }
             });
         }
