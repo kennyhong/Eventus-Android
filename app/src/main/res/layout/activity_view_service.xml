@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_view_event"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#46BD79"
+    tools:context="com.example.baronvonfaustiii.eventus_android.ui.ViewServiceActivity">
+
+    <Button
+        android:text="Back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/backButton"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="68dp"
+        android:id="@+id/detailsScrollView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/detailsListLayout">
+
+            <TextView
+                android:text="Place your short description here: "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:id="@+id/descriptionTag"
+                android:layout_below="@+id/backButton"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="25dp" />
+
+            <TextView
+                android:text="Price: "
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/priceTag"/>
+
+            <TextView
+                android:text="Booked On: "
+                android:layout_width="match_parent"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:layout_height="wrap_content"
+                android:id="@+id/dateBookedTag"/>
+
+            <TextView
+                android:text="Updated On: "
+                android:layout_width="match_parent"
+
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:layout_height="wrap_content"
+                android:id="@+id/dateUpdatedTag"/>
+
+            <TextView
+                android:text="ServiceID: "
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/productIDTag"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:text="TitleHere"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="36sp"
+        android:id="@+id/titleTextView"
+        android:textColor="#ffffff"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

@@ -10,12 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created by Bailey on 2/27/2017.
- */
 @RunWith(AndroidJUnit4.class)
 public class EventTest {
 
@@ -23,12 +22,14 @@ public class EventTest {
 
     @Before
     public void setUp() throws Exception {
-        event = new Event("name", "description");
+        event = new Event("name", "description", new ArrayList<Service>());
     }
 
     @After
     public void tearDown() throws Exception {
-        event = new Event("name", "description");
+        event = new Event();
+        event.setName("name");
+        event.setDescription("description");
     }
 
     @Test
@@ -59,7 +60,7 @@ public class EventTest {
     public void writeToParcel(){
 
         // Write the data.
-        Event event = new  Event("name", "description");
+        Event event = new  Event("name", "description", new ArrayList<Service>());
         Parcel parcel = Parcel.obtain();
 
         System.out.println(parcel == null);
