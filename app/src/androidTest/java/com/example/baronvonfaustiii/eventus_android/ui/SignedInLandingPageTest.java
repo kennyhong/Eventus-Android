@@ -72,7 +72,7 @@ public class SignedInLandingPageTest {
                 //okBtn.performClick();
                 //okBtn.callOnClick();
 
-            //  //if( !mActivityRule.getActivity().dialog.isShowing())
+              //if( !mActivityRule.getActivity().dialog.isShowing())
 
            // {// then the dialog has closed, and the new event should be launched.
 

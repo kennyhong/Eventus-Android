@@ -4,6 +4,7 @@ import android.support.test.rule.ActivityTestRule;
 
 import com.example.baronvonfaustiii.eventus_android.R;
 
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -17,9 +18,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.*;
 
-/**
- * Created by Bailey on 2/27/2017.
- */
+
 public class ViewEventActivityTest {
 
     private final String EVENT_TITLE = "TitleHere";
@@ -47,5 +46,22 @@ public class ViewEventActivityTest {
         onView(withId(R.id.backButton)).check(matches(isDisplayed()));
         onView(withId(R.id.backButton)).perform(click());
     }
+
+    @Test
+    public void deleteCodeTest()
+    {
+        onView(withId(R.id.editButton)).perform(click());
+        onView(withId(R.id.deleteButton)).perform(click());
+
+        Assert.assertEquals(5,mActivityRule.getActivity().getResultCode());
+    }
+
+    @Test
+    public void updateCodeTest()
+    {
+        onView(withId(R.id.backButton)).perform(click());
+        Assert.assertEquals(0,mActivityRule.getActivity().getResultCode());
+    }
+
 
 }
