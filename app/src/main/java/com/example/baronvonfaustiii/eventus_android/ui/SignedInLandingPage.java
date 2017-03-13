@@ -65,6 +65,11 @@ public class SignedInLandingPage extends Activity {
         outState.putParcelable(EXTRA_EVENT, event);
     }
 
+    public ServerData accessServerData()
+    {
+        return serverData;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -82,16 +87,20 @@ public class SignedInLandingPage extends Activity {
             System.out.println("Deleting Event from System");
             Event event = data.getParcelableExtra(ViewEventActivity.EXTRA_EVENT);
             eventListAdapter.remove(event);
-            // now update the server
+            serverData = new ServerData();
+            events = serverData.getEvents();
+            eventListAdapter.refresh(events);
 
-
+            setupListeners();
         }
         if(requestCode == 2 && resultCode == RESULT_OK)
         {// then we just need to update the event
             System.out.println("Updating");
+            serverData = new ServerData();
+            events = serverData.getEvents();
+            eventListAdapter.refresh(events);
 
-
-
+            setupListeners();
         }
     }
 

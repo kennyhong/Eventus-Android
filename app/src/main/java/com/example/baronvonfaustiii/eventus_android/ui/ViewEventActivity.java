@@ -66,11 +66,15 @@ public class ViewEventActivity extends AppCompatActivity
         setupListeners();
     }
 
+    public ServerData accessServerData()
+    {
+        return serverData;
+    }
+
     public int getResultCode()
     {
         return  resultCode;
     }
-
 
     public void setupListeners()
     {
@@ -112,7 +116,7 @@ public class ViewEventActivity extends AppCompatActivity
                 if(editOn)
                 {
                     // then you need to send the code back to delete this event
-
+                    serverData = new ServerData("DELETE", Integer.toString(event.getID()));
                     Intent intent = getIntent();
                     intent.putExtra(EXTRA_EVENT, event);
                     setResult(DELETE_CODE, intent);
@@ -299,7 +303,7 @@ public class ViewEventActivity extends AppCompatActivity
 
     public void save(View view) throws JSONException {
         JSONObject json = new JSONObject();
-        String data;
+        String id = Integer.toString(event.getID());
 
         String eventName = this.eventName.getText().toString();
         String eventDescription = this.eventDescription.getText().toString();
@@ -322,8 +326,7 @@ public class ViewEventActivity extends AppCompatActivity
             if(scrollLayout.getChildCount() > 0) {
                 saveServices(event, json);
             }
-            data = json.toString();
-            //serverData = new ServerData("POST", data); // we dont want to create a new event, we want to update
+            serverData = new ServerData("PUT", json.toString(), id); // update when implemented
             Intent intent = getIntent();
             intent.putExtra(EXTRA_EVENT, event);
             setResult(RESULT_OK, intent);

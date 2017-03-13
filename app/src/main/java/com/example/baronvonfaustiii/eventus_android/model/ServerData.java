@@ -1,7 +1,10 @@
 package com.example.baronvonfaustiii.eventus_android.model;
 
+import com.example.baronvonfaustiii.eventus_android.R;
 import com.example.baronvonfaustiii.eventus_android.ui.JSONFunctions;
 
+import android.text.TextUtils;
+import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,15 +31,46 @@ public class ServerData {
     public ServerData(String requestCode, String data) {
         this.requestCode = requestCode;
         this.data = data;
-        if(requestCode.equals("POST")) {
-            postRequest(data);
+        if (requestCode.equals("POST")) {
+            postRequest(requestCode, data);
+        } else if (requestCode.equals("DELETE")) {
+            deleteRequest(requestCode, data);
         }
-        getAllEventsRequest();
     }
 
-    public void postRequest(String data) {
+    public ServerData(String requestCode, String data, String id) {
+        this.requestCode = requestCode;
+        this.data = data;
+        if (requestCode.equals("PUT")) {
+            putRequest(requestCode, data, id);
+        }
+    }
+
+    public void putRequest(String requestCode, String data, String id) {
         try {
-            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events", "POST", data).get();
+            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + id, requestCode, data).get();
+            getAllEventsRequest();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteRequest(String requestCode, String data) {
+        try {
+            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + data, requestCode).get();
+            getAllEventsRequest();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void postRequest(String requestCode, String data) {
+        try {
+            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events", requestCode, data).get();
             getAllEventsRequest();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -56,6 +90,22 @@ public class ServerData {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public JSONObject getJSONEventDetails(Event event )throws JSONException
+    {
+        JSONObject json = new JSONObject();
+        String id = Integer.toString(event.getID());
+
+        String eventName = event.getName();
+        String eventDescription = event.getDescription();
+
+            json.put("name", eventName);
+            json.put("description", eventDescription);
+            json.put("date", "1000-01-01 00:00:00");
+            //If layout is empty, don't add anything to services, else, add services.
+
+        return json;
     }
 
     public void getAllServicesRequest() {
@@ -201,8 +251,8 @@ public class ServerData {
         String serviceTagCreatedAt;
         String serviceTagUpdatedAt;
 
-        if(!error.equals(null)) {
-            for(int i = 0; i < jsonServicesArray.length(); i++) {
+        if (!error.equals(null)) {
+            for (int i = 0; i < jsonServicesArray.length(); i++) {
                 jsonServices = jsonServicesArray.getJSONObject(i);
                 serviceId = jsonServices.getInt("id");
                 serviceName = jsonServices.getString("name");
@@ -241,7 +291,7 @@ public class ServerData {
         String serviceTagCreatedAt;
         String serviceTagUpdatedAt;
 
-        if(!error.equals(null)) {
+        if (!error.equals(null)) {
             for (int i = 0; i < jsonServiceTagsArray.length(); i++) {
                 jsonServiceTags = jsonServiceTagsArray.getJSONObject(i);
                 serviceTagId = jsonServiceTags.getInt("id");

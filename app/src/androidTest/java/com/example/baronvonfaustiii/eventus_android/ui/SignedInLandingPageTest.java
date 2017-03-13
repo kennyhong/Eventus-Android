@@ -60,49 +60,35 @@ public class SignedInLandingPageTest {
         {
             AlertDialog dialog = mActivityRule.getActivity().getDialog();
 
-          Integer datID  = dialog.getListView().getChildAt(1).getId();// .callOnClick();// .Click(dialog.getButton(1));
-            //View child = dialog.getListView().getChildAt(1);
-           // child.performClick();
-          //  child.callOnClick();
-           // child.performContextClick();
-            onView(withId(datID)).perform(click());
-            //child.
-//DialogInterface
-            //Button okBtn = (Button)dialog.getListView().getChildAt(1);
-                //okBtn.performClick();
-                //okBtn.callOnClick();
+              if( !mActivityRule.getActivity().getDialog().isShowing())
 
-              //if( !mActivityRule.getActivity().dialog.isShowing())
+            {// then the dialog has closed, and the new event should be launched.
 
-           // {// then the dialog has closed, and the new event should be launched.
+                    if(dialog != null)
+                    {
+                        // check to see if the createEventActivity fields pop up, and if so, populate and save.
+                        // Now, populate name field
+                        onView(withId(R.id.eventNameEditText))
+                                .perform(typeText(name), closeSoftKeyboard());
 
-            if(dialog != null)
-            {
-                // check to see if the createEventActivity fields pop up, and if so, populate and save.
-                // Now, populate name field
+                        // Now, populate description field
+                        onView(withId(R.id.eventDescriptionEditText))
+                                .perform(typeText(description), closeSoftKeyboard());
 
+                        // Attempt to save
+                        onView(withId(R.id.saveButton)).perform(click());
 
-                onView(withId(R.id.eventNameEditText))
-                        .perform(typeText(name), closeSoftKeyboard());
+                        // Check to see if an item exists
+                        onView(withId(R.id.eventItemName)).check(matches(isDisplayed()));
+                        onView(withId(R.id.eventItemDescription)).check(matches(isDisplayed()));
 
-                // Now, populate description field
-                onView(withId(R.id.eventDescriptionEditText))
-                        .perform(typeText(description), closeSoftKeyboard());
+                        // Check to see what the item contains
+                        onView(withId(R.id.eventItemName)).perform(click());
+                        onView(withId(R.id.titleTextView)).check(matches(withText(name)));
+                        onView(withId(R.id.descriptionTextView)).check(matches(withText(description)));
+                    }
 
-                // Attempt to save
-                onView(withId(R.id.saveButton)).perform(click());
-
-                // Check to see if an item exists
-                onView(withId(R.id.eventItemName)).check(matches(isDisplayed()));
-                onView(withId(R.id.eventItemDescription)).check(matches(isDisplayed()));
-
-                // Check to see what the item contains
-                onView(withId(R.id.eventItemName)).perform(click());
-                onView(withId(R.id.titleTextView)).check(matches(withText(name)));
-                onView(withId(R.id.descriptionTextView)).check(matches(withText(description)));
             }
-
-          //  }
 
         }
 
