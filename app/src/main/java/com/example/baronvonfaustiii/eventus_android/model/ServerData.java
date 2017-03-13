@@ -28,32 +28,25 @@ public class ServerData {
     public ServerData(String requestCode, String data) {
         this.requestCode = requestCode;
         this.data = data;
-        if(requestCode.equals("POST")) {
+        if (requestCode.equals("POST")) {
             postRequest(requestCode, data);
-        } else if(requestCode.equals("PUT")) {
-            putRequest(requestCode, data);
         } else if (requestCode.equals("DELETE")) {
             deleteRequest(requestCode, data);
         }
     }
 
-    public void putRequest(String requestCode, String data) {
+    public ServerData(String requestCode, String data, String id) {
+        this.requestCode = requestCode;
+        this.data = data;
+        if (requestCode.equals("PUT")) {
+            putRequest(requestCode, data, id);
+        }
+    }
+
+    public void putRequest(String requestCode, String data, String id) {
         try {
-            JSONObject json;
-            JSONObject newJson;
-            String id;
-            try {
-                json = new JSONObject(data);
-                newJson = new JSONObject();
-                id = json.getString("id");
-                newJson.put("name", json.getString("name"));
-                newJson.put("description", json.getString("description"));
-                newJson.put("date", "1000-01-01 00:00:00");
-                serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+id, requestCode, newJson.toString()).get();
-                getAllEventsRequest();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + id, requestCode, data).get();
+            getAllEventsRequest();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -63,7 +56,7 @@ public class ServerData {
 
     public void deleteRequest(String requestCode, String data) {
         try {
-            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+data, requestCode).get();
+            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + data, requestCode).get();
             getAllEventsRequest();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -239,8 +232,8 @@ public class ServerData {
         String serviceTagCreatedAt;
         String serviceTagUpdatedAt;
 
-        if(!error.equals(null)) {
-            for(int i = 0; i < jsonServicesArray.length(); i++) {
+        if (!error.equals(null)) {
+            for (int i = 0; i < jsonServicesArray.length(); i++) {
                 jsonServices = jsonServicesArray.getJSONObject(i);
                 serviceId = jsonServices.getInt("id");
                 serviceName = jsonServices.getString("name");
@@ -279,7 +272,7 @@ public class ServerData {
         String serviceTagCreatedAt;
         String serviceTagUpdatedAt;
 
-        if(!error.equals(null)) {
+        if (!error.equals(null)) {
             for (int i = 0; i < jsonServiceTagsArray.length(); i++) {
                 jsonServiceTags = jsonServiceTagsArray.getJSONObject(i);
                 serviceTagId = jsonServiceTags.getInt("id");

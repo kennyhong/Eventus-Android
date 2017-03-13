@@ -299,6 +299,7 @@ public class ViewEventActivity extends AppCompatActivity
 
     public void save(View view) throws JSONException {
         JSONObject json = new JSONObject();
+        String id = Integer.toString(event.getID());
 
         String eventName = this.eventName.getText().toString();
         String eventDescription = this.eventDescription.getText().toString();
@@ -314,7 +315,6 @@ public class ViewEventActivity extends AppCompatActivity
         {
             this.eventName.setError(null);
 
-            json.put("id", event.getID());
             json.put("name", eventName);
             json.put("description", eventDescription);
             json.put("date", "1000-01-01 00:00:00");
@@ -322,7 +322,7 @@ public class ViewEventActivity extends AppCompatActivity
             if(scrollLayout.getChildCount() > 0) {
                 saveServices(event, json);
             }
-            serverData = new ServerData("PUT", json.toString()); // update when implemented
+            serverData = new ServerData("PUT", json.toString(), id); // update when implemented
             Intent intent = getIntent();
             intent.putExtra(EXTRA_EVENT, event);
             setResult(RESULT_OK, intent);
