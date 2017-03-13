@@ -1,7 +1,10 @@
 package com.example.baronvonfaustiii.eventus_android.model;
 
+import com.example.baronvonfaustiii.eventus_android.R;
 import com.example.baronvonfaustiii.eventus_android.ui.JSONFunctions;
 
+import android.text.TextUtils;
+import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,6 +90,22 @@ public class ServerData {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public JSONObject getJSONEventDetails(Event event )throws JSONException
+    {
+        JSONObject json = new JSONObject();
+        String id = Integer.toString(event.getID());
+
+        String eventName = event.getName();
+        String eventDescription = event.getDescription();
+
+            json.put("name", eventName);
+            json.put("description", eventDescription);
+            json.put("date", "1000-01-01 00:00:00");
+            //If layout is empty, don't add anything to services, else, add services.
+
+        return json;
     }
 
     public void getAllServicesRequest() {

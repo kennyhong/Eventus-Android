@@ -20,8 +20,11 @@ import com.example.baronvonfaustiii.eventus_android.ui.adapter.EventListAdapter;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.TextView;
 import java.util.ArrayList;
 import junit.framework.Assert;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -92,16 +95,51 @@ public class ServerDataTestSet1
         int post = serverData.getEvents().size();
 
         Assert.assertTrue(post > preValue);
-        int id = mActivityRule.getActivity().getEvent().getID();
 
     }
 
+
     // add event from create event page. Then validate that it was added to the server
+
     @Rule
     public ActivityTestRule<SignedInLandingPage> vActivityRule = new ActivityTestRule<>(
             SignedInLandingPage.class);
 
-// we know that a new event was created by the last test, so lets go ahead and delete it.
+    @Test
+    public void testUpdateEvent() throws JSONException
+    {
+        ServerData data = vActivityRule.getActivity().accessServerData();
+        data = new ServerData();
+        int pre = data.getEvents().size();
+
+        ArrayList<Event> events = serverData.getEvents();
+        Assert.assertNotNull(events);
+
+        EventListAdapter eventListAdapter;
+        eventListAdapter = new EventListAdapter(vActivityRule.getActivity(), events);
+
+        Event temp = eventListAdapter.getEventByTitle("Event name");
+        Assert.assertNotNull(temp);
+        temp.setName("Fancy Event");
+
+
+
+        JSONObject json = new JSONObject();
+        json = data.getJSONEventDetails(temp);// note this doesnt include services
+        String id = Integer.toString(temp.getID());
+
+        serverData = new ServerData("PUT", json.toString(), id); // update when implemented
+
+        serverData.getAllEventsRequest();
+        int post = serverData.getEvents().size();
+
+        Assert.assertTrue(post == pre);
+
+    }
+
+// we know that a new event was created by the last test, so lets go ahead and delete it. // we also know
+    // what its updated title should be.
+    // thus validating two other tests
     @Test
     public void deleteEvent()
     {
@@ -116,7 +154,7 @@ public class ServerDataTestSet1
         EventListAdapter eventListAdapter;
         eventListAdapter = new EventListAdapter(vActivityRule.getActivity(), events);
 
-        Event temp = eventListAdapter.getEventByTitle("Event name");
+        Event temp = eventListAdapter.getEventByTitle("Fancy Event");
         Assert.assertNotNull(temp);
 
         serverData = new ServerData("DELETE", Integer.toString(temp.getID()));
@@ -127,6 +165,24 @@ public class ServerDataTestSet1
 
         Assert.assertTrue(post < pre);
 
+    }
+
+    @Test
+    public void failFindEvent()
+    {
+        ServerData data = vActivityRule.getActivity().accessServerData();
+        data = new ServerData();
+        int pre = data.getEvents().size();
+
+        ArrayList<Event> events = serverData.getEvents();
+        Assert.assertNotNull(events);
+
+        EventListAdapter eventListAdapter;
+        eventListAdapter = new EventListAdapter(vActivityRule.getActivity(), events);
+
+        Event temp = eventListAdapter.getEventByTitle("ImaginaryEventThatDoesntExist");
+        Assert.assertNull(temp);
+        // since the event doesnt exist, it cannot be deleted.
 
     }
 

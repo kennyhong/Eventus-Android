@@ -66,11 +66,15 @@ public class ViewEventActivity extends AppCompatActivity
         setupListeners();
     }
 
+    public ServerData accessServerData()
+    {
+        return serverData;
+    }
+
     public int getResultCode()
     {
         return  resultCode;
     }
-
 
     public void setupListeners()
     {
