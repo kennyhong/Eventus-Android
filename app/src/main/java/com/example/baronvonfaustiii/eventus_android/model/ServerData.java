@@ -31,9 +31,33 @@ public class ServerData {
         if(requestCode.equals("POST")) {
             postRequest(requestCode, data);
         } else if(requestCode.equals("PUT")) {
-//            putRequest(requestCode, data);
+            putRequest(requestCode, data);
         } else if (requestCode.equals("DELETE")) {
             deleteRequest(requestCode, data);
+        }
+    }
+
+    public void putRequest(String requestCode, String data) {
+        try {
+            JSONObject json;
+            JSONObject newJson;
+            String id;
+            try {
+                json = new JSONObject(data);
+                newJson = new JSONObject();
+                id = json.getString("id");
+                newJson.put("name", json.getString("name"));
+                newJson.put("description", json.getString("description"));
+                newJson.put("date", "1000-01-01 00:00:00");
+                serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+id, requestCode, newJson.toString()).get();
+                getAllEventsRequest();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
     }
 

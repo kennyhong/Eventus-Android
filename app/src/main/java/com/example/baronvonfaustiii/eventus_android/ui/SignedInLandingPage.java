@@ -87,16 +87,15 @@ public class SignedInLandingPage extends Activity {
             eventListAdapter.refresh(events);
 
             setupListeners();
-            // now update the server
-
-
         }
         if(requestCode == 2 && resultCode == RESULT_OK)
         {// then we just need to update the event
             System.out.println("Updating");
+            serverData = new ServerData();
+            events = serverData.getEvents();
+            eventListAdapter.refresh(events);
 
-
-
+            setupListeners();
         }
     }
 

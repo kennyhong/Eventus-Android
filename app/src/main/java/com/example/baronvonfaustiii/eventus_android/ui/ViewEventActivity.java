@@ -314,6 +314,7 @@ public class ViewEventActivity extends AppCompatActivity
         {
             this.eventName.setError(null);
 
+            json.put("id", event.getID());
             json.put("name", eventName);
             json.put("description", eventDescription);
             json.put("date", "1000-01-01 00:00:00");
