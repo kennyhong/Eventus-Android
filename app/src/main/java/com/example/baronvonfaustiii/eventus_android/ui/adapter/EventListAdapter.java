@@ -52,6 +52,40 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         notifyDataSetChanged();
     }
 
+    public Event getEventByTitle(String title)
+    {
+        Event result = null;
+
+        for(int i = 0 ; i < events.size(); i++)
+        {
+            if(events.get(i).getName().equals(title))
+            {
+                result = events.get(i);
+            }
+        }
+
+        return result;
+    }
+
+    public Event getEvent(Event event)
+    {
+        Event result = null;
+
+        int id = event.getID();
+
+        for(int i = 0; i < events.size(); i++)
+        {
+            if(events.get(i).getID() == id)
+            {
+                result = events.get(i);
+                break;
+            }
+        }
+
+        return result;
+    }
+
+
     public void remove(Event event){
         events.remove(event);
         notifyDataSetChanged();

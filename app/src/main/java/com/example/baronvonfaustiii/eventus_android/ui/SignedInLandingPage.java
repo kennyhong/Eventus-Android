@@ -65,6 +65,11 @@ public class SignedInLandingPage extends Activity {
         outState.putParcelable(EXTRA_EVENT, event);
     }
 
+    public ServerData accessServerData()
+    {
+        return serverData;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
