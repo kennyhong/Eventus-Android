@@ -110,7 +110,6 @@ public class ServerDataTestSet1
         data = new ServerData();
         int pre = data.getEvents().size();
 
-      //  Event temp = vActivityRule.getActivity();
         ArrayList<Event> events = serverData.getEvents();
         Assert.assertNotNull(events);
 
