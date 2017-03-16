@@ -15,7 +15,6 @@ import com.example.baronvonfaustiii.eventus_android.ui.ViewEventActivity;
 
 import java.util.ArrayList;
 
-
 public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;

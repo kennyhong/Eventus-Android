@@ -14,7 +14,6 @@ import com.example.baronvonfaustiii.eventus_android.ui.ViewServiceActivity;
 
 import java.util.ArrayList;
 
-
 public class ServiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
