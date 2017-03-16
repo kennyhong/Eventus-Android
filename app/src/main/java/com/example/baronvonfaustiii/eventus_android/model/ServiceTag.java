@@ -3,21 +3,21 @@ package com.example.baronvonfaustiii.eventus_android.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class ServiceTag implements Parcelable{
+public class ServiceTag implements Parcelable {
 
     private int id;
     private String name;
     private String createdAt;
     private String updatedAt;
 
-    public ServiceTag(){
+    public ServiceTag() {
         id = 0;
         name = "";
         createdAt = "";
         updatedAt = "";
     }
 
-    public ServiceTag(int id, String name, String createdAt, String updatedAt){
+    public ServiceTag(int id, String name, String createdAt, String updatedAt) {
         this.id = id;
         this.name = name;
         this.createdAt = createdAt;
@@ -36,10 +36,11 @@ public class ServiceTag implements Parcelable{
         this.updatedAt = in.readString();
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
 
@@ -52,7 +53,9 @@ public class ServiceTag implements Parcelable{
     }
 
     @Override
-    public int describeContents() {return 0;}
+    public int describeContents() {
+        return 0;
+    }
 
     public static final Creator<ServiceTag> CREATOR = new Creator<ServiceTag>() {
         @Override

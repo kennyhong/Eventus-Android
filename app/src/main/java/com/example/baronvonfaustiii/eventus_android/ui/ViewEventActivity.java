@@ -19,11 +19,11 @@ import com.example.baronvonfaustiii.eventus_android.model.ServerData;
 import com.example.baronvonfaustiii.eventus_android.model.Service;
 
 import java.util.ArrayList;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ViewEventActivity extends AppCompatActivity
-{
+public class ViewEventActivity extends AppCompatActivity {
     public static final String EXTRA_EVENT = "event";
 
     private TextView eventName;
@@ -40,21 +40,19 @@ public class ViewEventActivity extends AppCompatActivity
     private final int DELETE_CODE = 5;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_event);
-        eventName = (TextView)findViewById(R.id.titleTextView);
-        eventDescription = (TextView)findViewById(R.id.descriptionTextView);
+        eventName = (TextView) findViewById(R.id.titleTextView);
+        eventDescription = (TextView) findViewById(R.id.descriptionTextView);
         resultCode = 0;
-        if(savedInstanceState == null)
-        {
+        if (savedInstanceState == null) {
             event = getIntent().getParcelableExtra(EXTRA_EVENT);
         } else {
             event = savedInstanceState.getParcelable(EXTRA_EVENT);
         }
 
-        if(event != null) {
+        if (event != null) {
             eventName.setText(event.getName());
             eventDescription.setText(event.getDescription());
             eventServices = event.getServices();
@@ -66,34 +64,28 @@ public class ViewEventActivity extends AppCompatActivity
         setupListeners();
     }
 
-    public ServerData accessServerData()
-    {
+    public ServerData accessServerData() {
         return serverData;
     }
 
-    public int getResultCode()
-    {
-        return  resultCode;
+    public int getResultCode() {
+        return resultCode;
     }
 
-    public void setupListeners()
-    {
+    public void setupListeners() {
 
-        if(event != null)
-        {
-            for(Service service : event.getServices()) {
+        if (event != null) {
+            for (Service service : event.getServices()) {
                 System.out.println("Services are happening!");
 
                 createNewServiceTextView();
             }
         }
 
-        Button backButton = (Button)findViewById(R.id.backButton);
+        Button backButton = (Button) findViewById(R.id.backButton);
 
-        backButton.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
+        backButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 // Do something in response to button click
                 try {
                     save(v);
@@ -106,15 +98,13 @@ public class ViewEventActivity extends AppCompatActivity
 
         // Initialize delete button visibility etc.
         // Initially it is not visible, but will be once the edit button has been pressed
-       final Button deleteButton = (Button)findViewById(R.id.deleteButton);
+        final Button deleteButton = (Button) findViewById(R.id.deleteButton);
         deleteButton.setVisibility(View.GONE);
 
 
-        deleteButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v)
-            {
-                if(editOn)
-                {
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (editOn) {
                     // then you need to send the code back to delete this event
                     serverData = new ServerData("DELETE", Integer.toString(event.getID()));
                     Intent intent = getIntent();
@@ -128,13 +118,11 @@ public class ViewEventActivity extends AppCompatActivity
             }
         });
 
-        ImageButton editButton = (ImageButton)findViewById(R.id.editButton);
-        editButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v)
-            {
+        ImageButton editButton = (ImageButton) findViewById(R.id.editButton);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 // Do something in response to button click
-                if(editOn)
-                {
+                if (editOn) {
                     forceKeyboardClose();
                     editOn = false;
 
@@ -142,40 +130,33 @@ public class ViewEventActivity extends AppCompatActivity
                     deleteButton.setVisibility(View.GONE);
 
 
-
-                    TextView title = (TextView)findViewById(R.id.titleTextView);
+                    TextView title = (TextView) findViewById(R.id.titleTextView);
                     // allow for the title to be updated. @ TO DO , this needs to patching up
                     //title.setTextIsSelectable(true);
-                    title.setOnClickListener(new View.OnClickListener()
-                    {
-                        public void onClick(View v)
-                        {
-                            TextView title = (TextView)findViewById(R.id.titleTextView);
+                    title.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            TextView title = (TextView) findViewById(R.id.titleTextView);
                             // Do something in response to button click
                             title.setCursorVisible(false);
                             title.setFocusableInTouchMode(false);
-                          //  title.setInputType(InputType.);
+                            //  title.setInputType(InputType.);
                             title.setFocusable(false);
                             forceKeyboardClose();
-                           // title.requestFocus(); //to trigger the soft input
+                            // title.requestFocus(); //to trigger the soft input
                             //title.setText("");
                         }
                     });
-                }
-                else
-                {
+                } else {
                     // Make deleting the event possible
                     deleteButton.setVisibility(View.VISIBLE);
 
                     forceKeyboardClose();
                     editOn = true;
-                    TextView title = (TextView)findViewById(R.id.titleTextView);
+                    TextView title = (TextView) findViewById(R.id.titleTextView);
                     //title.setTextIsSelectable(true);
-                    title.setOnClickListener(new View.OnClickListener()
-                    {
-                        public void onClick(View v)
-                        {
-                            TextView title = (TextView)findViewById(R.id.titleTextView);
+                    title.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            TextView title = (TextView) findViewById(R.id.titleTextView);
                             // Do something in response to button click
                             title.setCursorVisible(true);
                             title.setFocusableInTouchMode(true);
@@ -193,9 +174,9 @@ public class ViewEventActivity extends AppCompatActivity
         });
 
 
-        ImageButton addButton = (ImageButton)findViewById((R.id.addNewServiceButton));
+        ImageButton addButton = (ImageButton) findViewById((R.id.addNewServiceButton));
 
-        addButton.setOnClickListener(new View.OnClickListener(){
+        addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Do something in response to button click
 
@@ -208,26 +189,21 @@ public class ViewEventActivity extends AppCompatActivity
             }
         });
 
-        ImageButton removeServiceButton = (ImageButton)findViewById((R.id.removeServiceButton));
+        ImageButton removeServiceButton = (ImageButton) findViewById((R.id.removeServiceButton));
 
-        removeServiceButton.setOnClickListener(new View.OnClickListener(){
+        removeServiceButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Do something in response to button click
 
                 //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
 
-                if(removeServiceMode)
-                {// then turn it off
+                if (removeServiceMode) {// then turn it off
                     turnOffRemoveServiceMode();
-                }
-                else
-                {// turn it on
+                } else {// turn it on
 
-                    if(scrollLayout.getChildCount() > 0)
-                    {
+                    if (scrollLayout.getChildCount() > 0) {
                         removeServiceMode = true;
-                        for(int i = 0 ; i < scrollLayout.getChildCount(); i++)
-                        {
+                        for (int i = 0; i < scrollLayout.getChildCount(); i++) {
                             TextView temp = (TextView) scrollLayout.getChildAt(i);
                             temp.setBackgroundColor(0xCCff0066);
 
@@ -243,21 +219,18 @@ public class ViewEventActivity extends AppCompatActivity
 
     }
 
-    public void forceKeyboardClose()
-    {
+    public void forceKeyboardClose() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
 
-    public void turnOffRemoveServiceMode()
-    {
+    public void turnOffRemoveServiceMode() {
         //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
 
         removeServiceMode = false;
 
-        for(int i = 0 ; i < scrollLayout.getChildCount(); i++)
-        {
+        for (int i = 0; i < scrollLayout.getChildCount(); i++) {
             TextView temp = (TextView) scrollLayout.getChildAt(i);
             temp.setBackgroundColor(-1);
 
@@ -265,8 +238,7 @@ public class ViewEventActivity extends AppCompatActivity
     }
 
 
-    public void createNewServiceTextView()
-    {// later this also may take parameter values from this field or elsewhere for creating the services stuff
+    public void createNewServiceTextView() {// later this also may take parameter values from this field or elsewhere for creating the services stuff
         // later this can be used for actually assembling the service object maybe
 
         //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
@@ -281,18 +253,15 @@ public class ViewEventActivity extends AppCompatActivity
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         scrollLayout.addView(result, lp);
 
-        result.setOnClickListener(new View.OnClickListener(){
+        result.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Do something in response to button click
                 // make sure that there are elements to remove
-                if(removeServiceMode)
-                {// then remove this service,
+                if (removeServiceMode) {// then remove this service,
                     // for now just delete the item, later, add a confirm dialog etc.
                     scrollLayout.removeView(v);
                     turnOffRemoveServiceMode();
-                }
-                else
-                {// turn it on
+                } else {// turn it on
                     // do nothing for now, later view details of that service
                     startActivity(new Intent(ViewEventActivity.this, ViewServiceActivity.class));
                 }
@@ -307,23 +276,20 @@ public class ViewEventActivity extends AppCompatActivity
 
         String eventName = this.eventName.getText().toString();
         String eventDescription = this.eventDescription.getText().toString();
-        if (TextUtils.isEmpty(eventName))
-        {
+        if (TextUtils.isEmpty(eventName)) {
             this.eventName.setError(getString(R.string.error_field_empty));
             this.eventName.requestFocus();
-        } else if(TextUtils.isEmpty((eventDescription)))
-        {
+        } else if (TextUtils.isEmpty((eventDescription))) {
             this.eventDescription.setError(getString(R.string.error_field_empty));
             this.eventDescription.requestFocus();
-        } else
-        {
+        } else {
             this.eventName.setError(null);
 
             json.put("name", eventName);
             json.put("description", eventDescription);
             json.put("date", "1000-01-01 00:00:00");
             //If layout is empty, don't add anything to services, else, add services.
-            if(scrollLayout.getChildCount() > 0) {
+            if (scrollLayout.getChildCount() > 0) {
                 saveServices(event, json);
             }
             serverData = new ServerData("PUT", json.toString(), id); // update when implemented
@@ -337,19 +303,13 @@ public class ViewEventActivity extends AppCompatActivity
     private void saveServices(Event event, JSONObject json) {
         String tempText;
         Service tempService;
-        for(int i = 0 ; i < scrollLayout.getChildCount(); i++)
-        {
+        for (int i = 0; i < scrollLayout.getChildCount(); i++) {
             TextView temp = (TextView) scrollLayout.getChildAt(i);
             tempText = temp.getText().toString();
             tempService = new Service(tempText, "description");
             event.getServices().add(tempService);
         }
     }
-
-
-
-
-
 
 
 }

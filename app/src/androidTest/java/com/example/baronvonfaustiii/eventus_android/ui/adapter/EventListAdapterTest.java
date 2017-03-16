@@ -89,7 +89,6 @@ public class EventListAdapterTest {
     @Test
     public void remove() throws Exception {
         Event event1 = new Event("Party", "Parteh Tiem!", services);
-        Event event2 = new Event("BBQ", "Just a chill time with friends!", services);
         events.remove(0);
         assertEquals(events.size() == 2, true);
         assertEquals(!events.get(0).equals(event1), true);
