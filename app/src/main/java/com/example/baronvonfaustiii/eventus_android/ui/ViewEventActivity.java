@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -45,6 +46,8 @@ public class ViewEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_event);
         eventName = (TextView) findViewById(R.id.titleTextView);
         eventDescription = (TextView) findViewById(R.id.descriptionTextView);
+
+        eventDescription.setMovementMethod(new ScrollingMovementMethod());
         resultCode = 0;
         if (savedInstanceState == null) {
             event = getIntent().getParcelableExtra(EXTRA_EVENT);
@@ -122,50 +125,17 @@ public class ViewEventActivity extends AppCompatActivity {
         editButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Do something in response to button click
-                if (editOn) {
+                if (editOn)
+                {
                     forceKeyboardClose();
                     editOn = false;
-
-                    // Remove the delete button from view
-                    deleteButton.setVisibility(View.GONE);
+                    setFieldsToEditable(editOn);
 
 
-                    TextView title = (TextView) findViewById(R.id.titleTextView);
-                    // allow for the title to be updated. @ TO DO , this needs to patching up
-                    //title.setTextIsSelectable(true);
-                    title.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            TextView title = (TextView) findViewById(R.id.titleTextView);
-                            // Do something in response to button click
-                            title.setCursorVisible(false);
-                            title.setFocusableInTouchMode(false);
-                            //  title.setInputType(InputType.);
-                            title.setFocusable(false);
-                            forceKeyboardClose();
-                            // title.requestFocus(); //to trigger the soft input
-                            //title.setText("");
-                        }
-                    });
                 } else {
                     // Make deleting the event possible
-                    deleteButton.setVisibility(View.VISIBLE);
-
-                    forceKeyboardClose();
                     editOn = true;
-                    TextView title = (TextView) findViewById(R.id.titleTextView);
-                    //title.setTextIsSelectable(true);
-                    title.setOnClickListener(new View.OnClickListener() {
-                        public void onClick(View v) {
-                            TextView title = (TextView) findViewById(R.id.titleTextView);
-                            // Do something in response to button click
-                            title.setCursorVisible(true);
-                            title.setFocusableInTouchMode(true);
-                            title.setInputType(InputType.TYPE_CLASS_TEXT);
-                            title.requestFocus(); //to trigger the soft input
-                            title.setText("");
-                        }
-                    });
-
+                    setFieldsToEditable(editOn);
 
                 }
 
@@ -215,6 +185,81 @@ public class ViewEventActivity extends AppCompatActivity {
 
             }
         });
+
+
+    }
+
+    public void setFieldsToEditable(boolean status)
+    {
+        final Button deleteButton = (Button) findViewById(R.id.deleteButton);
+        ImageButton editButton = (ImageButton) findViewById(R.id.editButton);
+
+        if(!status)
+            {// then turn edit abilities off
+                // Remove the delete button from view
+                deleteButton.setVisibility(View.GONE);
+
+                TextView title = (TextView) findViewById(R.id.titleTextView);
+                // allow for the title to be updated. @ TO DO , this needs to patching up
+                //title.setTextIsSelectable(true);
+                title.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        TextView title = (TextView) findViewById(R.id.titleTextView);
+                        // Do something in response to button click
+                        title.setCursorVisible(false);
+                        title.setFocusableInTouchMode(false);
+                        title.setFocusable(false);
+                        forceKeyboardClose();
+                    }
+                });
+
+                TextView desc = (TextView) findViewById(R.id.descriptionTextView);
+                // allow for the title to be updated. @ TO DO , this needs to patching up
+                //title.setTextIsSelectable(true);
+                desc.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        TextView desc = (TextView) findViewById(R.id.descriptionTextView);
+                        // Do something in response to button click
+                        desc.setCursorVisible(false);
+                        desc.setFocusableInTouchMode(false);
+                        desc.setFocusable(false);
+                        forceKeyboardClose();
+                    }
+                });
+            }
+            else
+        {
+
+
+            deleteButton.setVisibility(View.VISIBLE);
+
+            forceKeyboardClose();
+            TextView title = (TextView) findViewById(R.id.titleTextView);
+            //title.setTextIsSelectable(true);
+            title.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    TextView title = (TextView) findViewById(R.id.titleTextView);
+                    // Do something in response to button click
+                    title.setCursorVisible(true);
+                    title.setFocusableInTouchMode(true);
+                    title.setInputType(InputType.TYPE_CLASS_TEXT);
+                    title.requestFocus(); //to trigger the soft input
+                }
+            });
+
+            TextView desc = (TextView) findViewById(R.id.descriptionTextView);
+            //title.setTextIsSelectable(true);
+            desc.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    TextView desc = (TextView) findViewById(R.id.descriptionTextView);
+                    // Do something in response to button click
+                    desc.setCursorVisible(true);
+                    desc.setFocusableInTouchMode(true);
+                    desc.setInputType(InputType.TYPE_CLASS_TEXT);
+                    desc.requestFocus(); //to trigger the soft input
+                }
+            });
+        }
 
 
     }
