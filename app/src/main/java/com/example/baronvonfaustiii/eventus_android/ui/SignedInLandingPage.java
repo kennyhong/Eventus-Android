@@ -16,6 +16,7 @@ import com.example.baronvonfaustiii.eventus_android.R;
 import com.example.baronvonfaustiii.eventus_android.model.Event;
 import com.example.baronvonfaustiii.eventus_android.model.ServerData;
 import com.example.baronvonfaustiii.eventus_android.ui.adapter.EventListAdapter;
+
 import java.util.ArrayList;
 
 public class SignedInLandingPage extends Activity {
@@ -65,25 +66,21 @@ public class SignedInLandingPage extends Activity {
         outState.putParcelable(EXTRA_EVENT, event);
     }
 
-    public ServerData accessServerData()
-    {
+    public ServerData accessServerData() {
         return serverData;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_ADD_EVENT && data != null)
-        {
-            if (resultCode == RESULT_OK)
-            {
+        if (requestCode == REQUEST_ADD_EVENT && data != null) {
+            if (resultCode == RESULT_OK) {
                 System.out.println("Adding new");
                 Event event = data.getParcelableExtra(CreateEventActivity.EXTRA_EVENT);
                 eventListAdapter.add(event);
             }
         }
-        if(requestCode == 2 && resultCode == REQUEST_DELETE_EVENT)
-        {// then it is returning from a view event , and the event needs to be deleted.
+        if (requestCode == 2 && resultCode == REQUEST_DELETE_EVENT) {// then it is returning from a view event , and the event needs to be deleted.
             System.out.println("Deleting Event from System");
             Event event = data.getParcelableExtra(ViewEventActivity.EXTRA_EVENT);
             eventListAdapter.remove(event);
@@ -93,8 +90,7 @@ public class SignedInLandingPage extends Activity {
 
             setupListeners();
         }
-        if(requestCode == 2 && resultCode == RESULT_OK)
-        {// then we just need to update the event
+        if (requestCode == 2 && resultCode == RESULT_OK) {// then we just need to update the event
             System.out.println("Updating");
             serverData = new ServerData();
             events = serverData.getEvents();
@@ -104,9 +100,8 @@ public class SignedInLandingPage extends Activity {
         }
     }
 
-    public Event getEvent()
-    {
-        return event ;
+    public Event getEvent() {
+        return event;
     }
 
 
@@ -134,13 +129,11 @@ public class SignedInLandingPage extends Activity {
         });
     }
 
-    public AlertDialog getDialog()
-    {
+    public AlertDialog getDialog() {
         return dialog;
     }
 
-    public void generateNewEventDialog()
-    {
+    public void generateNewEventDialog() {
         boolean result = true;
 
         builder = new AlertDialog.Builder(SignedInLandingPage.this);
@@ -148,7 +141,7 @@ public class SignedInLandingPage extends Activity {
         //builder.setMessage("Create an empty new event, or \n select a prefab for some suggested \n services to be a part of the new event");
         builder.setTitle("Create a New Event");
         final String[] eventPrefabList = new String[5];
-       // just some samples for now
+        // just some samples for now
 
         eventPrefabList[0] = "Empty Event-Default";
         eventPrefabList[1] = "BBQ";
@@ -161,9 +154,8 @@ public class SignedInLandingPage extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // create new event of this type
-                        if (which <= 3)
-                        {
-                            System.out.println("---------------------------"+ which);
+                        if (which <= 3) {
+                            System.out.println("---------------------------" + which);
                             createNewEventButton(eventPrefabList[which], which);
                         }
                     }
@@ -175,16 +167,15 @@ public class SignedInLandingPage extends Activity {
 
     }
 
-    public void createNewEventButton(String eventName, int prefabID)
-    {
+    public void createNewEventButton(String eventName, int prefabID) {
         //use the prefabID for building a prefab event......
         // feed information into the new event page, so that it has some services already in its list,
         // that just need some confirmation and choices made etc.
 
-                // for now, links to an empty Event page.
+        // for now, links to an empty Event page.
 
-                Intent intent = new Intent(context, CreateEventActivity.class);
-                startActivityForResult(intent, REQUEST_ADD_EVENT);
+        Intent intent = new Intent(context, CreateEventActivity.class);
+        startActivityForResult(intent, REQUEST_ADD_EVENT);
 
     }
 

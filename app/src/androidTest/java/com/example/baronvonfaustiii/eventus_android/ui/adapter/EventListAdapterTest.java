@@ -42,9 +42,6 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Bailey on 2/27/2017.
- */
 public class EventListAdapterTest {
 
     private ArrayList<Event> events;

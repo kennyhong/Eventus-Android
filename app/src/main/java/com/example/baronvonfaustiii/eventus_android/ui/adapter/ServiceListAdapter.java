@@ -14,7 +14,6 @@ import com.example.baronvonfaustiii.eventus_android.ui.ViewServiceActivity;
 
 import java.util.ArrayList;
 
-
 public class ServiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
@@ -46,22 +45,22 @@ public class ServiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyDataSetChanged();
     }
 
-    public void add(Service event){
+    public void add(Service event) {
         services.add(event);
         notifyDataSetChanged();
     }
 
-    public void remove(Service event){
+    public void remove(Service event) {
         services.remove(event);
         notifyDataSetChanged();
     }
 
     class ServiceViewHolder extends RecyclerView.ViewHolder {
-//        private final View view;
+        //        private final View view;
         private final TextView textName;
         private final TextView textDescription;
 
-        public ServiceViewHolder(View v){
+        public ServiceViewHolder(View v) {
             super(v);
             this.textName = (TextView) v.findViewById(R.id.eventItemName);
             this.textDescription = (TextView) v.findViewById(R.id.eventItemDescription);
@@ -74,6 +73,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
             });
         }
+
         public void bindView(final Service service) {
             // Populate the elements
             textName.setText(service.getName());

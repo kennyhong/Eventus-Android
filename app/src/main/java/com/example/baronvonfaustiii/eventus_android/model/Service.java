@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-public class Service implements Parcelable{
+public class Service implements Parcelable {
 
     private int id;
     private String name;
@@ -15,7 +15,7 @@ public class Service implements Parcelable{
     private String updatedAt;
     private ArrayList<ServiceTag> serviceTags;
 
-    public Service(){
+    public Service() {
         id = 0;
         name = "";
         cost = 0;
@@ -30,7 +30,7 @@ public class Service implements Parcelable{
         this.description = description;
     }
 
-    public Service(int id, String name, int cost, String createdAt, String updatedAt, ArrayList<ServiceTag> serviceTags){ //remove part this later
+    public Service(int id, String name, int cost, String createdAt, String updatedAt, ArrayList<ServiceTag> serviceTags) { //remove part this later
         this.id = id;
         this.name = name;
         this.cost = cost;
@@ -55,16 +55,19 @@ public class Service implements Parcelable{
         in.readTypedList(serviceTags, ServiceTag.CREATOR);
     }
 
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     } //remove this later
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return description;
     } //remove this later
-    public String getName(){
+
+    public String getName() {
         return name;
     }
 
@@ -80,7 +83,9 @@ public class Service implements Parcelable{
     }
 
     @Override
-    public int describeContents() {return 0;}
+    public int describeContents() {
+        return 0;
+    }
 
     public static final Creator<Service> CREATOR = new Creator<Service>() {
         @Override

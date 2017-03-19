@@ -9,8 +9,7 @@ import android.widget.TextView;
 import com.example.baronvonfaustiii.eventus_android.R;
 import com.example.baronvonfaustiii.eventus_android.model.Service;
 
-public class ViewServiceActivity extends AppCompatActivity
-{
+public class ViewServiceActivity extends AppCompatActivity {
     public static final String EXTRA_SERVICE = "service";
 
     private TextView serviceName;
@@ -18,21 +17,19 @@ public class ViewServiceActivity extends AppCompatActivity
     private Service service;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_service);
-        serviceName = (TextView)findViewById(R.id.titleTextView);
-        serviceDescription = (TextView)findViewById(R.id.descriptionTag);
+        serviceName = (TextView) findViewById(R.id.titleTextView);
+        serviceDescription = (TextView) findViewById(R.id.descriptionTag);
 
-        if(savedInstanceState == null)
-        {
+        if (savedInstanceState == null) {
             service = getIntent().getParcelableExtra(EXTRA_SERVICE);
         } else {
             service = savedInstanceState.getParcelable(EXTRA_SERVICE);
         }
 
-        if(service != null) {
+        if (service != null) {
             serviceName.setText(service.getName());
             serviceDescription.setText(service.getDescription());
         }

@@ -15,7 +15,6 @@ import com.example.baronvonfaustiii.eventus_android.ui.ViewEventActivity;
 
 import java.util.ArrayList;
 
-
 public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context context;
@@ -47,19 +46,16 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         notifyDataSetChanged();
     }
 
-    public void add(Event event){
+    public void add(Event event) {
         events.add(event);
         notifyDataSetChanged();
     }
 
-    public Event getEventByTitle(String title)
-    {
+    public Event getEventByTitle(String title) {
         Event result = null;
 
-        for(int i = 0 ; i < events.size(); i++)
-        {
-            if(events.get(i).getName().equals(title))
-            {
+        for (int i = 0; i < events.size(); i++) {
+            if (events.get(i).getName().equals(title)) {
                 result = events.get(i);
             }
         }
@@ -67,16 +63,13 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return result;
     }
 
-    public Event getEvent(Event event)
-    {
+    public Event getEvent(Event event) {
         Event result = null;
 
         int id = event.getID();
 
-        for(int i = 0; i < events.size(); i++)
-        {
-            if(events.get(i).getID() == id)
-            {
+        for (int i = 0; i < events.size(); i++) {
+            if (events.get(i).getID() == id) {
                 result = events.get(i);
                 break;
             }
@@ -86,17 +79,17 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
 
-    public void remove(Event event){
+    public void remove(Event event) {
         events.remove(event);
         notifyDataSetChanged();
     }
 
     class EventViewHolder extends RecyclerView.ViewHolder {
-//        private final View view;
+        //        private final View view;
         private final TextView textName;
         private final TextView textDescription;
 
-        public EventViewHolder(View v){
+        public EventViewHolder(View v) {
             super(v);
             this.textName = (TextView) v.findViewById(R.id.eventItemName);
             this.textDescription = (TextView) v.findViewById(R.id.eventItemDescription);
@@ -105,10 +98,11 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ViewEventActivity.class);
                     intent.putExtra(ViewEventActivity.EXTRA_EVENT, events.get(getAdapterPosition()));
-                    ((Activity)context).startActivityForResult(intent,2);
+                    ((Activity) context).startActivityForResult(intent, 2);
                 }
             });
         }
+
         public void bindView(final Event event) {
             // Populate the elements
             textName.setText(event.getName());

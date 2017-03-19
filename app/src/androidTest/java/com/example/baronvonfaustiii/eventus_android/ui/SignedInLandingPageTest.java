@@ -7,6 +7,7 @@ import com.example.baronvonfaustiii.eventus_android.R;
 
 import android.view.View;
 import android.widget.Button;
+
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -20,7 +21,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.*;
-
 
 public class SignedInLandingPageTest {
 
@@ -56,42 +56,39 @@ public class SignedInLandingPageTest {
 
 
         //onView(withId(builder)).perform(click());
-        if(mActivityRule.getActivity().getDialog().isShowing())
-        {
+        if (mActivityRule.getActivity().getDialog().isShowing()) {
             AlertDialog dialog = mActivityRule.getActivity().getDialog();
 
-              if( !mActivityRule.getActivity().getDialog().isShowing())
+            if (!mActivityRule.getActivity().getDialog().isShowing())
 
             {// then the dialog has closed, and the new event should be launched.
 
-                    if(dialog != null)
-                    {
-                        // check to see if the createEventActivity fields pop up, and if so, populate and save.
-                        // Now, populate name field
-                        onView(withId(R.id.eventNameEditText))
-                                .perform(typeText(name), closeSoftKeyboard());
+                if (dialog != null) {
+                    // check to see if the createEventActivity fields pop up, and if so, populate and save.
+                    // Now, populate name field
+                    onView(withId(R.id.eventNameEditText))
+                            .perform(typeText(name), closeSoftKeyboard());
 
-                        // Now, populate description field
-                        onView(withId(R.id.eventDescriptionEditText))
-                                .perform(typeText(description), closeSoftKeyboard());
+                    // Now, populate description field
+                    onView(withId(R.id.eventDescriptionEditText))
+                            .perform(typeText(description), closeSoftKeyboard());
 
-                        // Attempt to save
-                        onView(withId(R.id.saveButton)).perform(click());
+                    // Attempt to save
+                    onView(withId(R.id.saveButton)).perform(click());
 
-                        // Check to see if an item exists
-                        onView(withId(R.id.eventItemName)).check(matches(isDisplayed()));
-                        onView(withId(R.id.eventItemDescription)).check(matches(isDisplayed()));
+                    // Check to see if an item exists
+                    onView(withId(R.id.eventItemName)).check(matches(isDisplayed()));
+                    onView(withId(R.id.eventItemDescription)).check(matches(isDisplayed()));
 
-                        // Check to see what the item contains
-                        onView(withId(R.id.eventItemName)).perform(click());
-                        onView(withId(R.id.titleTextView)).check(matches(withText(name)));
-                        onView(withId(R.id.descriptionTextView)).check(matches(withText(description)));
-                    }
+                    // Check to see what the item contains
+                    onView(withId(R.id.eventItemName)).perform(click());
+                    onView(withId(R.id.titleTextView)).check(matches(withText(name)));
+                    onView(withId(R.id.descriptionTextView)).check(matches(withText(description)));
+                }
 
             }
 
         }
-
 
 
     }

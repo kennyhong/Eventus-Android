@@ -7,7 +7,7 @@ import android.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Event implements Parcelable{
+public class Event implements Parcelable {
 
     private int id;
     private String name;
@@ -17,7 +17,7 @@ public class Event implements Parcelable{
     private String updatedAt;
     private ArrayList<Service> services;
 
-    public Event(){
+    public Event() {
         id = 0;
         name = "";
         description = "";
@@ -37,13 +37,12 @@ public class Event implements Parcelable{
         this.services = services;
     }
 
-    protected Event(Parcel in){
+    protected Event(Parcel in) {
         this();
         readFromParcel(in);
     }
 
-    public int getID()
-    {
+    public int getID() {
         return id;
     }
 
@@ -64,16 +63,19 @@ public class Event implements Parcelable{
         this.services = services;
     }
 
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
     }
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
     }
-    public String getDescription(){
+
+    public String getDescription() {
         return description;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
 
