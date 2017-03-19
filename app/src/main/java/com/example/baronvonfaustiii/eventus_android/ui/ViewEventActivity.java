@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -45,6 +46,8 @@ public class ViewEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_event);
         eventName = (TextView) findViewById(R.id.titleTextView);
         eventDescription = (TextView) findViewById(R.id.descriptionTextView);
+
+        eventDescription.setMovementMethod(new ScrollingMovementMethod());
         resultCode = 0;
         if (savedInstanceState == null) {
             event = getIntent().getParcelableExtra(EXTRA_EVENT);
