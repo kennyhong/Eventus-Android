@@ -19,9 +19,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.*;
 
-/**
- * Created by Bailey on 2/27/2017.
- */
 public class CreateEventActivityTest {
 
     private final String EVENT_TITLE_HINT = "Place your event name here: ";

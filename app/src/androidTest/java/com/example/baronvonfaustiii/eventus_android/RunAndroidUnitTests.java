@@ -1,6 +1,7 @@
 package com.example.baronvonfaustiii.eventus_android;
 
 import com.example.baronvonfaustiii.eventus_android.model.EventTest;
+import com.example.baronvonfaustiii.eventus_android.model.ServerDataTestSet1;
 import com.example.baronvonfaustiii.eventus_android.ui.CreateEventActivityTest;
 import com.example.baronvonfaustiii.eventus_android.ui.MainActivityTest;
 import com.example.baronvonfaustiii.eventus_android.ui.SignedInLandingPageTest;
@@ -10,14 +11,11 @@ import com.example.baronvonfaustiii.eventus_android.ui.adapter.EventListAdapterT
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-/**
- * Created by Bailey on 2/27/2017.
- */
-
 // Runs all unit tests.
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         EventTest.class,
+        ServerDataTestSet1.class,
         MainActivityTest.class,
         ViewEventActivityTest.class,
         CreateEventActivityTest.class,

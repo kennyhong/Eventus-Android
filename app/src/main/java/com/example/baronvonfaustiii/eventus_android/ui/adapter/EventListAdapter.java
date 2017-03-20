@@ -1,5 +1,6 @@
 package com.example.baronvonfaustiii.eventus_android.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +14,6 @@ import com.example.baronvonfaustiii.eventus_android.model.Event;
 import com.example.baronvonfaustiii.eventus_android.ui.ViewEventActivity;
 
 import java.util.ArrayList;
-
-/**
- * Created by Bailey on 2/26/2017.
- */
 
 public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -49,22 +46,50 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         notifyDataSetChanged();
     }
 
-    public void add(Event event){
+    public void add(Event event) {
         events.add(event);
         notifyDataSetChanged();
     }
 
-    public void remove(Event event){
+    public Event getEventByTitle(String title) {
+        Event result = null;
+
+        for (int i = 0; i < events.size(); i++) {
+            if (events.get(i).getName().equals(title)) {
+                result = events.get(i);
+            }
+        }
+
+        return result;
+    }
+
+    public Event getEvent(Event event) {
+        Event result = null;
+
+        int id = event.getID();
+
+        for (int i = 0; i < events.size(); i++) {
+            if (events.get(i).getID() == id) {
+                result = events.get(i);
+                break;
+            }
+        }
+
+        return result;
+    }
+
+
+    public void remove(Event event) {
         events.remove(event);
         notifyDataSetChanged();
     }
 
     class EventViewHolder extends RecyclerView.ViewHolder {
-//        private final View view;
+        //        private final View view;
         private final TextView textName;
         private final TextView textDescription;
 
-        public EventViewHolder(View v){
+        public EventViewHolder(View v) {
             super(v);
             this.textName = (TextView) v.findViewById(R.id.eventItemName);
             this.textDescription = (TextView) v.findViewById(R.id.eventItemDescription);
@@ -73,10 +98,11 @@ public class EventListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ViewEventActivity.class);
                     intent.putExtra(ViewEventActivity.EXTRA_EVENT, events.get(getAdapterPosition()));
-                    context.startActivity(intent);
+                    ((Activity) context).startActivityForResult(intent, 2);
                 }
             });
         }
+
         public void bindView(final Event event) {
             // Populate the elements
             textName.setText(event.getName());

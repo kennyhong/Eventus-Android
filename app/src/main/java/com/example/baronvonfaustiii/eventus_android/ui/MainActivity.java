@@ -11,15 +11,13 @@ import android.widget.EditText;
 
 import com.example.baronvonfaustiii.eventus_android.R;
 
-public class MainActivity extends AppCompatActivity
-{
-//test
+public class MainActivity extends AppCompatActivity {
+    //test
     private EditText userNameField;
     private String userNameFieldText;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -27,19 +25,16 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void setupListeners()
-    {
-        Button signIn = (Button)findViewById( R.id.OK_Button);
-        userNameField = (EditText)findViewById((R.id.UsernameField));
+    public void setupListeners() {
+        Button signIn = (Button) findViewById(R.id.OK_Button);
+        userNameField = (EditText) findViewById((R.id.UsernameField));
         userNameFieldText = userNameField.getText().toString();
 
-        signIn.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
+        signIn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 // Do something in response to button click
                 String userNameFieldText = userNameField.getText().toString();
-                if(TextUtils.isEmpty(userNameFieldText)) {
+                if (TextUtils.isEmpty(userNameFieldText)) {
                     userNameField.setError(getString(R.string.error_field_empty));
                     userNameField.requestFocus();
                 } else {
@@ -51,18 +46,16 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        final EditText userNameField = (EditText)findViewById((R.id.UsernameField));
+        final EditText userNameField = (EditText) findViewById((R.id.UsernameField));
 
-        userNameField.setOnKeyListener(new View.OnKeyListener()
-        {
+        userNameField.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER) && !(TextUtils.isEmpty(userNameFieldText)))
-                {
+                        (keyCode == KeyEvent.KEYCODE_ENTER) && !(TextUtils.isEmpty(userNameFieldText))) {
                     // Perform action on key press
-                   userNameField.setText("Signing you in");
+                    userNameField.setText("Signing you in");
 
                     return true;
                 }

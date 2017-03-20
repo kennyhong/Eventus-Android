@@ -6,3 +6,17 @@
 /build
 /captures
 .externalNativeBuild
+_windows/*
+inspection/*
+IntelliLang.xml
+androidEditors.xml
+colors.scheme.xml
+debugger.renderers.xml
+debugger.xml
+diff.xml
+editor.xml
+filetypes.xml
+ignore.xml
+other.xml
+ui.inf.xml
+web-browsers.xml
