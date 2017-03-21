@@ -17,6 +17,7 @@ import com.example.baronvonfaustiii.eventus_android.model.Service;
 public class ReceiptActivity extends AppCompatActivity
 {
     public static final String EXTRA_EVENT = "event";
+
     private ArrayList<Service> eventServices;
     LinearLayout scrollLayout = null;
 
@@ -42,7 +43,16 @@ public class ReceiptActivity extends AppCompatActivity
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
 
         setupListeners();
+        setEstimatedCost();
     }
+
+    public void setEstimatedCost()
+    {
+        TextView eCost= (TextView) findViewById(R.id.EstimatedCost);
+        eCost.setText("Set this: ");
+
+    }
+
 
     public void setupListeners()
     {
@@ -58,7 +68,7 @@ public class ReceiptActivity extends AppCompatActivity
 
         // Initialize the back button, for navigating back to the event
 
-        Button backButton = (Button) findViewById(R.id.backButton);
+        Button backButton = (Button) findViewById(R.id.back_button);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -74,14 +84,12 @@ public class ReceiptActivity extends AppCompatActivity
 
     public void createNewServiceTextView(Service service)
     {
-
-
         TextView result = new TextView(this);
         result.setText("New Service Added"); // switch this to the service title + "---------------"+ cost
         result.setBackgroundColor(-1);
         result.setTextSize(24f);
         result.setTextColor((0xff000000));
-        result.setClickable(true);
+        result.setClickable(false);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         scrollLayout.addView(result, lp);

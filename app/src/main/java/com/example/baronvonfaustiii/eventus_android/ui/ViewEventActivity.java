@@ -99,6 +99,22 @@ public class ViewEventActivity extends AppCompatActivity {
             }
         });
 
+        Button receiptButton = (Button) findViewById(R.id.receiptButton);
+
+        receiptButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Do something in response to button click
+
+                Intent intent = new Intent(ViewEventActivity.this, ReceiptActivity.class);
+                intent.putExtra(ViewEventActivity.EXTRA_EVENT, EXTRA_EVENT);
+
+                startActivity(intent);
+
+
+
+            }
+        });;
+
         // Initialize delete button visibility etc.
         // Initially it is not visible, but will be once the edit button has been pressed
         final Button deleteButton = (Button) findViewById(R.id.deleteButton);
