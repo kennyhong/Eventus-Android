@@ -61,6 +61,13 @@ public class Event implements Parcelable {
         this.services = services;
     }
 
+    public Event(int id, String name, String description, ArrayList<Service> services) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.services = services;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }

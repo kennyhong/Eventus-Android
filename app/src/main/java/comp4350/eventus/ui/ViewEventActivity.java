@@ -59,6 +59,8 @@ public class ViewEventActivity extends AppCompatActivity {
             eventName.setText(event.getName());
             eventDescription.setText(event.getDescription());
             eventServices = event.getServices();
+        } else {
+            event = new Event(0, "Empty Event", "Empty Event", new ArrayList<Service>());
         }
 
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
@@ -79,7 +81,6 @@ public class ViewEventActivity extends AppCompatActivity {
 
         if (event != null) {
             for (Service service : event.getServices()) {
-                System.out.println("Services are happening!");
 
                 createNewServiceTextView(service);
             }

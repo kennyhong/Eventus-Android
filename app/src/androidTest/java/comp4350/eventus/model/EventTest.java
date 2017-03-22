@@ -22,7 +22,7 @@ public class EventTest {
 
     @Before
     public void setUp() throws Exception {
-        event = new Event("name", "description", new ArrayList<Service>());
+        event = new Event(0, "name", "description", new ArrayList<Service>());
     }
 
     @After

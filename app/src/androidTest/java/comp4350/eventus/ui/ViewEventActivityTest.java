@@ -3,11 +3,16 @@ package comp4350.eventus.ui;
 import android.support.test.rule.ActivityTestRule;
 
 import comp4350.eventus.R;
+import comp4350.eventus.model.Event;
+import comp4350.eventus.model.Service;
 
 import junit.framework.Assert;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -21,10 +26,16 @@ public class ViewEventActivityTest {
 
     private final String EVENT_TITLE = "TitleHere";
     private final String EVENT_DESCRIPTION = "Place your short description here: ";
+    private Event event;
 
     @Rule
     public ActivityTestRule<ViewEventActivity> mActivityRule = new ActivityTestRule<>(
             ViewEventActivity.class);
+
+    @Before
+    public void setUp() throws Exception {
+        event = new Event(0, "name", "description", new ArrayList<Service>());
+    }
 
     @Test
     public void onCreate() throws Exception {
