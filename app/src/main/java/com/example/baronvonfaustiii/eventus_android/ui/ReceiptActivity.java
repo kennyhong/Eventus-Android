@@ -16,7 +16,7 @@ import com.example.baronvonfaustiii.eventus_android.model.Service;
 
 public class ReceiptActivity extends AppCompatActivity
 {
-    public static final String EXTRA_EVENT = "event";
+    public static final String EXTRA_RECEIPT = "event";
 
 
     private ArrayList<Service> eventServices;
@@ -32,15 +32,16 @@ public class ReceiptActivity extends AppCompatActivity
         setContentView(R.layout.activity_receipt);
 
         if (savedInstanceState == null) {
-            event = getIntent().getParcelableExtra(EXTRA_EVENT);
+            event = getIntent().getParcelableExtra(EXTRA_RECEIPT);
         } else {
-            event = savedInstanceState.getParcelable(EXTRA_EVENT);
+            event = savedInstanceState.getParcelable(EXTRA_RECEIPT);
         }
 
         if (event != null)
         {
             eventServices = event.getServices();
             System.out.println("Event is gooooooooooooooooood");
+            System.out.println("\n\n"+ event.getName());
 
         }
         else
@@ -48,31 +49,33 @@ public class ReceiptActivity extends AppCompatActivity
             System.out.println("Event is null");
         }
 
-        scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
+        scrollLayout = (LinearLayout) findViewById(R.id.receipt_services_list);
 
         setupListeners();
-        setEstimatedCost();
     }
 
-    public void setEstimatedCost()
+    public void setEstimatedCost(int sum )
     {
         TextView eCost= (TextView) findViewById(R.id.EstimatedCost);
-        eCost.setText("Set this: ");
+        Integer spleeeh = sum;
+        eCost.setText("$"+ spleeeh.toString());
 
     }
 
 
     public void setupListeners()
     {
-
+        int sum = 0;
         //setup the services list , with associated costs
         if (event != null)
         {
             for (Service service : event.getServices())
             {
-                createNewServiceTextView(service);
+                   createNewServiceTextView(service);
+                   sum+= service.getCost();
             }
         }
+        setEstimatedCost(sum);
 
 
         // Initialize the back button, for navigating back to the event
@@ -94,7 +97,7 @@ public class ReceiptActivity extends AppCompatActivity
     public void createNewServiceTextView(Service service)
     {
         TextView result = new TextView(this);
-        result.setText("New Service Added"); // switch this to the service title + "---------------"+ cost
+        result.setText(service.getName()+ "------$ "+ service.getCost()); // switch this to the service title
         result.setBackgroundColor(-1);
         result.setTextSize(24f);
         result.setTextColor((0xff000000));
