@@ -81,7 +81,7 @@ public class ViewEventActivity extends AppCompatActivity {
             for (Service service : event.getServices()) {
                 System.out.println("Services are happening!");
 
-                createNewServiceTextView();
+                createNewServiceTextView(service);
             }
         }
 
@@ -170,7 +170,8 @@ public class ViewEventActivity extends AppCompatActivity {
 
                 // For now, simply add another button to the view
                 turnOffRemoveServiceMode();
-                createNewServiceTextView();
+                // Now we have to have new Service Activity start here
+//                createNewServiceTextView();
 
             }
         });
@@ -299,13 +300,13 @@ public class ViewEventActivity extends AppCompatActivity {
     }
 
 
-    public void createNewServiceTextView() {// later this also may take parameter values from this field or elsewhere for creating the services stuff
+    public void createNewServiceTextView(Service service) {// later this also may take parameter values from this field or elsewhere for creating the services stuff
         // later this can be used for actually assembling the service object maybe
 
         //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
 
         TextView result = new TextView(this);
-        result.setText("New Service Added");
+        result.setText(service.getName());
         result.setBackgroundColor(-1);
         result.setTextSize(24f);
         result.setTextColor((0xff000000));
@@ -348,6 +349,7 @@ public class ViewEventActivity extends AppCompatActivity {
 
             json.put("name", eventName);
             json.put("description", eventDescription);
+            // Create a Datepicker obj for Date.
             json.put("date", "1000-01-01 00:00:00");
             //If layout is empty, don't add anything to services, else, add services.
             if (scrollLayout.getChildCount() > 0) {
