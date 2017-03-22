@@ -58,13 +58,15 @@
         android:textSize="24dp"/>
 
     <ScrollView
+        android:id="@+id/services_LIST"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignStart="@+id/CostLabel"
         android:layout_above="@+id/CostLabel"
+        android:layout_alignStart="@+id/CostLabel"
         android:layout_below="@+id/back_button">
 
         <LinearLayout
+            android:id="@+id/receipt_services_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"/>

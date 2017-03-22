@@ -55,6 +55,12 @@ public class Service implements Parcelable {
         in.readTypedList(serviceTags, ServiceTag.CREATOR);
     }
 
+    public int getCost()
+    {
+        return cost;
+    }
+
+
     public void setDescription(String description) {
         this.description = description;
     } //remove this later

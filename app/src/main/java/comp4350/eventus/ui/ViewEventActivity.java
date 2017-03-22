@@ -106,7 +106,7 @@ public class ViewEventActivity extends AppCompatActivity {
                 // Do something in response to button click
 
                 Intent intent = new Intent(ViewEventActivity.this, ReceiptActivity.class);
-                intent.putExtra(EXTRA_EVENT, EXTRA_EVENT);
+                intent.putExtra(ReceiptActivity.EXTRA_RECEIPT, event);
 
                 startActivity(intent);
 
