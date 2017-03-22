@@ -1,6 +1,8 @@
 package comp4350.eventus.ui;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,15 +11,20 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import comp4350.eventus.R;
 import comp4350.eventus.model.Event;
 import comp4350.eventus.model.ServerData;
 import comp4350.eventus.model.Service;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +41,10 @@ public class CreateEventActivity extends AppCompatActivity {
     private EditText inputEventDescription;
     private boolean keyboardAltOpen = false;
     private ServerData serverData;
+    private EditText inputEventDate;
+    private EditText inputEventTime;
+    private DatePickerDialog datePickerDialog;
+    private TimePickerDialog timePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +177,50 @@ public class CreateEventActivity extends AppCompatActivity {
                 }
             }
         });
+
+        inputEventDate = (EditText) findViewById(R.id.eventDay);
+        inputEventTime = (EditText) findViewById(R.id.eventTime);
+
+        inputEventDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR); // current year
+                int mMonth = c.get(Calendar.MONTH); // current month
+                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+                // date picker dialog
+                datePickerDialog = new DatePickerDialog(CreateEventActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                inputEventDate.setText(String.format(Locale.getDefault(), "%04d-%02d-%02d", year, monthOfYear, dayOfMonth));
+                            }
+                        }, mYear, mMonth, mDay);
+
+                datePickerDialog.show();
+            }
+        });
+
+        inputEventTime.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance();
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+
+                timePickerDialog = new TimePickerDialog(CreateEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        inputEventTime.setText(String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute));
+                    }
+                }, hour, minute, true);
+                timePickerDialog.show();
+            }
+        });
     }
 
     public void turnOffRemoveServiceMode() {
@@ -234,9 +289,11 @@ public class CreateEventActivity extends AppCompatActivity {
             inputEventName.setError(null);
             event.setName(eventName);
             event.setDescription(eventDescription);
+            String fullDate = inputEventDate.getText().toString() + " " + inputEventTime.getText().toString() + ":00";
+            event.setDate(fullDate);
             json.put("name", eventName);
             json.put("description", eventDescription);
-            json.put("date", "1000-01-01 00:00:00");
+            json.put("date", fullDate);
             //If layout is empty, don't add anything to services, else, add services.
             if (scrollLayout.getChildCount() > 0) {
                 saveServices(event, json);

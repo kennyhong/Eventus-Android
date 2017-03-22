@@ -52,6 +52,41 @@
         android:textColor="#ffffff"
         android:textSize="18sp" />
 
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/eventDay"
+            android:layout_width="181dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/date_box_border"
+            android:hint="@string/event_date"
+            android:padding="15dp"
+            android:textColor="#897"
+            android:textColorHint="#090"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:focusable="false"
+            />
+
+        <EditText
+            android:id="@+id/eventTime"
+            android:layout_width="181dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/date_box_border"
+            android:hint="@string/event_time"
+            android:padding="15dp"
+            android:textColor="#897"
+            android:textColorHint="#090"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:focusable="false"/>
+    </LinearLayout>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -77,19 +112,21 @@
             android:id="@+id/yourServicesTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
 
             android:text="Your Services: "
             android:textColor="#ffffff"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:layout_marginTop="27dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
         <ScrollView
             android:id="@+id/ServiceScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/yourServicesTextView"
-            android:layout_marginTop="22dp">
+            android:layout_marginTop="23dp"
+            android:layout_below="@+id/removeServiceButton"
+            android:layout_alignParentStart="true">
 
             <LinearLayout
                 android:id="@+id/ServiceScrollLinearLayout"
