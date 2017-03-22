@@ -131,7 +131,6 @@ public class ViewEventActivity extends AppCompatActivity {
                     setResult(DELETE_CODE, intent);
                     resultCode = DELETE_CODE;
                     finish();
-
                 }
 
             }
@@ -147,14 +146,12 @@ public class ViewEventActivity extends AppCompatActivity {
                     editOn = false;
                     setFieldsToEditable(editOn);
 
-
                 } else {
                     // Make deleting the event possible
                     editOn = true;
                     setFieldsToEditable(editOn);
 
                 }
-
 
             }
         });
@@ -164,14 +161,8 @@ public class ViewEventActivity extends AppCompatActivity {
 
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Do something in response to button click
 
-                // Begin new Dialog actions for adding a new event
-
-                // For now, simply add another button to the view
                 turnOffRemoveServiceMode();
-                // Now we have to have new Service Activity start here
-//                createNewServiceTextView();
 
             }
         });
@@ -300,10 +291,8 @@ public class ViewEventActivity extends AppCompatActivity {
     }
 
 
-    public void createNewServiceTextView(Service service) {// later this also may take parameter values from this field or elsewhere for creating the services stuff
+    public void createNewServiceTextView(final Service service) {// later this also may take parameter values from this field or elsewhere for creating the services stuff
         // later this can be used for actually assembling the service object maybe
-
-        //LinearLayout scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
 
         TextView result = new TextView(this);
         result.setText(service.getName());
@@ -324,12 +313,28 @@ public class ViewEventActivity extends AppCompatActivity {
                     scrollLayout.removeView(v);
                     turnOffRemoveServiceMode();
                 } else {// turn it on
-                    // do nothing for now, later view details of that service
-                    startActivity(new Intent(ViewEventActivity.this, ViewServiceActivity.class));
+                    Intent intent = new Intent(ViewEventActivity.this, ViewServiceActivity.class);
+                    intent.putExtra(ViewServiceActivity.EXTRA_SERVICE, getServiceByID(service.getID()));
+
+                    startActivity(intent);
+
+
                 }
             }
         });
-        //return result;
+    }
+
+    public Service getServiceByID(int id)
+    {
+        Service result = null;
+        for(int i = 0 ; i < eventServices.size(); i++)
+        {
+            if(eventServices.get(i).getID() == id)
+            {
+                result = eventServices.get(i);
+            }
+        }
+        return result;
     }
 
     public void save(View view) throws JSONException {

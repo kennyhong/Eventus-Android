@@ -59,8 +59,15 @@ public class Service implements Parcelable {
     {
         return cost;
     }
+    public String getCreatedAt()
+    {
+        return createdAt;
+    }
 
+    public String getUpdatedAt()
+    {return  updatedAt; }
 
+    public int getID(){return id; }
     public void setDescription(String description) {
         this.description = description;
     } //remove this later
