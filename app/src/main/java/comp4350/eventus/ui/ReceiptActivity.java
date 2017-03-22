@@ -1,4 +1,4 @@
-package com.example.baronvonfaustiii.eventus_android.ui;
+package comp4350.eventus.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +10,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import org.json.JSONException;
 
-import com.example.baronvonfaustiii.eventus_android.R;
-import com.example.baronvonfaustiii.eventus_android.model.Event;
-import com.example.baronvonfaustiii.eventus_android.model.Service;
+import comp4350.eventus.R;
+import comp4350.eventus.model.Event;
+import comp4350.eventus.model.Service;
 
 public class ReceiptActivity extends AppCompatActivity
 {

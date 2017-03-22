@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#46BD79"
     android:orientation="vertical"
-    tools:context="com.example.baronvonfaustiii.eventus_android.ui.ReceiptActivity">
+    tools:context="comp4350.eventus.ui.ReceiptActivity">
 
     <Button
         android:id="@+id/back_button"
