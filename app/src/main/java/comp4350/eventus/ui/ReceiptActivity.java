@@ -40,13 +40,7 @@ public class ReceiptActivity extends AppCompatActivity
         if (event != null)
         {
             eventServices = event.getServices();
-            System.out.println("Event is gooooooooooooooooood");
             System.out.println("\n\n"+ event.getName());
-
-        }
-        else
-        {
-            System.out.println("Event is null");
         }
 
         scrollLayout = (LinearLayout) findViewById(R.id.receipt_services_list);
@@ -62,7 +56,6 @@ public class ReceiptActivity extends AppCompatActivity
 
     }
 
-
     public void setupListeners()
     {
         int sum = 0;
@@ -76,7 +69,6 @@ public class ReceiptActivity extends AppCompatActivity
             }
         }
         setEstimatedCost(sum);
-
 
         // Initialize the back button, for navigating back to the event
 
@@ -97,7 +89,7 @@ public class ReceiptActivity extends AppCompatActivity
     public void createNewServiceTextView(Service service)
     {
         TextView result = new TextView(this);
-        result.setText(service.getName()+ "------$ "+ service.getCost()); // switch this to the service title
+        result.setText(service.getName()+ "------$ "+ service.getCost());
         result.setBackgroundColor(-1);
         result.setTextSize(24f);
         result.setTextColor((0xff000000));
