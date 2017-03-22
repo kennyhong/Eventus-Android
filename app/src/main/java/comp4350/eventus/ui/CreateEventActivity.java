@@ -22,8 +22,6 @@ import comp4350.eventus.model.Service;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
-
 
 public class CreateEventActivity extends AppCompatActivity {
 

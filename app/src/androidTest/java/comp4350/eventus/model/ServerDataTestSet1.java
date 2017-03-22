@@ -1,26 +1,20 @@
 package comp4350.eventus.model;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.registerIdlingResources;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 import comp4350.eventus.R;
 import comp4350.eventus.ui.CreateEventActivity;
 import comp4350.eventus.ui.SignedInLandingPage;
-import comp4350.eventus.ui.ViewEventActivity;
 import comp4350.eventus.ui.adapter.EventListAdapter;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.widget.TextView;
 import java.util.ArrayList;
 import junit.framework.Assert;
 import org.json.JSONException;
