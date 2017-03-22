@@ -106,14 +106,14 @@ public class ViewEventActivity extends AppCompatActivity {
                 // Do something in response to button click
 
                 Intent intent = new Intent(ViewEventActivity.this, ReceiptActivity.class);
-                intent.putExtra(ViewEventActivity.EXTRA_EVENT, EXTRA_EVENT);
+                intent.putExtra(EXTRA_EVENT, EXTRA_EVENT);
 
                 startActivity(intent);
 
 
 
             }
-        });;
+        });
 
         // Initialize delete button visibility etc.
         // Initially it is not visible, but will be once the edit button has been pressed

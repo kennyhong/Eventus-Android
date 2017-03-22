@@ -18,6 +18,7 @@ public class ReceiptActivity extends AppCompatActivity
 {
     public static final String EXTRA_EVENT = "event";
 
+
     private ArrayList<Service> eventServices;
     LinearLayout scrollLayout = null;
 
@@ -36,8 +37,15 @@ public class ReceiptActivity extends AppCompatActivity
             event = savedInstanceState.getParcelable(EXTRA_EVENT);
         }
 
-        if (event != null) {
+        if (event != null)
+        {
             eventServices = event.getServices();
+            System.out.println("Event is gooooooooooooooooood");
+
+        }
+        else
+        {
+            System.out.println("Event is null");
         }
 
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
@@ -58,7 +66,8 @@ public class ReceiptActivity extends AppCompatActivity
     {
 
         //setup the services list , with associated costs
-        if (event != null) {
+        if (event != null)
+        {
             for (Service service : event.getServices())
             {
                 createNewServiceTextView(service);
