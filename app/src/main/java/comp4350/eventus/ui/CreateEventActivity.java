@@ -1,6 +1,7 @@
 package comp4350.eventus.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,10 +27,14 @@ import org.json.JSONObject;
 public class CreateEventActivity extends AppCompatActivity {
 
     public static final String EXTRA_EVENT = "event";
+    private static final int REQUEST_ADD_SERVICE = 10;
+    private final int CANCEL_CODE = 6;
+
 
     boolean removeServiceMode = false;
     LinearLayout scrollLayout;
     private Event event;
+    private Context context;
     private EditText inputEventName;
     private EditText inputEventDescription;
     private boolean keyboardAltOpen = false;
@@ -38,6 +43,7 @@ public class CreateEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+        context = this;
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
         setupListeners();
     }
@@ -142,7 +148,13 @@ public class CreateEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Begin new Dialog actions for adding a new event
                 turnOffRemoveServiceMode();
-                createNewServiceTextView();
+                //createNewServiceTextView();
+                forceKeyboardClose();
+
+
+                Intent intent = new Intent(context, BrowseServicesActivity.class);
+                startActivityForResult(intent, REQUEST_ADD_SERVICE);
+
             }
         });
 
@@ -176,11 +188,11 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
-    public void createNewServiceTextView() {// later this also may take parameter values from this field or elsewhere for creating the services stuff
+    public void createNewServiceTextView(Service service) {// later this also may take parameter values from this field or elsewhere for creating the services stuff
         // later this can be used for actually assembling the service object maybe
 
         TextView result = new TextView(this);
-        result.setText("New Service Added");
+        result.setText(service.getName());
         result.setBackgroundColor(-1);
         result.setTextSize(24f);
         result.setTextColor((0xff000000));
@@ -209,11 +221,6 @@ public class CreateEventActivity extends AppCompatActivity {
         outState.putParcelable(EXTRA_EVENT, event);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // Add more to this if we have to.
-    }
 
     public void save(View view) throws JSONException {
         JSONObject json = new JSONObject();
@@ -275,6 +282,31 @@ public class CreateEventActivity extends AppCompatActivity {
     public void cancel(View view) {
         setResult(RESULT_CANCELED);
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CANCEL_CODE )
+        { // do nothing
+
+        }
+        if (requestCode == REQUEST_ADD_SERVICE )
+        {// then it is returning from an add service, with a service, so extract it.
+            System.out.println("Adding service to event ");
+            Service service = data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE);
+
+            // Then save the service to the event
+            createNewServiceTextView(service);
+
+            ServerData serverData = new ServerData();
+            //events = serverData.getEvents();
+            //eventListAdapter.refresh(events);
+
+            setupListeners();
+        }
+
     }
 
 }
