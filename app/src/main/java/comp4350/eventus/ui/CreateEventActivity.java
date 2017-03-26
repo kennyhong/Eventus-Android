@@ -28,6 +28,8 @@ public class CreateEventActivity extends AppCompatActivity {
 
     public static final String EXTRA_EVENT = "event";
     private static final int REQUEST_ADD_SERVICE = 10;
+    private final int CANCEL_CODE = 6;
+
 
     boolean removeServiceMode = false;
     LinearLayout scrollLayout;
@@ -186,11 +188,11 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
-    public void createNewServiceTextView() {// later this also may take parameter values from this field or elsewhere for creating the services stuff
+    public void createNewServiceTextView(Service service) {// later this also may take parameter values from this field or elsewhere for creating the services stuff
         // later this can be used for actually assembling the service object maybe
 
         TextView result = new TextView(this);
-        result.setText("New Service Added");
+        result.setText(service.getName());
         result.setBackgroundColor(-1);
         result.setTextSize(24f);
         result.setTextColor((0xff000000));
@@ -219,11 +221,6 @@ public class CreateEventActivity extends AppCompatActivity {
         outState.putParcelable(EXTRA_EVENT, event);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // Add more to this if we have to.
-    }
 
     public void save(View view) throws JSONException {
         JSONObject json = new JSONObject();
@@ -285,6 +282,31 @@ public class CreateEventActivity extends AppCompatActivity {
     public void cancel(View view) {
         setResult(RESULT_CANCELED);
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CANCEL_CODE )
+        { // do nothing
+
+        }
+        if (requestCode == REQUEST_ADD_SERVICE )
+        {// then it is returning from an add service, with a service, so extract it.
+            System.out.println("Adding service to event ");
+            Service service = data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE);
+
+            // Then save the service to the event
+            createNewServiceTextView(service);
+
+            ServerData serverData = new ServerData();
+            //events = serverData.getEvents();
+            //eventListAdapter.refresh(events);
+
+            setupListeners();
+        }
+
     }
 
 }

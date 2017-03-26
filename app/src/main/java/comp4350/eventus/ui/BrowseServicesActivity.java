@@ -17,7 +17,9 @@ import java.util.ArrayList;
 
 public class BrowseServicesActivity extends AppCompatActivity {
 private final String EXTRA_CANCEL = "cancel";
-private final String EXTRA_SERVICE = "service";
+public static String EXTRA_SERVICE = "service";
+private final int ADD_SERVICE_CODE = 10;
+private final int CANCEL_CODE = 6;
 private LinearLayout scrollLayout = null;
 
   public ArrayList<Service> serviceList;
@@ -74,8 +76,12 @@ private LinearLayout scrollLayout = null;
 
                     //startActivity(intent);
 
-
+                forceKeyboardClose();
                 // return code, and include this clicked service
+            Intent intent = getIntent();
+            intent.putExtra(EXTRA_SERVICE, service);
+            setResult(ADD_SERVICE_CODE, intent);
+            finish();
 
 
             }
