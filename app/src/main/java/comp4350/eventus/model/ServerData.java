@@ -17,6 +17,12 @@ public class ServerData {
     String requestCode;
     String serverInfo;
     String data;
+    String url;
+    int JSONObjId;
+
+    // url for PUT requests on Events w/ ID: "http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + id
+    // url for DELETE requests on Events w/ ID: "http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + id
+    // url for POST requests on Events: "http://eventus.us-west-2.elasticbeanstalk.com/api/events"
 
     public ServerData() {
         requestCode = "GET";
@@ -25,28 +31,56 @@ public class ServerData {
         getAllServiceTagsRequest();
     }
 
-    public ServerData(String requestCode, String data) {
+    public ServerData(String url, String requestCode, String data) {
         this.requestCode = requestCode;
         this.data = data;
+        this.url = url;
         if (requestCode.equals("POST")) {
-            postRequest(requestCode, data);
+            postRequest(url, requestCode, data);
         } else if (requestCode.equals("DELETE")) {
-            deleteRequest(requestCode, data);
+            deleteRequest(url, requestCode);
+        } else if(requestCode.equals("PUT")) {
+            putRequest(url, requestCode, data);
         }
     }
 
-    public ServerData(String requestCode, String data, String id) {
-        this.requestCode = requestCode;
-        this.data = data;
-        if (requestCode.equals("PUT")) {
-            putRequest(requestCode, data, id);
-        }
+    public int getId() {
+        return JSONObjId;
     }
 
-    public void putRequest(String requestCode, String data, String id) {
+    public int getJSONId(String jsonData) {
         try {
-            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + id, requestCode, data).get();
-            getAllEventsRequest();
+            System.out.println("JSONData: "+jsonData);
+            JSONObject json = new JSONObject(jsonData);
+            Object type = json.get("data");
+                if (type instanceof JSONObject) {
+                    JSONObject jsonEvents = (JSONObject) type;
+                    return JSONObjId = jsonEvents.getInt("id");
+                } else if (type instanceof JSONArray) {
+                    JSONArray jsonArray = (JSONArray) type;
+                    return JSONObjId = jsonArray.getJSONObject(0).getInt("id");
+                }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int putRequest(String url, String requestCode, String data) {
+        try {
+            serverInfo = new JSONFunctions().execute(url, requestCode, data).get();
+            return getJSONId(serverInfo);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public void deleteRequest(String url, String requestCode) {
+        try {
+            serverInfo = new JSONFunctions().execute(url, requestCode).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -54,26 +88,16 @@ public class ServerData {
         }
     }
 
-    public void deleteRequest(String requestCode, String data) {
+    public int postRequest(String url, String requestCode, String data) {
         try {
-            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + data, requestCode).get();
-            getAllEventsRequest();
+            serverInfo = new JSONFunctions().execute(url, requestCode, data).get();
+            return getJSONId(serverInfo);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-    }
-
-    public void postRequest(String requestCode, String data) {
-        try {
-            serverInfo = new JSONFunctions().execute("http://eventus.us-west-2.elasticbeanstalk.com/api/events", requestCode, data).get();
-            getAllEventsRequest();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        return 0;
     }
 
     public void getAllEventsRequest() {

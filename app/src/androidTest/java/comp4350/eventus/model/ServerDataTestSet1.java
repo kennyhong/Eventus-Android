@@ -152,7 +152,7 @@ public class ServerDataTestSet1
         Event temp = eventListAdapter.getEventByTitle("Fancy Event");
         Assert.assertNotNull(temp);
 
-        serverData = new ServerData("DELETE", Integer.toString(temp.getID()));
+        serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+Integer.toString(temp.getID()), "DELETE", "");
         // great now get the fresh list, with the item remvoved
 
         serverData.getAllEventsRequest();

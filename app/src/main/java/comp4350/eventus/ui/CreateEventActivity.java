@@ -33,7 +33,6 @@ public class CreateEventActivity extends AppCompatActivity {
     private EditText inputEventName;
     private EditText inputEventDescription;
     private boolean keyboardAltOpen = false;
-    private ServerData serverData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,7 +217,13 @@ public class CreateEventActivity extends AppCompatActivity {
 
     public void save(View view) throws JSONException {
         JSONObject json = new JSONObject();
-        String data;
+        ServerData eventServerData;
+        ServerData serviceServerData;
+        String eventData;
+        String serviceData;
+        int serviceId;
+        int eventId;
+
         if (event == null) {
             event = new Event();
         }
@@ -241,8 +246,13 @@ public class CreateEventActivity extends AppCompatActivity {
             if (scrollLayout.getChildCount() > 0) {
                 saveServices(event, json);
             }
-            data = json.toString();
-            serverData = new ServerData("POST", data);
+            eventData = json.toString();
+            eventServerData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events", "POST", eventData);
+            eventId = eventServerData.getId();
+            for(int i = 0; i < event.getServices().size(); i++) {
+                serviceId = event.getServices().get(i).getID();
+                serviceServerData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+eventId+"/services/"+(i+1)/*replace i with serviceId*/, "POST", "");
+            }
             Intent intent = getIntent();
             intent.putExtra(EXTRA_EVENT, event);
             setResult(RESULT_OK, intent);

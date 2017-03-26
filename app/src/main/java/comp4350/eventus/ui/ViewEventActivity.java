@@ -126,7 +126,7 @@ public class ViewEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (editOn) {
                     // then you need to send the code back to delete this event
-                    serverData = new ServerData("DELETE", Integer.toString(event.getID()));
+                    serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + Integer.toString(event.getID()), "DELETE", "");
                     Intent intent = getIntent();
                     intent.putExtra(EXTRA_EVENT, event);
                     setResult(DELETE_CODE, intent);
@@ -361,7 +361,7 @@ public class ViewEventActivity extends AppCompatActivity {
             if (scrollLayout.getChildCount() > 0) {
                 saveServices(event, json);
             }
-            serverData = new ServerData("PUT", json.toString(), id); // update when implemented
+            serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+id, "PUT", json.toString()); // update when implemented
             Intent intent = getIntent();
             intent.putExtra(EXTRA_EVENT, event);
             setResult(RESULT_OK, intent);
