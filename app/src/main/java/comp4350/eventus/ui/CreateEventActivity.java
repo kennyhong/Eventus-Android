@@ -1,6 +1,7 @@
 package comp4350.eventus.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,10 +27,12 @@ import org.json.JSONObject;
 public class CreateEventActivity extends AppCompatActivity {
 
     public static final String EXTRA_EVENT = "event";
+    private static final int REQUEST_ADD_SERVICE = 10;
 
     boolean removeServiceMode = false;
     LinearLayout scrollLayout;
     private Event event;
+    private Context context;
     private EditText inputEventName;
     private EditText inputEventDescription;
     private boolean keyboardAltOpen = false;
@@ -38,6 +41,7 @@ public class CreateEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+        context = this;
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
         setupListeners();
     }
@@ -142,7 +146,13 @@ public class CreateEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Begin new Dialog actions for adding a new event
                 turnOffRemoveServiceMode();
-                createNewServiceTextView();
+                //createNewServiceTextView();
+                forceKeyboardClose();
+
+
+                Intent intent = new Intent(context, BrowseServicesActivity.class);
+                startActivityForResult(intent, REQUEST_ADD_SERVICE);
+
             }
         });
 
