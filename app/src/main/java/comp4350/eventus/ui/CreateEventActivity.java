@@ -44,6 +44,8 @@ public class CreateEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         context = this;
+        event = new Event();
+
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
         setupListeners();
     }
@@ -152,7 +154,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 forceKeyboardClose();
 
 
-                Intent intent = new Intent(context, BrowseServicesActivity.class);
+                Intent intent = new Intent(CreateEventActivity.this, BrowseServicesActivity.class);
 
                 intent.putExtra(BrowseServicesActivity.EXTRA_BROWSE, event);
 
@@ -301,6 +303,8 @@ public class CreateEventActivity extends AppCompatActivity {
         {// then it is returning from an add service, with a service, so extract it.
             System.out.println("Adding service to event ");
             Service service = data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE);
+
+            event.getServices().add(service);
 
             // Then save the service to the event
             createNewServiceTextView(service);
