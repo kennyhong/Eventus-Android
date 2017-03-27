@@ -44,6 +44,7 @@ public class Event implements Parcelable {
         return id;
     }
 
+    public void setId(int id) {this.id = id;}
 
     private void readFromParcel(Parcel in) {
         this.id = in.readInt();
