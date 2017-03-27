@@ -1,6 +1,7 @@
 package comp4350.eventus.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -33,14 +34,17 @@ import org.json.JSONObject;
 public class CreateEventActivity extends AppCompatActivity {
 
     public static final String EXTRA_EVENT = "event";
+    private static final int REQUEST_ADD_SERVICE = 10;
+    private final int CANCEL_CODE = 6;
+
 
     boolean removeServiceMode = false;
     LinearLayout scrollLayout;
     private Event event;
+    private Context context;
     private EditText inputEventName;
     private EditText inputEventDescription;
     private boolean keyboardAltOpen = false;
-    private ServerData serverData;
     private EditText inputEventDate;
     private EditText inputEventTime;
     private DatePickerDialog datePickerDialog;
@@ -50,6 +54,9 @@ public class CreateEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+        context = this;
+        event = new Event();
+
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
         setupListeners();
     }
@@ -116,7 +123,6 @@ public class CreateEventActivity extends AppCompatActivity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER))
                 {
-                    System.out.println("Keyboard should close now.");
                     inputEventDescription.setText(inputEventDescription.getText().toString().trim());
                     // close the keyboard
                     forceKeyboardClose();
@@ -154,7 +160,15 @@ public class CreateEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Begin new Dialog actions for adding a new event
                 turnOffRemoveServiceMode();
-                createNewServiceTextView();
+                forceKeyboardClose();
+
+
+                Intent intent = new Intent(CreateEventActivity.this, BrowseServicesActivity.class);
+
+                intent.putExtra(BrowseServicesActivity.EXTRA_BROWSE, event);
+
+                startActivityForResult(intent, REQUEST_ADD_SERVICE);
+
             }
         });
 
@@ -232,11 +246,12 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
-    public void createNewServiceTextView() {// later this also may take parameter values from this field or elsewhere for creating the services stuff
+
+    public void createNewServiceTextView(Service service) {// later this also may take parameter values from this field or elsewhere for creating the services stuff
         // later this can be used for actually assembling the service object maybe
 
         TextView result = new TextView(this);
-        result.setText("New Service Added");
+        result.setText(service.getName());
         result.setBackgroundColor(-1);
         result.setTextSize(24f);
         result.setTextColor((0xff000000));
@@ -251,6 +266,18 @@ public class CreateEventActivity extends AppCompatActivity {
                 if (removeServiceMode) {// then remove this service,
                     // for now just delete the item, later, add a confirm dialog etc.
                     scrollLayout.removeView(v);
+
+                    String serviceName =  ((TextView)v).getText().toString();
+
+                    for(int i = 0 ; i < event.getServices().size(); i++)
+                    {
+                        if(event.getServices().get(i).getName().equals(serviceName))
+                        {
+                            event.getServices().remove(i);
+                            break;
+                        }
+                    }
+
                     turnOffRemoveServiceMode();
                 } else {// turn it on
                     startActivity(new Intent(CreateEventActivity.this, ViewServiceActivity.class));
@@ -265,15 +292,15 @@ public class CreateEventActivity extends AppCompatActivity {
         outState.putParcelable(EXTRA_EVENT, event);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // Add more to this if we have to.
-    }
 
     public void save(View view) throws JSONException {
         JSONObject json = new JSONObject();
-        String data;
+        ServerData eventServerData;
+        ServerData serviceServerData;
+        String eventData;
+        int serviceId;
+        int eventId;
+
         if (event == null) {
             event = new Event();
         }
@@ -295,11 +322,15 @@ public class CreateEventActivity extends AppCompatActivity {
             json.put("description", eventDescription);
             json.put("date", fullDate);
             //If layout is empty, don't add anything to services, else, add services.
-            if (scrollLayout.getChildCount() > 0) {
-                saveServices(event, json);
+
+            eventData = json.toString();
+            eventServerData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events", "POST", eventData);
+            eventId = eventServerData.getId();
+            event.setId(eventId);
+            for(int i = 0; i < event.getServices().size(); i++) {
+                serviceId = event.getServices().get(i).getID();
+                serviceServerData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+eventId+"/services/"+serviceId/*replace i with serviceId*/, "POST", "");
             }
-            data = json.toString();
-            serverData = new ServerData("POST", data);
             Intent intent = getIntent();
             intent.putExtra(EXTRA_EVENT, event);
             setResult(RESULT_OK, intent);
@@ -307,21 +338,27 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
-    private void saveServices(Event event, JSONObject json) {
-        String tempText;
-        Service tempService;
-        for (int i = 0; i < scrollLayout.getChildCount(); i++) {
-            TextView temp = (TextView) scrollLayout.getChildAt(i);
-            tempText = temp.getText().toString();
-            tempService = new Service(tempText, "description");
-            event.getServices().add(tempService);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        boolean cancel = false;
+        if (requestCode == CANCEL_CODE )
+        { // do nothing
+            cancel = true;
         }
-    }
+        if (requestCode == REQUEST_ADD_SERVICE && !cancel && (data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE) != null  ))
+        {// then it is returning from an add service, with a service, so extract it.
+            Service service = data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE);
 
-    // Possibly use this instead of going back to the SignedInLandingPage Activity?
-    public void cancel(View view) {
-        setResult(RESULT_CANCELED);
-        finish();
+            event.getServices().add(service);
+
+            // Then save the service to the event
+            createNewServiceTextView(service);
+
+            setupListeners();
+        }
+
     }
 
 }

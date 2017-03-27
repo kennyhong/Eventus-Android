@@ -1,5 +1,6 @@
 package comp4350.eventus.ui;
 
+import android.support.test.espresso.contrib.PickerActions;
 import android.support.test.rule.ActivityTestRule;
 
 import comp4350.eventus.R;
@@ -55,7 +56,7 @@ public class CreateEventActivityTest {
 
     @Test
     public void save() throws Exception {
-        String name = "Event name";
+        String name = "Test Event";
         String description = "Event description";
         // First, attempt to save without fields populated
         onView(withId(R.id.saveButton)).check(matches(isDisplayed()));
@@ -75,6 +76,8 @@ public class CreateEventActivityTest {
                 .perform(replaceText(""));
         onView(withId(R.id.eventDescriptionEditText))
                 .perform(typeText(description), closeSoftKeyboard());
+        onView(withId(R.id.eventDay)).perform(replaceText("2017-03-20"));
+        onView(withId(R.id.eventTime)).perform(replaceText("15:00"));
 
         // Attempt to save round 3
         onView(withId(R.id.saveButton)).perform(click());

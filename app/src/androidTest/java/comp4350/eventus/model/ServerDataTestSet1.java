@@ -3,6 +3,7 @@ package comp4350.eventus.model;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -15,8 +16,11 @@ import comp4350.eventus.ui.adapter.EventListAdapter;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+
 import java.util.ArrayList;
+
 import junit.framework.Assert;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.After;
@@ -27,20 +31,17 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 
-public class ServerDataTestSet1
-{
+public class ServerDataTestSet1 {
     private ServerData serverData;
     private ArrayList<Event> events;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         serverData = new ServerData();
     }
 
     @After
-    public void tearDown() throws Exception
-    {
+    public void tearDown() throws Exception {
 
     }
 
@@ -51,15 +52,13 @@ public class ServerDataTestSet1
 
 
     @Test
-    public void getEvents() throws Exception
-    {
+    public void getEvents() throws Exception {
         events = serverData.getEvents();
         Assert.assertNotNull(events);
     }
 
     @Test
-    public void addEvent() throws Exception
-    {
+    public void addEvent() throws Exception {
         int preValue = serverData.getEvents().size();
         String name = "Event name";
         String description = "Event description";
@@ -67,6 +66,8 @@ public class ServerDataTestSet1
         // Check to see if these exist and are displayed on render
         onView(withId(R.id.eventNameEditText)).check(matches(isDisplayed()));
         onView(withId(R.id.eventDescriptionEditText)).check(matches(isDisplayed()));
+        onView(withId(R.id.eventDay)).check(matches(isDisplayed()));
+        onView(withId(R.id.eventTime)).check(matches(isDisplayed()));
         onView(withId(R.id.backButton)).check(matches(isDisplayed()));
         onView(withId(R.id.saveButton)).check(matches(isDisplayed()));
 
@@ -80,11 +81,16 @@ public class ServerDataTestSet1
 
         // Now, populate description field
         // Type text and then press the button.
-       onView(withId(R.id.eventDescriptionEditText))
+        onView(withId(R.id.eventDescriptionEditText))
                 .perform(typeText(description), closeSoftKeyboard());
+
+
+        onView(withId(R.id.eventDay)).perform(replaceText("2017-03-20"));
+        onView(withId(R.id.eventTime)).perform(replaceText("15:00"));
 
         // This should save the freshly created event all the way to the server
         onView(withId(R.id.saveButton)).perform(click());
+
 
         serverData.getAllEventsRequest();
         int post = serverData.getEvents().size();
@@ -101,8 +107,7 @@ public class ServerDataTestSet1
             SignedInLandingPage.class);
 
     @Test
-    public void testUpdateEvent() throws JSONException
-    {
+    public void testUpdateEvent() throws JSONException {
         ServerData data = vActivityRule.getActivity().accessServerData();
         data = new ServerData();
         int pre = data.getEvents().size();
@@ -118,7 +123,6 @@ public class ServerDataTestSet1
         temp.setName("Fancy Event");
 
 
-
         JSONObject json = new JSONObject();
         json = data.getJSONEventDetails(temp);// note this doesnt include services
         String id = Integer.toString(temp.getID());
@@ -132,12 +136,11 @@ public class ServerDataTestSet1
 
     }
 
-// we know that a new event was created by the last test, so lets go ahead and delete it. // we also know
+    // we know that a new event was created by the last test, so lets go ahead and delete it. // we also know
     // what its updated title should be.
     // thus validating two other tests
     @Test
-    public void deleteEvent()
-    {
+    public void deleteEvent() {
         // get access to the server data
         ServerData data = vActivityRule.getActivity().accessServerData();
         data = new ServerData();
@@ -152,19 +155,17 @@ public class ServerDataTestSet1
         Event temp = eventListAdapter.getEventByTitle("Fancy Event");
         Assert.assertNotNull(temp);
 
-        serverData = new ServerData("DELETE", Integer.toString(temp.getID()));
+        serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + Integer.toString(temp.getID()), "DELETE", "");
         // great now get the fresh list, with the item remvoved
 
         serverData.getAllEventsRequest();
         int post = serverData.getEvents().size();
 
         Assert.assertTrue(post < pre);
-
     }
 
     @Test
-    public void failFindEvent()
-    {
+    public void failFindEvent() {
         ServerData data = vActivityRule.getActivity().accessServerData();
         data = new ServerData();
         int pre = data.getEvents().size();

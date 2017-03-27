@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="comp4350.eventus">
+          package="comp4350.eventus">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -22,6 +22,8 @@
         <activity android:name=".ui.CreateEventActivity"/>
         <activity android:name=".ui.ViewServiceActivity"/>
         <activity android:name=".ui.ReceiptActivity">
+        </activity>
+        <activity android:name=".ui.BrowseServicesActivity">
         </activity>
     </application>
 

@@ -44,6 +44,7 @@ public class Event implements Parcelable {
         return id;
     }
 
+    public void setId(int id) {this.id = id;}
 
     private void readFromParcel(Parcel in) {
         this.id = in.readInt();
@@ -56,6 +57,13 @@ public class Event implements Parcelable {
     }
 
     public Event(String name, String description, ArrayList<Service> services) {
+        this.name = name;
+        this.description = description;
+        this.services = services;
+    }
+
+    public Event(int id, String name, String description, ArrayList<Service> services) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.services = services;

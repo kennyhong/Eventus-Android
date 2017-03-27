@@ -64,12 +64,15 @@ public class JSONFunctions extends AsyncTask<String, Void, String> {
                     }
                     urlConnection.setRequestProperty("Content-Type", "application/json");
                     data = params[2];
-                    serverResponse = stream(urlConnection.getOutputStream(), data);
+                    if(!data.equals("")){
+                        serverResponse = stream(urlConnection.getOutputStream(), data);
+                    }
                     responseCode = urlConnection.getResponseCode();
 
                     if (responseCode == HttpsURLConnection.HTTP_OK) {
                         String line;
                         BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                        serverResponse = "";
                         while ((line = br.readLine()) != null) {
                             serverResponse += line;
                         }
@@ -103,7 +106,6 @@ public class JSONFunctions extends AsyncTask<String, Void, String> {
     private String stream(OutputStream out, String data) {
         String result = "";
         try {
-            System.out.println("DATA: " + data);
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
             writer.write(data);
             writer.flush();
