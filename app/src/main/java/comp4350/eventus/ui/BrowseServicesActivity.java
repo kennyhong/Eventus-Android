@@ -67,7 +67,10 @@ private EditText searchBar = null;
 
     public void emptyAvailableServices()
     {
-
+        while(scrollLayout.getChildCount() > 0)
+        {
+            scrollLayout.removeViewAt(0);
+        }
     }
 
     public void gatherAvailableServices()
@@ -181,6 +184,10 @@ private EditText searchBar = null;
                     searchBar.setText("");
                     skip = true;
                 }
+                if(searchBar.getText().toString().equals(""))
+                {
+                    rePopulate();
+                }
 
                 if(!skip)
                 {
@@ -191,6 +198,12 @@ private EditText searchBar = null;
         });
 
 
+    }
+
+    public void rePopulate()
+    {
+        emptyAvailableServices();
+        gatherAvailableServices();
     }
 
     public void updateAvailableServicesWithSearchBar()
