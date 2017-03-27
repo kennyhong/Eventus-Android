@@ -46,9 +46,11 @@ public class ViewEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_event);
-        eventName = (TextView) findViewById(R.id.titleTextView);
-        eventDescription = (TextView) findViewById(R.id.descriptionTextView);
 
+        eventName = (TextView) findViewById(R.id.titleTextView);
+        eventName.setMovementMethod(new ScrollingMovementMethod());
+
+        eventDescription = (TextView) findViewById(R.id.descriptionTextView);
         eventDescription.setMovementMethod(new ScrollingMovementMethod());
         resultCode = 0;
         if (savedInstanceState == null) {
