@@ -193,6 +193,7 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
+
     public void createNewServiceTextView(Service service) {// later this also may take parameter values from this field or elsewhere for creating the services stuff
         // later this can be used for actually assembling the service object maybe
 
@@ -212,6 +213,18 @@ public class CreateEventActivity extends AppCompatActivity {
                 if (removeServiceMode) {// then remove this service,
                     // for now just delete the item, later, add a confirm dialog etc.
                     scrollLayout.removeView(v);
+
+                    String serviceName =  ((TextView)v).getText().toString();
+
+                    for(int i = 0 ; i < event.getServices().size(); i++)
+                    {
+                        if(event.getServices().get(i).getName().equals(serviceName))
+                        {
+                            event.getServices().remove(i);
+                            break;
+                        }
+                    }
+
                     turnOffRemoveServiceMode();
                 } else {// turn it on
                     startActivity(new Intent(CreateEventActivity.this, ViewServiceActivity.class));
