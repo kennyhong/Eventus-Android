@@ -44,6 +44,8 @@ public class CreateEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         context = this;
+        event = new Event();
+
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
         setupListeners();
     }
@@ -152,7 +154,10 @@ public class CreateEventActivity extends AppCompatActivity {
                 forceKeyboardClose();
 
 
-                Intent intent = new Intent(context, BrowseServicesActivity.class);
+                Intent intent = new Intent(CreateEventActivity.this, BrowseServicesActivity.class);
+
+                intent.putExtra(BrowseServicesActivity.EXTRA_BROWSE, event);
+
                 startActivityForResult(intent, REQUEST_ADD_SERVICE);
 
             }
@@ -250,9 +255,7 @@ public class CreateEventActivity extends AppCompatActivity {
             json.put("description", eventDescription);
             json.put("date", "1000-01-01 00:00:00");
             //If layout is empty, don't add anything to services, else, add services.
-            if (scrollLayout.getChildCount() > 0) {
-                saveServices(event, json);
-            }
+
             eventData = json.toString();
             eventServerData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events", "POST", eventData);
             eventId = eventServerData.getId();
@@ -267,17 +270,6 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
-    private void saveServices(Event event, JSONObject json) {
-        String tempText;
-        Service tempService;
-        for (int i = 0; i < scrollLayout.getChildCount(); i++) {
-            TextView temp = (TextView) scrollLayout.getChildAt(i);
-            tempText = temp.getText().toString();
-            tempService = new Service(tempText, "description");
-            event.getServices().add(tempService);
-        }
-    }
-
     // Possibly use this instead of going back to the SignedInLandingPage Activity?
     public void cancel(View view) {
         setResult(RESULT_CANCELED);
@@ -288,14 +280,18 @@ public class CreateEventActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+        boolean cancel = false;
         if (requestCode == CANCEL_CODE )
         { // do nothing
-
+            System.out.println("Received cancel");
+            cancel = true;
         }
-        if (requestCode == REQUEST_ADD_SERVICE )
+        if (requestCode == REQUEST_ADD_SERVICE && !cancel && (data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE) != null  ))
         {// then it is returning from an add service, with a service, so extract it.
             System.out.println("Adding service to event ");
             Service service = data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE);
+
+            event.getServices().add(service);
 
             // Then save the service to the event
             createNewServiceTextView(service);

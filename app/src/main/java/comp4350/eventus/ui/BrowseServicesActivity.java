@@ -17,10 +17,14 @@ import java.util.ArrayList;
 
 public class BrowseServicesActivity extends AppCompatActivity {
 private final String EXTRA_CANCEL = "cancel";
-public static String EXTRA_SERVICE = "service";
+    public static final String EXTRA_BROWSE = "event";
+    public static String EXTRA_SERVICE = "service";
 private final int ADD_SERVICE_CODE = 10;
 private final int CANCEL_CODE = 6;
 private LinearLayout scrollLayout = null;
+
+    private Event event;
+    private ArrayList<Service> eventServices;
 
   public ArrayList<Service> serviceList;
 
@@ -30,6 +34,24 @@ private LinearLayout scrollLayout = null;
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_services);
+
+        if (savedInstanceState == null) {
+            event = getIntent().getParcelableExtra(EXTRA_BROWSE);
+
+        } else {
+            event = savedInstanceState.getParcelable(EXTRA_BROWSE);
+        }
+
+
+        if (event != null)
+        {
+            eventServices = event.getServices();
+            System.out.println("\n\n"+ event.getName());
+        }
+        else
+        {
+            eventServices = new ArrayList<Service>();
+        }
 
         scrollLayout = (LinearLayout) findViewById(R.id.addServicesLinLayout);
 
@@ -49,7 +71,25 @@ private LinearLayout scrollLayout = null;
 
         for(int i = 0 ; i < serviceList.size(); i++)
         {
-            createNewServiceTextView(serviceList.get(i));
+            Service curr = serviceList.get(i);
+            boolean add = true;
+
+            for(int j = 0 ; j < eventServices.size(); j++)
+            {
+                if(event.getServices().get(j).getID() == curr.getID())
+                {// then the id of this service, already exists on this event, and we do not want to add it again
+                    add = false;
+                   break;
+               }
+            }
+
+
+            if(add)
+            {
+                createNewServiceTextView(curr);
+            }
+
+
         }
 
     }
@@ -98,10 +138,10 @@ private LinearLayout scrollLayout = null;
                 // Do something in response to button click
                 Intent intent = getIntent();
                 forceKeyboardClose();
-                Service event = new Service();
+                //Service event = new Service();
 
                 intent.putExtra(EXTRA_CANCEL, event);
-                setResult(RESULT_OK, intent);
+                setResult(CANCEL_CODE, intent);
                 finish();
 
             }
