@@ -255,9 +255,7 @@ public class CreateEventActivity extends AppCompatActivity {
             json.put("description", eventDescription);
             json.put("date", "1000-01-01 00:00:00");
             //If layout is empty, don't add anything to services, else, add services.
-            if (scrollLayout.getChildCount() > 0) {
-                saveServices(event, json);
-            }
+
             eventData = json.toString();
             eventServerData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events", "POST", eventData);
             eventId = eventServerData.getId();
@@ -269,17 +267,6 @@ public class CreateEventActivity extends AppCompatActivity {
             intent.putExtra(EXTRA_EVENT, event);
             setResult(RESULT_OK, intent);
             finish();
-        }
-    }
-
-    private void saveServices(Event event, JSONObject json) {
-        String tempText;
-        Service tempService;
-        for (int i = 0; i < scrollLayout.getChildCount(); i++) {
-            TextView temp = (TextView) scrollLayout.getChildAt(i);
-            tempText = temp.getText().toString();
-            tempService = new Service(tempText, "description");
-            event.getServices().add(tempService);
         }
     }
 
