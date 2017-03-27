@@ -39,12 +39,11 @@
         android:id="@+id/locationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date: "
-        android:textColor="#ffffff"
-        android:textSize="18sp"
-        android:layout_below="@+id/deleteButton"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="9dp" />
+        android:layout_below="@+id/backButton"
+        android:text="Location: "
+        android:textColor="#ffffff"
+        android:textSize="18sp"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -99,10 +98,8 @@
         android:textSize="24sp"
         android:id="@+id/titleTextView"
         android:textColor="#ffffff"
-        android:layout_marginStart="16dp"
-        android:layout_alignBaseline="@+id/deleteButton"
-        android:layout_alignBottom="@+id/deleteButton"
-        android:layout_toEndOf="@+id/removeServiceButton" />
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/locationTextView"/>
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -125,11 +122,12 @@
         android:text="Your Services: "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/estimatedCostTextView"
         android:textColor="#ffffff"
         android:textSize="30sp"
         android:id="@+id/yourServicesTextView"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/removeServiceButton" />
+        android:layout_marginTop="23dp"
+        android:layout_toEndOf="@+id/locationTextView"/>
 
     <TextView
         android:text=""

@@ -34,6 +34,7 @@ import org.junit.runner.RunWith;
 public class ServerDataTestSet1 {
     private ServerData serverData;
     private ArrayList<Event> events;
+    private String URL = "http://eventus.us-west-2.elasticbeanstalk.com/api/events/";
 
     @Before
     public void setUp() throws Exception {
@@ -127,7 +128,7 @@ public class ServerDataTestSet1 {
         json = data.getJSONEventDetails(temp);// note this doesnt include services
         String id = Integer.toString(temp.getID());
 
-        serverData = new ServerData("PUT", json.toString(), id); // update when implemented
+        serverData = new ServerData(URL + id, "PUT", json.toString()); // update when implemented
 
         serverData.getAllEventsRequest();
         int post = serverData.getEvents().size();
@@ -155,7 +156,9 @@ public class ServerDataTestSet1 {
         Event temp = eventListAdapter.getEventByTitle("Fancy Event");
         Assert.assertNotNull(temp);
 
-        serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + Integer.toString(temp.getID()), "DELETE", "");
+        String id = Integer.toString(temp.getID());
+
+        serverData = new ServerData(URL + id, "DELETE", "");
         // great now get the fresh list, with the item remvoved
 
         serverData.getAllEventsRequest();
