@@ -153,6 +153,9 @@ public class CreateEventActivity extends AppCompatActivity {
 
 
                 Intent intent = new Intent(context, BrowseServicesActivity.class);
+
+                intent.putExtra(BrowseServicesActivity.EXTRA_BROWSE, event);
+
                 startActivityForResult(intent, REQUEST_ADD_SERVICE);
 
             }
@@ -288,11 +291,13 @@ public class CreateEventActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+        boolean cancel = false;
         if (requestCode == CANCEL_CODE )
         { // do nothing
-
+            System.out.println("Received cancel");
+            cancel = true;
         }
-        if (requestCode == REQUEST_ADD_SERVICE )
+        if (requestCode == REQUEST_ADD_SERVICE && !cancel && (data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE) != null  ))
         {// then it is returning from an add service, with a service, so extract it.
             System.out.println("Adding service to event ");
             Service service = data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE);
