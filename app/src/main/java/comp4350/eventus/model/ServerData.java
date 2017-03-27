@@ -66,16 +66,14 @@ public class ServerData {
         return 0;
     }
 
-    public int putRequest(String url, String requestCode, String data) {
+    public void putRequest(String url, String requestCode, String data) {
         try {
             serverInfo = new JSONFunctions().execute(url, requestCode, data).get();
-            return getJSONId(serverInfo);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        return 0;
     }
 
     public void deleteRequest(String url, String requestCode) {
@@ -88,16 +86,14 @@ public class ServerData {
         }
     }
 
-    public int postRequest(String url, String requestCode, String data) {
+    public void postRequest(String url, String requestCode, String data) {
         try {
             serverInfo = new JSONFunctions().execute(url, requestCode, data).get();
-            return getJSONId(serverInfo);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        return 0;
     }
 
     public void getAllEventsRequest() {

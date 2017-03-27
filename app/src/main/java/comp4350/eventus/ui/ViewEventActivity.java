@@ -26,10 +26,12 @@ import org.json.JSONObject;
 
 public class ViewEventActivity extends AppCompatActivity {
     public static final String EXTRA_EVENT = "event";
+    private static final int REQUEST_ADD_SERVICE = 10;
+    private final int CANCEL_CODE = 6;
 
     private TextView eventName;
     private TextView eventDescription;
-    private ArrayList<Service> eventServices;
+    private ArrayList<Service> currEventServices;
     private Event event;
 
     boolean removeServiceMode = false;
@@ -58,14 +60,22 @@ public class ViewEventActivity extends AppCompatActivity {
         if (event != null) {
             eventName.setText(event.getName());
             eventDescription.setText(event.getDescription());
-            eventServices = event.getServices();
+            currEventServices = event.getServices();
         } else {
+            eventName.setText("Empty Event");
+            eventDescription.setText("Empty Event");
             event = new Event(0, "Empty Event", "Empty Event", new ArrayList<Service>());
+            currEventServices = event.getServices();
         }
 
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
         listLayout = new LinearLayout(this);
         listLayout.setOrientation(LinearLayout.HORIZONTAL);
+
+        for(int i = 0; i < currEventServices.size(); i++) {
+            createNewServiceTextView(currEventServices.get(i));
+        }
+        
         setupListeners();
     }
 
@@ -78,13 +88,6 @@ public class ViewEventActivity extends AppCompatActivity {
     }
 
     public void setupListeners() {
-
-        if (event != null) {
-            for (Service service : event.getServices()) {
-
-                createNewServiceTextView(service);
-            }
-        }
 
         Button backButton = (Button) findViewById(R.id.backButton);
 
@@ -164,6 +167,14 @@ public class ViewEventActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 turnOffRemoveServiceMode();
+
+                forceKeyboardClose();
+
+                Intent intent = new Intent(ViewEventActivity.this, BrowseServicesActivity.class);
+
+                intent.putExtra(BrowseServicesActivity.EXTRA_BROWSE, event);
+
+                startActivityForResult(intent, REQUEST_ADD_SERVICE);
 
             }
         });
@@ -307,19 +318,26 @@ public class ViewEventActivity extends AppCompatActivity {
 
         result.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Do something in response to button click
                 // make sure that there are elements to remove
                 if (removeServiceMode) {// then remove this service,
                     // for now just delete the item, later, add a confirm dialog etc.
                     scrollLayout.removeView(v);
+
+                    String serviceName =  ((TextView)v).getText().toString();
+
+                    for(int i = 0 ; i < event.getServices().size(); i++)
+                    {
+                        if(event.getServices().get(i).getName().equals(serviceName))
+                        {
+                            event.getServices().remove(i);
+                            ServerData serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+event.getID()+"/services/"+service.getID(), "DELETE", "");
+                            break;
+                        }
+                    }
+
                     turnOffRemoveServiceMode();
                 } else {// turn it on
-                    Intent intent = new Intent(ViewEventActivity.this, ViewServiceActivity.class);
-                    intent.putExtra(ViewServiceActivity.EXTRA_SERVICE, getServiceByID(service.getID()));
-
-                    startActivity(intent);
-
-
+                    startActivity(new Intent(ViewEventActivity.this, ViewServiceActivity.class));
                 }
             }
         });
@@ -328,11 +346,11 @@ public class ViewEventActivity extends AppCompatActivity {
     public Service getServiceByID(int id)
     {
         Service result = null;
-        for(int i = 0 ; i < eventServices.size(); i++)
+        for(int i = 0 ; i < currEventServices.size(); i++)
         {
-            if(eventServices.get(i).getID() == id)
+            if(currEventServices.get(i).getID() == id)
             {
-                result = eventServices.get(i);
+                result = currEventServices.get(i);
             }
         }
         return result;
@@ -340,28 +358,31 @@ public class ViewEventActivity extends AppCompatActivity {
 
     public void save(View view) throws JSONException {
         JSONObject json = new JSONObject();
-        String id = Integer.toString(event.getID());
+        ServerData eventServerData;
+        String eventData;
 
-        String eventName = this.eventName.getText().toString();
-        String eventDescription = this.eventDescription.getText().toString();
-        if (TextUtils.isEmpty(eventName)) {
-            this.eventName.setError(getString(R.string.error_field_empty));
-            this.eventName.requestFocus();
-        } else if (TextUtils.isEmpty((eventDescription))) {
-            this.eventDescription.setError(getString(R.string.error_field_empty));
-            this.eventDescription.requestFocus();
+        if (event == null) {
+            event = new Event();
+        }
+        String saveEventName = eventName.getText().toString();
+        String saveEventDescription = eventDescription.getText().toString();
+        if (TextUtils.isEmpty(saveEventName)) {
+            eventName.setError(getString(R.string.error_field_empty));
+            eventName.requestFocus();
+        } else if (TextUtils.isEmpty((saveEventDescription))) {
+            eventDescription.setError(getString(R.string.error_field_empty));
+            eventDescription.requestFocus();
         } else {
-            this.eventName.setError(null);
-
-            json.put("name", eventName);
-            json.put("description", eventDescription);
-            // Create a Datepicker obj for Date.
+            eventName.setError(null);
+            event.setName(saveEventName);
+            event.setDescription(saveEventDescription);
+            json.put("name", saveEventName);
+            json.put("description", saveEventDescription);
             json.put("date", "1000-01-01 00:00:00");
             //If layout is empty, don't add anything to services, else, add services.
-            if (scrollLayout.getChildCount() > 0) {
-                saveServices(event, json);
-            }
-            serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+id, "PUT", json.toString()); // update when implemented
+
+            eventData = json.toString();
+            eventServerData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+Integer.toString(event.getID()), "PUT", eventData);
             Intent intent = getIntent();
             intent.putExtra(EXTRA_EVENT, event);
             setResult(RESULT_OK, intent);
@@ -369,16 +390,36 @@ public class ViewEventActivity extends AppCompatActivity {
         }
     }
 
-    private void saveServices(Event event, JSONObject json) {
-        String tempText;
-        Service tempService;
-        for (int i = 0; i < scrollLayout.getChildCount(); i++) {
-            TextView temp = (TextView) scrollLayout.getChildAt(i);
-            tempText = temp.getText().toString();
-            tempService = new Service(tempText, "description");
-            event.getServices().add(tempService);
-        }
-    }
 
+//    serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+id, "PUT", json.toString()); // update when implemented
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        boolean cancel = false;
+        if (requestCode == CANCEL_CODE )
+        { // do nothing
+            System.out.println("Received cancel");
+            cancel = true;
+        }
+        if (requestCode == REQUEST_ADD_SERVICE && !cancel && (data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE) != null  ))
+        {// then it is returning from an add service, with a service, so extract it.
+            System.out.println("Adding service to event ");
+            Service service = data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE);
+
+            event.getServices().add(service);
+
+            // Then save the service to the event
+            createNewServiceTextView(service);
+
+            ServerData serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+event.getID()+"/services/"+service.getID(), "POST", "");
+            //events = serverData.getEvents();
+            //eventListAdapter.refresh(events);
+
+            setupListeners();
+        }
+
+    }
 
 }

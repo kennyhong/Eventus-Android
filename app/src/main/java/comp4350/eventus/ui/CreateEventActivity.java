@@ -150,7 +150,6 @@ public class CreateEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Begin new Dialog actions for adding a new event
                 turnOffRemoveServiceMode();
-                //createNewServiceTextView();
                 forceKeyboardClose();
 
 
@@ -245,7 +244,6 @@ public class CreateEventActivity extends AppCompatActivity {
         ServerData eventServerData;
         ServerData serviceServerData;
         String eventData;
-        String serviceData;
         int serviceId;
         int eventId;
 
@@ -274,7 +272,7 @@ public class CreateEventActivity extends AppCompatActivity {
             eventId = eventServerData.getId();
             for(int i = 0; i < event.getServices().size(); i++) {
                 serviceId = event.getServices().get(i).getID();
-                serviceServerData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+eventId+"/services/"+(i+1)/*replace i with serviceId*/, "POST", "");
+                serviceServerData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+eventId+"/services/"+serviceId/*replace i with serviceId*/, "POST", "");
             }
             Intent intent = getIntent();
             intent.putExtra(EXTRA_EVENT, event);
