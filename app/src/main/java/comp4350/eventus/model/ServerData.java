@@ -46,7 +46,6 @@ public class ServerData {
 
     public int getJSONId(String jsonData) {
         try {
-            System.out.println("JSONData: "+jsonData);
             JSONObject json = new JSONObject(jsonData);
             Object type = json.get("data");
                 if (type instanceof JSONObject) {

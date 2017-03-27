@@ -62,11 +62,6 @@ public class EventTest {
         // Write the data.
         Event event = new  Event("name", "description", new ArrayList<Service>());
         Parcel parcel = Parcel.obtain();
-
-        System.out.println(parcel == null);
-
-        System.out.println("Contents: " + event.describeContents());
-        System.out.println("Event: "+ event.getName() + ", " + event.getDescription());
         event.writeToParcel(parcel, event.describeContents());
 
         // After you're done with writing, you need to reset the parcel for reading.

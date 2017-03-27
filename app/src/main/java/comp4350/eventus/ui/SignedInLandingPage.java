@@ -75,13 +75,11 @@ public class SignedInLandingPage extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_ADD_EVENT && data != null) {
             if (resultCode == RESULT_OK) {
-                System.out.println("Adding new");
                 Event event = data.getParcelableExtra(CreateEventActivity.EXTRA_EVENT);
                 eventListAdapter.add(event);
             }
         }
         if (requestCode == 2 && resultCode == REQUEST_DELETE_EVENT) {// then it is returning from a view event , and the event needs to be deleted.
-            System.out.println("Deleting Event from System");
             Event event = data.getParcelableExtra(ViewEventActivity.EXTRA_EVENT);
             eventListAdapter.remove(event);
             serverData = new ServerData();
@@ -91,7 +89,6 @@ public class SignedInLandingPage extends Activity {
             setupListeners();
         }
         if (requestCode == 2 && resultCode == RESULT_OK) {// then we just need to update the event
-            System.out.println("Updating");
             serverData = new ServerData();
             events = serverData.getEvents();
             eventListAdapter.refresh(events);
@@ -155,7 +152,6 @@ public class SignedInLandingPage extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         // create new event of this type
                         if (which <= 3) {
-                            System.out.println("---------------------------" + which);
                             createNewEventButton(eventPrefabList[which], which);
                         }
                     }

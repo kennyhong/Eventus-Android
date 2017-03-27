@@ -400,12 +400,10 @@ public class ViewEventActivity extends AppCompatActivity {
         boolean cancel = false;
         if (requestCode == CANCEL_CODE )
         { // do nothing
-            System.out.println("Received cancel");
             cancel = true;
         }
         if (requestCode == REQUEST_ADD_SERVICE && !cancel && (data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE) != null  ))
         {// then it is returning from an add service, with a service, so extract it.
-            System.out.println("Adding service to event ");
             Service service = data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE);
 
             event.getServices().add(service);

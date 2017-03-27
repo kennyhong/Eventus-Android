@@ -40,7 +40,6 @@ public class ReceiptActivity extends AppCompatActivity
         if (event != null)
         {
             eventServices = event.getServices();
-            System.out.println("\n\n"+ event.getName());
         }
 
         scrollLayout = (LinearLayout) findViewById(R.id.receipt_services_list);

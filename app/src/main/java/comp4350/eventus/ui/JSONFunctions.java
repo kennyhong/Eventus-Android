@@ -79,7 +79,6 @@ public class JSONFunctions extends AsyncTask<String, Void, String> {
                     } else {
                         serverResponse = "Error";
                     }
-                    System.out.println(serverResponse);
                 }
             } catch (ProtocolException e) {
                 e.printStackTrace();
@@ -107,7 +106,6 @@ public class JSONFunctions extends AsyncTask<String, Void, String> {
     private String stream(OutputStream out, String data) {
         String result = "";
         try {
-            System.out.println("DATA: " + data);
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
             writer.write(data);
             writer.flush();

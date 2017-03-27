@@ -46,7 +46,6 @@ private LinearLayout scrollLayout = null;
         if (event != null)
         {
             eventServices = event.getServices();
-            System.out.println("\n\n"+ event.getName());
         }
         else
         {

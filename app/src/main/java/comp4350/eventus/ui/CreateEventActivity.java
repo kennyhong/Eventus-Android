@@ -269,7 +269,6 @@ public class CreateEventActivity extends AppCompatActivity {
             eventData = json.toString();
             eventServerData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events", "POST", eventData);
             eventId = eventServerData.getId();
-            System.out.println("EVENT ID: "+eventId);
             for(int i = 0; i < event.getServices().size(); i++) {
                 serviceId = event.getServices().get(i).getID();
                 serviceServerData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+eventId+"/services/"+serviceId/*replace i with serviceId*/, "POST", "");
