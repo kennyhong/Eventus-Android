@@ -112,7 +112,6 @@ public class CreateEventActivity extends AppCompatActivity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER))
                 {
-                    System.out.println("Keyboard should close now.");
                     inputEventDescription.setText(inputEventDescription.getText().toString().trim());
                     // close the keyboard
                     forceKeyboardClose();
@@ -270,6 +269,7 @@ public class CreateEventActivity extends AppCompatActivity {
             eventData = json.toString();
             eventServerData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events", "POST", eventData);
             eventId = eventServerData.getId();
+            System.out.println("EVENT ID: "+eventId);
             for(int i = 0; i < event.getServices().size(); i++) {
                 serviceId = event.getServices().get(i).getID();
                 serviceServerData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+eventId+"/services/"+serviceId/*replace i with serviceId*/, "POST", "");
@@ -281,12 +281,6 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
-    // Possibly use this instead of going back to the SignedInLandingPage Activity?
-    public void cancel(View view) {
-        setResult(RESULT_CANCELED);
-        finish();
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -294,22 +288,16 @@ public class CreateEventActivity extends AppCompatActivity {
         boolean cancel = false;
         if (requestCode == CANCEL_CODE )
         { // do nothing
-            System.out.println("Received cancel");
             cancel = true;
         }
         if (requestCode == REQUEST_ADD_SERVICE && !cancel && (data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE) != null  ))
         {// then it is returning from an add service, with a service, so extract it.
-            System.out.println("Adding service to event ");
             Service service = data.getParcelableExtra(BrowseServicesActivity.EXTRA_SERVICE);
 
             event.getServices().add(service);
 
             // Then save the service to the event
             createNewServiceTextView(service);
-
-            ServerData serverData = new ServerData();
-            //events = serverData.getEvents();
-            //eventListAdapter.refresh(events);
 
             setupListeners();
         }

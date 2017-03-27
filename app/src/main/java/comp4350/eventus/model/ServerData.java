@@ -20,10 +20,6 @@ public class ServerData {
     String url;
     int JSONObjId;
 
-    // url for PUT requests on Events w/ ID: "http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + id
-    // url for DELETE requests on Events w/ ID: "http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + id
-    // url for POST requests on Events: "http://eventus.us-west-2.elasticbeanstalk.com/api/events"
-
     public ServerData() {
         requestCode = "GET";
         getAllEventsRequest();
@@ -55,10 +51,10 @@ public class ServerData {
             Object type = json.get("data");
                 if (type instanceof JSONObject) {
                     JSONObject jsonEvents = (JSONObject) type;
-                    return JSONObjId = jsonEvents.getInt("id");
+                    return jsonEvents.getInt("id");
                 } else if (type instanceof JSONArray) {
                     JSONArray jsonArray = (JSONArray) type;
-                    return JSONObjId = jsonArray.getJSONObject(0).getInt("id");
+                    return jsonArray.getJSONObject(0).getInt("id");
                 }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -69,6 +65,7 @@ public class ServerData {
     public void putRequest(String url, String requestCode, String data) {
         try {
             serverInfo = new JSONFunctions().execute(url, requestCode, data).get();
+            JSONObjId = getJSONId(serverInfo);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -89,6 +86,7 @@ public class ServerData {
     public void postRequest(String url, String requestCode, String data) {
         try {
             serverInfo = new JSONFunctions().execute(url, requestCode, data).get();
+            JSONObjId = getJSONId(serverInfo);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
