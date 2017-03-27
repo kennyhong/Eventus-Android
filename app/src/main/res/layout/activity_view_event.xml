@@ -11,7 +11,21 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#46BD79"
-    tools:context="com.example.baronvonfaustiii.eventus_android.ui.ViewEventActivity">
+    tools:context="comp4350.eventus.ui.ViewEventActivity">
+
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/locationTextView"
+        android:layout_below="@+id/locationTextView"
+        android:layout_marginTop="18dp"
+        android:allowUndo="true"
+        android:maxLines="5"
+        android:scrollbars="vertical"
+        android:text="Place your short description here: "
+        android:textColor="#ffffff"
+        android:textSize="18sp"/>
 
     <Button
         android:text="Back"
@@ -22,25 +36,14 @@
         android:id="@+id/backButton"/>
 
     <TextView
-        android:text="Place your short description here: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/locationTextView"
-        android:layout_alignStart="@+id/locationTextView"
-        android:layout_marginTop="18dp"
-        android:textSize="18sp"
-        android:textColor="#ffffff"
-        android:id="@+id/descriptionTextView"/>
-
-    <TextView
-        android:text="Location: "
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="#ffffff"
         android:id="@+id/locationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/backButton"
-        android:layout_alignParentStart="true"/>
+        android:text="Location: "
+        android:textColor="#ffffff"
+        android:textSize="18sp"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -63,8 +66,8 @@
         android:text="Estimated Cost: "
         android:layout_width="1000dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/descriptionTextView"
         android:layout_toStartOf="@+id/titleTextView"
+        android:layout_below="@+id/descriptionTextView"
         android:layout_marginTop="14dp"
         android:textColor="#ffffff"
         android:textSize="18sp"
@@ -92,11 +95,11 @@
         android:text="TitleHere"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="36sp"
+        android:textSize="24sp"
         android:id="@+id/titleTextView"
         android:textColor="#ffffff"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_toEndOf="@+id/locationTextView"/>
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -119,11 +122,11 @@
         android:text="Your Services: "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/estimatedCostTextView"
         android:textColor="#ffffff"
         android:textSize="30sp"
         android:id="@+id/yourServicesTextView"
         android:layout_marginTop="23dp"
-        android:layout_below="@+id/estimatedCostTextView"
         android:layout_toEndOf="@+id/locationTextView"/>
 
     <TextView
@@ -132,7 +135,6 @@
         android:textSize= "18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/descriptionTextView"
         android:layout_alignStart="@+id/titleTextView"
         android:id="@+id/EventLocation"/>
 

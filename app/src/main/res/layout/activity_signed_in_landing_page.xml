@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
                 android:background="#46BD79"
-    tools:context="com.example.baronvonfaustiii.eventus_android.ui.SignedInLandingPage">
+    tools:context="comp4350.eventus.ui.SignedInLandingPage">
 
     <Button
         android:text="Signout"
