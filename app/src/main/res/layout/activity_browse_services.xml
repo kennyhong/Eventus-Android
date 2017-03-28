@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScreenLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#46BD79"
+    android:orientation="vertical"
+    tools:context="comp4350.eventus.ui.BrowseServicesActivity">
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="75dp">
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Back"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="16dp"/>
+
+
+        <EditText
+            android:id="@+id/searchBar"
+            android:layout_width="225dp"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Browse"
+            tools:layout_editor_absoluteX="91dp"
+            tools:layout_editor_absoluteY="16dp"/>
+
+        <ImageButton
+            android:id="@+id/SearchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:visibility="visible"
+            app:srcCompat="?android:attr/actionModeWebSearchDrawable"
+            tools:layout_editor_absoluteX="316dp"
+            tools:layout_editor_absoluteY="16dp"/>
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:id="@+id/addServicesScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="42dp"
+        tools:layout_editor_absoluteY="95dp">
+
+        <LinearLayout
+            android:id="@+id/addServicesLinLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+    </ScrollView>
+
+
+</LinearLayout>
