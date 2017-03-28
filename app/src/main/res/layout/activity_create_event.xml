@@ -36,6 +36,7 @@
         android:inputType="text"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:maxLines="2"
         android:textColor="#ffffff"
         android:textSize="18sp" />
 
@@ -48,6 +49,8 @@
         android:layout_marginTop="18dp"
         android:hint="Place your short description here: "
         android:paddingLeft="10dp"
+        android:maxLines="3"
+        android:scrollbars="vertical"
         android:paddingRight="10dp"
         android:textColor="#ffffff"
         android:textSize="18sp" />

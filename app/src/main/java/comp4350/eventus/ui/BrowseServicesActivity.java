@@ -2,11 +2,14 @@ package comp4350.eventus.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import comp4350.eventus.R;
@@ -21,7 +24,9 @@ private final String EXTRA_CANCEL = "cancel";
     public static String EXTRA_SERVICE = "service";
 private final int ADD_SERVICE_CODE = 10;
 private final int CANCEL_CODE = 6;
+
 private LinearLayout scrollLayout = null;
+private EditText searchBar = null;
 
     private Event event;
     private ArrayList<Service> eventServices;
@@ -58,6 +63,14 @@ private LinearLayout scrollLayout = null;
         gatherAvailableServices();
 
         setupListeners();
+    }
+
+    public void emptyAvailableServices()
+    {
+        while(scrollLayout.getChildCount() > 0)
+        {
+            scrollLayout.removeViewAt(0);
+        }
     }
 
     public void gatherAvailableServices()
@@ -146,23 +159,78 @@ private LinearLayout scrollLayout = null;
             }
         });
 
+        searchBar = (EditText) findViewById(R.id.searchBar);
 
+        searchBar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Do something in response to button click
 
+                if(searchBar.getText().toString().equals("Browse"))
+                {
+                    searchBar.setText("");
+                }
+
+            }
+        });
+
+        ImageButton searchButton = (ImageButton) findViewById(R.id.SearchButton);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                boolean skip = false;
+                if(searchBar.getText().toString().equals("Browse"))
+                {
+                    searchBar.setText("");
+                    skip = true;
+                }
+                if(searchBar.getText().toString().equals(""))
+                {
+                    rePopulate();
+                }
+
+                if(!skip)
+                {
+                    updateAvailableServicesWithSearchBar();
+                }
+
+            }
+        });
 
 
     }
+
+    public void rePopulate()
+    {
+        emptyAvailableServices();
+        gatherAvailableServices();
+    }
+
+    public void updateAvailableServicesWithSearchBar()
+    {
+        String text = searchBar.getText().toString();
+
+        for(int i = 0 ; i < scrollLayout.getChildCount(); i++)
+        {
+            TextView theTextView = (TextView) scrollLayout.getChildAt(i);
+
+            if(theTextView.getText().toString().contains(text))
+            {
+                // then it is the desired event, so allow it to stay
+                //consider highlighting section of same text later ? Or other jazz
+            }
+            else
+            {
+                scrollLayout.removeViewAt(i);
+                i--;// dont miss any elements in the search.
+            }
+        }
+    }
+
+
     public void forceKeyboardClose() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
-    /*
-             Intent intent = getIntent();
-            intent.putExtra(EXTRA_EVENT, event);
-            setResult(RESULT_OK, intent);
-            finish();
-    */
-
-
-
 
     }// end activity

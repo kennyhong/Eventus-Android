@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -114,6 +115,7 @@ public class CreateEventActivity extends AppCompatActivity {
         });
 
         inputEventDescription = (EditText) findViewById(R.id.eventDescriptionEditText);
+        inputEventDescription.setMovementMethod(new ScrollingMovementMethod());
 
 // Should set up listeners so that the keyboard will close when the enter key is pressed.
         inputEventDescription.setOnKeyListener(new View.OnKeyListener() {
