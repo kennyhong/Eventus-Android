@@ -45,6 +45,11 @@ public class Service implements Parcelable {
         readFromParcel(in);
     }
 
+   public ArrayList<ServiceTag> getServiceTags()
+   {
+       return serviceTags;
+   }
+
     private void readFromParcel(Parcel in) {
         this.id = in.readInt();
         this.name = in.readString();

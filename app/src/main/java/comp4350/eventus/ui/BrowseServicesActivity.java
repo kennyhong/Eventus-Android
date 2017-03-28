@@ -64,10 +64,10 @@ private EditText searchBar = null;
 
         scrollLayout = (LinearLayout) findViewById(R.id.addServicesLinLayout);
 
-
-        gatherAvailableServices();
-
         setupListeners();
+
+        gatherAvailableServices(true);
+
     }
 
     public void emptyAvailableServices()
@@ -78,9 +78,10 @@ private EditText searchBar = null;
         }
     }
 
-    public void gatherAvailableServices()
+    public void gatherAvailableServices(boolean reset)
     {
         serviceList = new ArrayList<Service>();
+        String text = searchBar.getText().toString();
 
         ServerData serverData = new ServerData();
 
@@ -90,22 +91,67 @@ private EditText searchBar = null;
         {
             Service curr = serviceList.get(i);
             boolean add = true;
+            boolean serviceAdd = false;
 
             for(int j = 0 ; j < eventServices.size(); j++)
-            {
+            {// check to see if this service, matches any existing service that you are already signed up for
                 if(event.getServices().get(j).getID() == curr.getID())
                 {// then the id of this service, already exists on this event, and we do not want to add it again
                     add = false;
                    break;
                }
+
             }
 
+            if(!reset)
+            {
 
+            // filter out other results from the search bar
+            if(add)
+            {// you dont want more filtering
+                    switch (filterMode)
+                    {
+                        case 0 :
+                            if(!curr.getName().contains(text))
+                            {//
+                                add = false;
+                            }
+                            break;
+                        case 1 :
+                            String serviceID = Integer.toString(curr.getID());
+                            if(!serviceID.equals(text))
+                            {
+                                add = false;
+                            }
+                            break;
+                        case 2 :
+
+                            for(int k = 0 ; k < curr.getServiceTags().size(); k++)
+                            {
+                                if(curr.getServiceTags().get(k).getName().toString().equals(text))
+                                {
+                                    // then this service, has the searched for text, as a service tag
+                                    serviceAdd = true;
+                                }
+                            }
+
+                            if(!serviceAdd)
+                            {// then this means that this service, does not have a matching service tag
+                                add = false;
+                            }
+
+                            break;
+
+                    }// end switch
+                }
+
+            }// end if
+
+            // Then you want to display it as an option
             if(add)
             {
                 createNewServiceTextView(curr);
             }
-
 
         }
 
@@ -183,21 +229,22 @@ private EditText searchBar = null;
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                boolean skip = false;
                 if(searchBar.getText().toString().equals("Browse"))
                 {
                     searchBar.setText("");
-                    skip = true;
-                }
-                if(searchBar.getText().toString().equals(""))
-                {
-                    rePopulate();
+                    rePopulate(true);
                 }
 
-                if(!skip)
+                if(searchBar.getText().toString().equals(""))
                 {
-                    updateAvailableServicesWithSearchBar();
+                    rePopulate(true);
                 }
+                else
+                {
+                    rePopulate(false);
+
+                }
+
 
             }
         });
@@ -227,7 +274,7 @@ private EditText searchBar = null;
                     // need to turn off other button... IE change its background back to white
                     filterMode = 0 ;
                     resetSelectedFilter();
-                    //populateServicesList();
+                   // populateServicesList();
                 }
 
             }
@@ -242,7 +289,7 @@ private EditText searchBar = null;
                     // need to turn off other button... IE change its background back to white
                     filterMode = 1 ;
                     resetSelectedFilter();
-                    //populateServicesList();
+                  //  populateServicesList();
                 }
 
             }
@@ -257,7 +304,6 @@ private EditText searchBar = null;
                     // need to turn off other button... IE change its background back to white
                     filterMode = 2 ;
                     resetSelectedFilter();
-                    //populateServicesList();
                 }
 
             }
@@ -291,31 +337,10 @@ private EditText searchBar = null;
         }
     }
 
-    public void rePopulate()
+    public void rePopulate(boolean reset)
     {
         emptyAvailableServices();
-        gatherAvailableServices();
-    }
-
-    public void updateAvailableServicesWithSearchBar()
-    {
-        String text = searchBar.getText().toString();
-
-        for(int i = 0 ; i < scrollLayout.getChildCount(); i++)
-        {
-            TextView theTextView = (TextView) scrollLayout.getChildAt(i);
-
-            if(theTextView.getText().toString().contains(text))
-            {
-                // then it is the desired event, so allow it to stay
-                //consider highlighting section of same text later ? Or other jazz
-            }
-            else
-            {
-                scrollLayout.removeViewAt(i);
-                i--;// dont miss any elements in the search.
-            }
-        }
+        gatherAvailableServices(reset);
     }
 
 
