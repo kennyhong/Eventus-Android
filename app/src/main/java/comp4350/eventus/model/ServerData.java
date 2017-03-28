@@ -112,10 +112,11 @@ public class ServerData {
 
         String eventName = event.getName();
         String eventDescription = event.getDescription();
+        String eventDate = event.getDate();
 
         json.put("name", eventName);
         json.put("description", eventDescription);
-        json.put("date", "1000-01-01 00:00:00");
+        json.put("date", eventDate);
         //If layout is empty, don't add anything to services, else, add services.
 
         return json;
