@@ -24,9 +24,14 @@ private final String EXTRA_CANCEL = "cancel";
     public static String EXTRA_SERVICE = "service";
 private final int ADD_SERVICE_CODE = 10;
 private final int CANCEL_CODE = 6;
+    private int filterMode = 0;
 
 private LinearLayout scrollLayout = null;
 private EditText searchBar = null;
+
+    private  Button nameButton = null;
+    private  Button idButton = null;
+    private  Button serviceTagButton = null;
 
     private Event event;
     private ArrayList<Service> eventServices;
@@ -59,10 +64,10 @@ private EditText searchBar = null;
 
         scrollLayout = (LinearLayout) findViewById(R.id.addServicesLinLayout);
 
-
-        gatherAvailableServices();
-
         setupListeners();
+
+        gatherAvailableServices(true);
+
     }
 
     public void emptyAvailableServices()
@@ -73,9 +78,10 @@ private EditText searchBar = null;
         }
     }
 
-    public void gatherAvailableServices()
+    public void gatherAvailableServices(boolean reset)
     {
         serviceList = new ArrayList<Service>();
+        String text = searchBar.getText().toString();
 
         ServerData serverData = new ServerData();
 
@@ -85,22 +91,67 @@ private EditText searchBar = null;
         {
             Service curr = serviceList.get(i);
             boolean add = true;
+            boolean serviceAdd = false;
 
             for(int j = 0 ; j < eventServices.size(); j++)
-            {
+            {// check to see if this service, matches any existing service that you are already signed up for
                 if(event.getServices().get(j).getID() == curr.getID())
                 {// then the id of this service, already exists on this event, and we do not want to add it again
                     add = false;
                    break;
                }
+
             }
 
+            if(!reset)
+            {
 
+            // filter out other results from the search bar
+            if(add)
+            {// you dont want more filtering
+                    switch (filterMode)
+                    {
+                        case 0 :
+                            if(!curr.getName().contains(text))
+                            {//
+                                add = false;
+                            }
+                            break;
+                        case 1 :
+                            String serviceID = Integer.toString(curr.getID());
+                            if(!serviceID.equals(text))
+                            {
+                                add = false;
+                            }
+                            break;
+                        case 2 :
+
+                            for(int k = 0 ; k < curr.getServiceTags().size(); k++)
+                            {
+                                if(curr.getServiceTags().get(k).getName().toString().equals(text))
+                                {
+                                    // then this service, has the searched for text, as a service tag
+                                    serviceAdd = true;
+                                }
+                            }
+
+                            if(!serviceAdd)
+                            {// then this means that this service, does not have a matching service tag
+                                add = false;
+                            }
+
+                            break;
+
+                    }// end switch
+                }
+
+            }// end if
+
+            // Then you want to display it as an option
             if(add)
             {
                 createNewServiceTextView(curr);
             }
-
 
         }
 
@@ -178,20 +229,81 @@ private EditText searchBar = null;
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                boolean skip = false;
                 if(searchBar.getText().toString().equals("Browse"))
                 {
                     searchBar.setText("");
-                    skip = true;
-                }
-                if(searchBar.getText().toString().equals(""))
-                {
-                    rePopulate();
+                    rePopulate(true);
                 }
 
-                if(!skip)
+                if(searchBar.getText().toString().equals(""))
                 {
-                    updateAvailableServicesWithSearchBar();
+                    rePopulate(true);
+                }
+                else
+                {
+                    rePopulate(false);
+
+                }
+
+
+            }
+        });
+
+        initializeFilterButtons();
+
+
+    }
+
+    public void initializeFilterButtons()
+    {
+        // Filter ID 0 == Name filter
+         nameButton = (Button)findViewById(R.id.byNameButton);
+        //Filter ID 1 = By ID filter
+         idButton = (Button)findViewById(R.id.byIDButton);
+        //Filter ID = 2 == By Service tag button
+         serviceTagButton = (Button)findViewById(R.id.byServiceTagButton);
+
+        //apply listeners
+
+        nameButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Do something in response to button click
+
+                if(filterMode != 0)
+                {// then we are turning filter by name on.
+                    // need to turn off other button... IE change its background back to white
+                    filterMode = 0 ;
+                    resetSelectedFilter();
+                   // populateServicesList();
+                }
+
+            }
+        });
+
+        idButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Do something in response to button click
+
+                if(filterMode != 1)
+                {// then we are turning filter by name on.
+                    // need to turn off other button... IE change its background back to white
+                    filterMode = 1 ;
+                    resetSelectedFilter();
+                  //  populateServicesList();
+                }
+
+            }
+        });
+
+        serviceTagButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Do something in response to button click
+
+                if(filterMode != 2)
+                {// then we are turning filter by name on.
+                    // need to turn off other button... IE change its background back to white
+                    filterMode = 2 ;
+                    resetSelectedFilter();
                 }
 
             }
@@ -200,31 +312,35 @@ private EditText searchBar = null;
 
     }
 
-    public void rePopulate()
+    public void resetSelectedFilter()
     {
-        emptyAvailableServices();
-        gatherAvailableServices();
+        switch(filterMode)
+        {
+            case 0:
+                nameButton.setBackgroundColor(0xffff8800);
+
+                idButton.setBackgroundColor(0xffffffff);
+                serviceTagButton.setBackgroundColor(0xffffffff);
+                break;
+            case 1 :
+                idButton.setBackgroundColor(0xffff8800);
+                serviceTagButton.setBackgroundColor(0xffffffff);
+                nameButton.setBackgroundColor(0xffffffff);
+
+                break;
+
+            case 2 :
+                serviceTagButton.setBackgroundColor(0xffff8800);
+                idButton.setBackgroundColor(0xffffffff);
+                nameButton.setBackgroundColor(0xffffffff);
+                break;
+        }
     }
 
-    public void updateAvailableServicesWithSearchBar()
+    public void rePopulate(boolean reset)
     {
-        String text = searchBar.getText().toString();
-
-        for(int i = 0 ; i < scrollLayout.getChildCount(); i++)
-        {
-            TextView theTextView = (TextView) scrollLayout.getChildAt(i);
-
-            if(theTextView.getText().toString().contains(text))
-            {
-                // then it is the desired event, so allow it to stay
-                //consider highlighting section of same text later ? Or other jazz
-            }
-            else
-            {
-                scrollLayout.removeViewAt(i);
-                i--;// dont miss any elements in the search.
-            }
-        }
+        emptyAvailableServices();
+        gatherAvailableServices(reset);
     }
 
 
