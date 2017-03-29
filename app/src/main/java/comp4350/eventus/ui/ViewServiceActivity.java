@@ -16,8 +16,7 @@ public class ViewServiceActivity extends AppCompatActivity {
     private TextView serviceName;
     private TextView servicePrice;
     private TextView serviceCreatedDate;
-    private TextView serviceUpdateDate;
-    private Service service;
+    public Service service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,6 @@ public class ViewServiceActivity extends AppCompatActivity {
         serviceName = (TextView) findViewById(R.id.titleTextView);
         servicePrice = (TextView) findViewById(R.id.priceTag);
         serviceCreatedDate = (TextView)findViewById(R.id.dateBookedTag);
-        serviceUpdateDate = (TextView)findViewById(R.id.dateUpdatedTag);
 
         if (savedInstanceState == null) {
             service = getIntent().getParcelableExtra(EXTRA_SERVICE);
@@ -38,16 +36,25 @@ public class ViewServiceActivity extends AppCompatActivity {
         {
             initializeFields();
         } else {
+            service = new Service();
         }
         setupListeners();
     }
 
     public void initializeFields()
     {
-        serviceName.setText(service.getName());
-        serviceUpdateDate.setText("Date Updated: "+ service.getUpdatedAt());
-        serviceCreatedDate.setText("Date Booked: "+ service.getCreatedAt());
-        servicePrice.setText("Price: $"+ service.getCost());
+        setText(serviceName, service.getName());
+        setText(serviceCreatedDate, "Date Booked: "+ service.getCreatedAt());
+        setText(servicePrice, "Price: $"+ service.getCost());
+    }
+
+    private void setText(final TextView text,final String value){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                text.setText(value);
+            }
+        });
     }
 
     public void setupListeners() {

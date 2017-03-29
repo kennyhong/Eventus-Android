@@ -7,6 +7,8 @@ import comp4350.eventus.ui.CreateEventActivityTest;
 import comp4350.eventus.ui.MainActivityTest;
 import comp4350.eventus.ui.SignedInLandingPageTest;
 import comp4350.eventus.ui.ViewEventActivityTest;
+import comp4350.eventus.ui.ViewServiceActivity;
+import comp4350.eventus.ui.ViewServiceActivityTest;
 import comp4350.eventus.ui.adapter.EventListAdapterTest;
 
 import org.junit.runner.RunWith;
@@ -22,5 +24,6 @@ import org.junit.runners.Suite;
         CreateEventActivityTest.class,
         SignedInLandingPageTest.class,
         BrowseServicesTest.class,
+        ViewServiceActivityTest.class,
         EventListAdapterTest.class})
 public class RunAndroidUnitTests {}

@@ -35,7 +35,7 @@
                 android:id="@+id/priceTag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Price: "
+                android:text="Price: $"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
 
@@ -43,16 +43,7 @@
                 android:id="@+id/dateBookedTag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Booked On: "
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/dateUpdatedTag"
-                android:layout_width="match_parent"
-
-                android:layout_height="wrap_content"
-                android:text="Updated On: "
+                android:text="Date Booked: "
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
         </LinearLayout>
