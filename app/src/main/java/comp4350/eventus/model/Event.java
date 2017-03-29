@@ -44,6 +44,14 @@ public class Event implements Parcelable {
         return id;
     }
 
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
     public void setId(int id) {this.id = id;}
 
     private void readFromParcel(Parcel in) {

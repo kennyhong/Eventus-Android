@@ -249,7 +249,7 @@ public class CreateEventActivity extends AppCompatActivity {
     }
 
 
-    public void createNewServiceTextView(Service service) {// later this also may take parameter values from this field or elsewhere for creating the services stuff
+    public void createNewServiceTextView(final Service service) {// later this also may take parameter values from this field or elsewhere for creating the services stuff
         // later this can be used for actually assembling the service object maybe
 
         TextView result = new TextView(this);
@@ -282,7 +282,9 @@ public class CreateEventActivity extends AppCompatActivity {
 
                     turnOffRemoveServiceMode();
                 } else {// turn it on
-                    startActivity(new Intent(CreateEventActivity.this, ViewServiceActivity.class));
+                    Intent intent = new Intent(CreateEventActivity.this, ViewServiceActivity.class);
+                    intent.putExtra(ViewServiceActivity.EXTRA_SERVICE, service);
+                    startActivity(intent);
                 }
             }
         });

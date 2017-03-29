@@ -10,7 +10,6 @@ public class Service implements Parcelable {
     private int id;
     private String name;
     private int cost;
-    private String description; //remove this later
     private String createdAt;
     private String updatedAt;
     private ArrayList<ServiceTag> serviceTags;
@@ -19,22 +18,15 @@ public class Service implements Parcelable {
         id = 0;
         name = "";
         cost = 0;
-        description = ""; //remove this later
         createdAt = "";
         updatedAt = "";
         serviceTags = new ArrayList<ServiceTag>();
-    }
-
-    public Service(String name, String description) {
-        this.name = name;
-        this.description = description;
     }
 
     public Service(int id, String name, int cost, String createdAt, String updatedAt, ArrayList<ServiceTag> serviceTags) { //remove part this later
         this.id = id;
         this.name = name;
         this.cost = cost;
-        this.description = "Empty"; //remove this later
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.serviceTags = serviceTags;
@@ -54,7 +46,6 @@ public class Service implements Parcelable {
         this.id = in.readInt();
         this.name = in.readString();
         this.cost = in.readInt();
-        this.description = in.readString(); //remove this later
         this.createdAt = in.readString();
         this.updatedAt = in.readString();
         in.readTypedList(serviceTags, ServiceTag.CREATOR);
@@ -73,17 +64,10 @@ public class Service implements Parcelable {
     {return  updatedAt; }
 
     public int getID(){return id; }
-    public void setDescription(String description) {
-        this.description = description;
-    } //remove this later
 
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getDescription() {
-        return description;
-    } //remove this later
 
     public String getName() {
         return name;
@@ -94,7 +78,6 @@ public class Service implements Parcelable {
         dest.writeInt(id);
         dest.writeString(name);
         dest.writeInt(cost);
-        dest.writeString(description); //remove this later
         dest.writeString(createdAt);
         dest.writeString(updatedAt);
         dest.writeTypedList(serviceTags);

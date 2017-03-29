@@ -339,7 +339,9 @@ public class ViewEventActivity extends AppCompatActivity {
 
                     turnOffRemoveServiceMode();
                 } else {// turn it on
-                    startActivity(new Intent(ViewEventActivity.this, ViewServiceActivity.class));
+                    Intent intent = new Intent(ViewEventActivity.this, ViewServiceActivity.class);
+                    intent.putExtra(ViewServiceActivity.EXTRA_SERVICE, service);
+                    startActivity(intent);
                 }
             }
         });
