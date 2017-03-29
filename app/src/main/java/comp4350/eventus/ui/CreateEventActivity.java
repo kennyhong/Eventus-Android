@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -114,6 +115,7 @@ public class CreateEventActivity extends AppCompatActivity {
         });
 
         inputEventDescription = (EditText) findViewById(R.id.eventDescriptionEditText);
+        inputEventDescription.setMovementMethod(new ScrollingMovementMethod());
 
 // Should set up listeners so that the keyboard will close when the enter key is pressed.
         inputEventDescription.setOnKeyListener(new View.OnKeyListener() {
@@ -210,7 +212,7 @@ public class CreateEventActivity extends AppCompatActivity {
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
                                 // set day of month , month and year value in the edit text
-                                inputEventDate.setText(String.format(Locale.getDefault(), "%04d-%02d-%02d", year, monthOfYear, dayOfMonth));
+                                inputEventDate.setText(String.format(Locale.getDefault(), "%04d-%02d-%02d", year, monthOfYear + 1, dayOfMonth));
                             }
                         }, mYear, mMonth, mDay);
 
@@ -247,7 +249,7 @@ public class CreateEventActivity extends AppCompatActivity {
     }
 
 
-    public void createNewServiceTextView(Service service) {// later this also may take parameter values from this field or elsewhere for creating the services stuff
+    public void createNewServiceTextView(final Service service) {// later this also may take parameter values from this field or elsewhere for creating the services stuff
         // later this can be used for actually assembling the service object maybe
 
         TextView result = new TextView(this);
@@ -280,7 +282,9 @@ public class CreateEventActivity extends AppCompatActivity {
 
                     turnOffRemoveServiceMode();
                 } else {// turn it on
-                    startActivity(new Intent(CreateEventActivity.this, ViewServiceActivity.class));
+                    Intent intent = new Intent(CreateEventActivity.this, ViewServiceActivity.class);
+                    intent.putExtra(ViewServiceActivity.EXTRA_SERVICE, service);
+                    startActivity(intent);
                 }
             }
         });

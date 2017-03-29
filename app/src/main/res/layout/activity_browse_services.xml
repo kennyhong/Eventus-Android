@@ -46,9 +46,41 @@
     </LinearLayout>
 
 
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="50dp">
+
+        <Button
+            android:id="@+id/byNameButton"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:layout_margin="8dp"
+            android:background="@android:color/holo_orange_dark"
+            android:text="By Name"/>
+
+        <Button
+            android:id="@+id/byIDButton"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:layout_margin="8dp"
+            android:background="@android:color/white"
+            android:text="By ID"/>
+
+        <Button
+            android:id="@+id/byServiceTagButton"
+            android:layout_width="120dp"
+            android:layout_height="45dp"
+
+            android:layout_margin="8dp"
+            android:background="@android:color/white"
+            android:text="By Service Tag"/>
+
+    </LinearLayout>
+
     <ScrollView
         android:id="@+id/addServicesScrollView"
         android:layout_width="match_parent"
+        android:layout_margin="15dp"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="42dp"
         tools:layout_editor_absoluteY="95dp">

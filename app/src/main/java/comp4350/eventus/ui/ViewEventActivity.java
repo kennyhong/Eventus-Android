@@ -46,9 +46,11 @@ public class ViewEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_event);
-        eventName = (TextView) findViewById(R.id.titleTextView);
-        eventDescription = (TextView) findViewById(R.id.descriptionTextView);
 
+        eventName = (TextView) findViewById(R.id.titleTextView);
+        eventName.setMovementMethod(new ScrollingMovementMethod());
+
+        eventDescription = (TextView) findViewById(R.id.descriptionTextView);
         eventDescription.setMovementMethod(new ScrollingMovementMethod());
         resultCode = 0;
         if (savedInstanceState == null) {
@@ -337,7 +339,9 @@ public class ViewEventActivity extends AppCompatActivity {
 
                     turnOffRemoveServiceMode();
                 } else {// turn it on
-                    startActivity(new Intent(ViewEventActivity.this, ViewServiceActivity.class));
+                    Intent intent = new Intent(ViewEventActivity.this, ViewServiceActivity.class);
+                    intent.putExtra(ViewServiceActivity.EXTRA_SERVICE, service);
+                    startActivity(intent);
                 }
             }
         });

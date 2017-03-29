@@ -108,14 +108,20 @@ public class ServerData {
 
     public JSONObject getJSONEventDetails(Event event) throws JSONException {
         JSONObject json = new JSONObject();
-        String id = Integer.toString(event.getID());
 
+        String eventId = Integer.toString(event.getID());
         String eventName = event.getName();
         String eventDescription = event.getDescription();
+        String eventDate = event.getDate();
+        String eventCreatedAt = event.getCreatedAt();
+        String eventUpdatedAt = event.getUpdatedAt();
 
+        json.put("id", eventId);
         json.put("name", eventName);
         json.put("description", eventDescription);
-        json.put("date", "1000-01-01 00:00:00");
+        json.put("date", eventDate);
+        json.put("created_at", eventCreatedAt);
+        json.put("updated_at", eventUpdatedAt);
         //If layout is empty, don't add anything to services, else, add services.
 
         return json;

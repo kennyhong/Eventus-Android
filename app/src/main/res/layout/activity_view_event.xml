@@ -93,11 +93,14 @@
 
     <TextView
         android:text="TitleHere"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:id="@+id/titleTextView"
         android:textColor="#ffffff"
+        android:scrollHorizontally="true"
+        android:maxWidth="150dp"
+        android:maxLines="2"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/locationTextView"/>
 
