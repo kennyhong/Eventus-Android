@@ -26,15 +26,17 @@ private final int ADD_SERVICE_CODE = 10;
 private final int CANCEL_CODE = 6;
     private int filterMode = 0;
 
-private LinearLayout scrollLayout = null;
+public LinearLayout scrollLayout = null;
 private EditText searchBar = null;
+
+private ImageButton searchButton = null;
 
     private  Button nameButton = null;
     private  Button idButton = null;
     private  Button serviceTagButton = null;
 
-    private Event event;
-    private ArrayList<Service> eventServices;
+    public Event event;
+    public ArrayList<Service> eventServices;
 
   public ArrayList<Service> serviceList;
 
@@ -62,12 +64,16 @@ private EditText searchBar = null;
             eventServices = new ArrayList<Service>();
         }
 
-        scrollLayout = (LinearLayout) findViewById(R.id.addServicesLinLayout);
-
+        initScrollLayout();
         setupListeners();
 
         gatherAvailableServices(true);
 
+    }
+
+    public void initScrollLayout()
+    {
+        scrollLayout = (LinearLayout) findViewById(R.id.addServicesLinLayout);
     }
 
     public void emptyAvailableServices()
@@ -224,7 +230,7 @@ private EditText searchBar = null;
             }
         });
 
-        ImageButton searchButton = (ImageButton) findViewById(R.id.SearchButton);
+        searchButton = (ImageButton) findViewById(R.id.SearchButton);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
