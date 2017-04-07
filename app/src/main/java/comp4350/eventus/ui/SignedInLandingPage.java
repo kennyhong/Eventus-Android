@@ -171,6 +171,31 @@ public class SignedInLandingPage extends Activity {
         // for now, links to an empty Event page.
 
         Intent intent = new Intent(context, CreateEventActivity.class);
+
+        Event result = null;
+
+        if(prefabID != 0) // 0 is the default event, with nothing set
+        {
+            result = new Event();
+            result.setName(eventName);
+
+            switch(prefabID)
+            {
+                case 1:
+                // initialize some BBQ prefabs
+                    break;
+
+                case 2:
+                // initialize some Warehouse Party prefabs
+                    break;
+                case 3:
+                // initialize some Wedding Prefabs
+                    break;
+            }
+        }
+
+
+        intent.putExtra(CreateEventActivity.EXTRA_PREFAB, result);
         startActivityForResult(intent, REQUEST_ADD_EVENT);
 
     }

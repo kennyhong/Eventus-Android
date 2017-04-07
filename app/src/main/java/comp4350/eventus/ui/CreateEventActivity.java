@@ -35,6 +35,7 @@ import org.json.JSONObject;
 public class CreateEventActivity extends AppCompatActivity {
 
     public static final String EXTRA_EVENT = "event";
+    public static final String EXTRA_PREFAB = "prefab";
     private static final int REQUEST_ADD_SERVICE = 10;
     private final int CANCEL_CODE = 6;
 
@@ -56,7 +57,20 @@ public class CreateEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         context = this;
-        event = new Event();
+
+
+
+        if (savedInstanceState == null)
+        {
+            event = getIntent().getParcelableExtra(EXTRA_PREFAB);
+        } else {
+            event = savedInstanceState.getParcelable(EXTRA_PREFAB);
+        }
+
+        if (event == null)
+        {
+            event = new Event();
+        }
 
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
         setupListeners();
@@ -99,6 +113,10 @@ public class CreateEventActivity extends AppCompatActivity {
 
         inputEventName = (EditText) findViewById(R.id.eventNameEditText);
 
+        if(!event.getName().equals(""))
+        {
+            inputEventName.setText(event.getName());
+        }
 
         inputEventName.setOnKeyListener(new View.OnKeyListener() {
             @Override
