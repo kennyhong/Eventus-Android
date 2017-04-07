@@ -74,6 +74,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
         scrollLayout = (LinearLayout) findViewById(R.id.ServiceScrollLinearLayout);
         setupListeners();
+        prefabServices();
     }
 
     public void forceKeyboardClose() {
@@ -85,6 +86,15 @@ public class CreateEventActivity extends AppCompatActivity {
         return event;
     }
 
+
+    public void prefabServices()
+    {
+            for(int i = 0 ; i < event.getServices().size(); i++)
+            {
+                createNewServiceTextView(event.getServices().get(i));
+            }
+
+    }
 
     public void setupListeners() {
         Button backButton = (Button) findViewById(R.id.backButton);
