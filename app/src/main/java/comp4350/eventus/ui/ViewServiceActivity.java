@@ -3,6 +3,7 @@ package comp4350.eventus.ui;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -68,5 +69,10 @@ public class ViewServiceActivity extends AppCompatActivity {
 
             }
         });
+
+        TextView title = (TextView) findViewById(R.id.titleTextView);
+        title.setMovementMethod(new ScrollingMovementMethod());
+
+
     }
 }
