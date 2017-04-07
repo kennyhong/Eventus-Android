@@ -25,8 +25,10 @@ private final String EXTRA_CANCEL = "cancel";
 private final int ADD_SERVICE_CODE = 10;
 private final int CANCEL_CODE = 6;
     private int filterMode = 0;
+    boolean browseOn = false;
 
-public LinearLayout scrollLayout = null;
+
+    public LinearLayout scrollLayout = null;
 private EditText searchBar = null;
 
 private ImageButton searchButton = null;
@@ -69,7 +71,9 @@ private ImageButton searchButton = null;
 
         gatherAvailableServices(true);
 
-    }
+
+        forceKeyboardClose();
+    }// fin onCreate
 
     public void initScrollLayout()
     {
@@ -225,6 +229,17 @@ private ImageButton searchButton = null;
                 if(searchBar.getText().toString().equals("Browse"))
                 {
                     searchBar.setText("");
+                }
+
+                if(browseOn)
+                {
+                    browseOn = false;
+                    forceKeyboardClose();
+                }
+                else
+                {
+                    browseOn = true;
+                    searchBar.setShowSoftInputOnFocus(true);
                 }
 
             }

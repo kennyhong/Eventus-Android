@@ -55,8 +55,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:scrollHorizontally="true"
+        android:maxWidth="150dp"
+        android:maxLines="2"
         android:text="TitleHere"
         android:textColor="#ffffff"
-        android:textSize="36sp" />
+        android:textSize="24sp" />
 
 </RelativeLayout>
