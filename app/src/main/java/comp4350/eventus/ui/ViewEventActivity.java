@@ -208,7 +208,22 @@ public class ViewEventActivity extends AppCompatActivity {
             }
         });
 
+        TextView estimatedCostTextView = (TextView) findViewById(R.id.estimatedCostTextView);
+        estimatedCostTextView.setText("Estimated Cost: $"+ getEventCost());
 
+
+    }// end setupListeners
+
+    public int getEventCost()
+    {
+        int result = 0;
+
+        for(int i = 0; i < event.getServices().size(); i++)
+        {
+            result += event.getServices().get(i).getCost();
+        }
+
+        return result;
     }
 
     public void setFieldsToEditable(boolean status)
