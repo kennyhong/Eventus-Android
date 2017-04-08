@@ -12,38 +12,47 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.json.JSONException;
+
 import comp4350.eventus.R;
 import comp4350.eventus.model.Event;
 import comp4350.eventus.model.ServerData;
 import comp4350.eventus.model.Service;
+import comp4350.eventus.model.ServiceTag;
+
 import java.util.ArrayList;
 
 public class BrowseServicesActivity extends AppCompatActivity {
-private final String EXTRA_CANCEL = "cancel";
+    private final String EXTRA_CANCEL = "cancel";
     public static final String EXTRA_BROWSE = "event";
     public static String EXTRA_SERVICE = "service";
-private final int ADD_SERVICE_CODE = 10;
-private final int CANCEL_CODE = 6;
+    private final int ADD_SERVICE_CODE = 10;
+    private final int CANCEL_CODE = 6;
     private int filterMode = 0;
+    private String nameParameter = "";
+    private String idParameter = "";
+    private int nameClicks = 0;
+    private int idClicks = 0;
 
-public LinearLayout scrollLayout = null;
-private EditText searchBar = null;
+    public LinearLayout scrollLayout = null;
+    private EditText searchBar = null;
 
-private ImageButton searchButton = null;
+    private ImageButton searchButton = null;
 
-    private  Button nameButton = null;
-    private  Button idButton = null;
-    private  Button serviceTagButton = null;
+    private Button nameButton = null;
+    private Button idButton = null;
+    private Button serviceTagButton = null;
 
     public Event event;
     public ArrayList<Service> eventServices;
 
-  public ArrayList<Service> serviceList;
+    public ArrayList<Service> serviceList;
+    private ServerData serverData;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_services);
 
@@ -53,14 +62,15 @@ private ImageButton searchButton = null;
         } else {
             event = savedInstanceState.getParcelable(EXTRA_BROWSE);
         }
-
-
-        if (event != null)
-        {
-            eventServices = event.getServices();
+        try {
+            serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/services", "GET", "Services");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        else
-        {
+
+        if (event != null) {
+            eventServices = event.getServices();
+        } else {
             eventServices = new ArrayList<Service>();
         }
 
@@ -71,78 +81,61 @@ private ImageButton searchButton = null;
 
     }
 
-    public void initScrollLayout()
-    {
+    public void initScrollLayout() {
         scrollLayout = (LinearLayout) findViewById(R.id.addServicesLinLayout);
     }
 
-    public void emptyAvailableServices()
-    {
-        while(scrollLayout.getChildCount() > 0)
-        {
+    public void emptyAvailableServices() {
+        while (scrollLayout.getChildCount() > 0) {
             scrollLayout.removeViewAt(0);
         }
     }
 
-    public void gatherAvailableServices(boolean reset)
-    {
+    public void gatherAvailableServices(boolean reset) {
         serviceList = new ArrayList<Service>();
         String text = searchBar.getText().toString();
 
-        ServerData serverData = new ServerData();
-
         serviceList = serverData.getServices();
 
-        for(int i = 0 ; i < serviceList.size(); i++)
-        {
+        for (int i = 0; i < serviceList.size(); i++) {
             Service curr = serviceList.get(i);
             boolean add = true;
             boolean serviceAdd = false;
 
-            for(int j = 0 ; j < eventServices.size(); j++)
-            {// check to see if this service, matches any existing service that you are already signed up for
-                if(event.getServices().get(j).getID() == curr.getID())
-                {// then the id of this service, already exists on this event, and we do not want to add it again
+            for (int j = 0; j < eventServices.size(); j++) {// check to see if this service, matches any existing service that you are already signed up for
+                if (eventServices.get(j).getID() == curr.getID()) {// then the id of this service, already exists on this event, and we do not want to add it again
                     add = false;
-                   break;
-               }
+                    break;
+                }
 
             }
 
-            if(!reset)
-            {
+            if (!reset) {
 
-            // filter out other results from the search bar
-            if(add)
-            {// you dont want more filtering
-                    switch (filterMode)
-                    {
-                        case 0 :
-                            if(!curr.getName().contains(text))
-                            {//
+                // filter out other results from the search bar
+                if (add) {// you dont want more filtering
+                    switch (filterMode) {
+                        case 0:
+                            if (!curr.getName().contains(text)) {//
                                 add = false;
                             }
                             break;
-                        case 1 :
+                        case 1:
                             String serviceID = Integer.toString(curr.getID());
-                            if(!serviceID.equals(text))
-                            {
+                            if (!serviceID.equals(text)) {
                                 add = false;
                             }
                             break;
-                        case 2 :
+                        case 2:
 
-                            for(int k = 0 ; k < curr.getServiceTags().size(); k++)
-                            {
-                                if(curr.getServiceTags().get(k).getName().toString().equals(text))
-                                {
+                            for (int k = 0; k < curr.getServiceTags().size(); k++) {
+                                if (curr.getServiceTags().get(k).getName().toString().equals(text)) {
                                     // then this service, has the searched for text, as a service tag
                                     serviceAdd = true;
                                 }
                             }
 
-                            if(!serviceAdd)
-                            {// then this means that this service, does not have a matching service tag
+                            if (!serviceAdd) {// then this means that this service, does not have a matching service tag
                                 add = false;
                             }
 
@@ -154,8 +147,7 @@ private ImageButton searchButton = null;
             }// end if
 
             // Then you want to display it as an option
-            if(add)
-            {
+            if (add) {
                 createNewServiceTextView(curr);
             }
 
@@ -177,20 +169,19 @@ private ImageButton searchButton = null;
         scrollLayout.addView(result, lp);
 
         result.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 // Do something in response to button click
-                    //Intent intent = new Intent(ViewEventActivity.this, ViewServiceActivity.class);
-                    //intent.putExtra(ViewServiceActivity.EXTRA_SERVICE, getServiceByID(service.getID()));
+                //Intent intent = new Intent(ViewEventActivity.this, ViewServiceActivity.class);
+                //intent.putExtra(ViewServiceActivity.EXTRA_SERVICE, getServiceByID(service.getID()));
 
-                    //startActivity(intent);
+                //startActivity(intent);
 
                 forceKeyboardClose();
                 // return code, and include this clicked service
-            Intent intent = getIntent();
-            intent.putExtra(EXTRA_SERVICE, service);
-            setResult(ADD_SERVICE_CODE, intent);
-            finish();
+                Intent intent = getIntent();
+                intent.putExtra(EXTRA_SERVICE, service);
+                setResult(ADD_SERVICE_CODE, intent);
+                finish();
 
 
             }
@@ -198,8 +189,7 @@ private ImageButton searchButton = null;
     }
 
 
-    public void setupListeners()
-    {
+    public void setupListeners() {
         Button backButton = (Button) findViewById(R.id.backButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -222,8 +212,7 @@ private ImageButton searchButton = null;
             public void onClick(View v) {
                 // Do something in response to button click
 
-                if(searchBar.getText().toString().equals("Browse"))
-                {
+                if (searchBar.getText().toString().equals("Browse")) {
                     searchBar.setText("");
                 }
 
@@ -235,18 +224,14 @@ private ImageButton searchButton = null;
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if(searchBar.getText().toString().equals("Browse"))
-                {
+                if (searchBar.getText().toString().equals("Browse")) {
                     searchBar.setText("");
                     rePopulate(true);
                 }
 
-                if(searchBar.getText().toString().equals(""))
-                {
+                if (searchBar.getText().toString().equals("")) {
                     rePopulate(true);
-                }
-                else
-                {
+                } else {
                     rePopulate(false);
 
                 }
@@ -260,82 +245,89 @@ private ImageButton searchButton = null;
 
     }
 
-    public void initializeFilterButtons()
-    {
+    public void initializeFilterButtons() {
         // Filter ID 0 == Name filter
-         nameButton = (Button)findViewById(R.id.byNameButton);
+        nameButton = (Button) findViewById(R.id.byNameButton);
         //Filter ID 1 = By ID filter
-         idButton = (Button)findViewById(R.id.byIDButton);
+        idButton = (Button) findViewById(R.id.byIDButton);
         //Filter ID = 2 == By Service tag button
-         serviceTagButton = (Button)findViewById(R.id.byServiceTagButton);
+        serviceTagButton = (Button) findViewById(R.id.byServiceTagButton);
 
         //apply listeners
 
         nameButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Do something in response to button click
-
-                if(filterMode != 0)
-                {// then we are turning filter by name on.
-                    // need to turn off other button... IE change its background back to white
-                    filterMode = 0 ;
-                    resetSelectedFilter();
-                   // populateServicesList();
+                nameClicks++;
+                if(nameClicks%2 == 0) {
+                    nameParameter = "DESC";
+                } else if(nameClicks%2 == 1) {
+                    nameParameter = "ASC";
                 }
-
+                    // need to turn off other button... IE change its background back to white
+                    filterMode = 0;
+                try {
+                    serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/services?order="+nameParameter, "GET", "Services");// Order by Name
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                rePopulate(true);
+                    resetSelectedFilter();
             }
         });
 
         idButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Do something in response to button click
-
-                if(filterMode != 1)
-                {// then we are turning filter by name on.
-                    // need to turn off other button... IE change its background back to white
-                    filterMode = 1 ;
-                    resetSelectedFilter();
-                  //  populateServicesList();
+                idClicks++;
+                if(idClicks%2 == 0) {
+                    idParameter = "DESC";
+                } else if(idClicks%2 == 1) {
+                    idParameter = "ASC";
                 }
-
+                    // need to turn off other button... IE change its background back to white
+                    filterMode = 1;
+                try {
+                    serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/services?order-by=id&order="+idParameter, "GET", "Services");// Order by ID
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                rePopulate(true);
+                    resetSelectedFilter();
             }
         });
 
         serviceTagButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Do something in response to button click
-
-                if(filterMode != 2)
-                {// then we are turning filter by name on.
                     // need to turn off other button... IE change its background back to white
-                    filterMode = 2 ;
-                    resetSelectedFilter();
+                    filterMode = 2;
+                try {
+                    serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/services?filter-tag-ids=13", "GET", "Services");// Order by ServiceTag
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
+                rePopulate(true);
+                    resetSelectedFilter();
             }
         });
 
 
     }
 
-    public void resetSelectedFilter()
-    {
-        switch(filterMode)
-        {
+    public void resetSelectedFilter() {
+        switch (filterMode) {
             case 0:
                 nameButton.setBackgroundColor(0xffff8800);
-
                 idButton.setBackgroundColor(0xffffffff);
                 serviceTagButton.setBackgroundColor(0xffffffff);
                 break;
-            case 1 :
+            case 1:
                 idButton.setBackgroundColor(0xffff8800);
                 serviceTagButton.setBackgroundColor(0xffffffff);
                 nameButton.setBackgroundColor(0xffffffff);
-
                 break;
-
-            case 2 :
+            case 2:
                 serviceTagButton.setBackgroundColor(0xffff8800);
                 idButton.setBackgroundColor(0xffffffff);
                 nameButton.setBackgroundColor(0xffffffff);
@@ -343,8 +335,7 @@ private ImageButton searchButton = null;
         }
     }
 
-    public void rePopulate(boolean reset)
-    {
+    public void rePopulate(boolean reset) {
         emptyAvailableServices();
         gatherAvailableServices(reset);
     }
@@ -355,4 +346,4 @@ private ImageButton searchButton = null;
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
-    }// end activity
+}// end activity
