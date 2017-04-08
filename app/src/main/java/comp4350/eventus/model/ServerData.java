@@ -65,11 +65,12 @@ public class ServerData {
 
     public void getRequest(String url, String requestCode, String data) throws JSONException {
         try {
+            serverInfo = new JSONFunctions().execute(url, requestCode, data).get();
             if(data.equals("Services")) {
-                serverInfo = new JSONFunctions().execute(url, requestCode, data).get();
                 parseJSONServices(serverInfo);
+            } else if(data.equals("ServiceTags")) {
+                parseJSONServiceTags(serverInfo);
             } else {
-                serverInfo = new JSONFunctions().execute(url, requestCode, data).get();
                 JSONObjId = getJSONId(serverInfo);
             }
         } catch (InterruptedException e) {

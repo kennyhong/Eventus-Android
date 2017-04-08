@@ -34,8 +34,10 @@ public class BrowseServicesActivity extends AppCompatActivity {
 
     private String nameParameter = "";
     private String idParameter = "";
+    private String tagParameter = "";
     private int nameClicks = 0;
     private int idClicks = 0;
+    private int tagClicks = 0;
 
     public LinearLayout scrollLayout = null;
     private EditText searchBar = null;
@@ -48,9 +50,11 @@ public class BrowseServicesActivity extends AppCompatActivity {
 
     public Event event;
     public ArrayList<Service> eventServices;
-
+    public ArrayList<ServiceTag> serviceTags;
     public ArrayList<Service> serviceList;
     private ServerData serverData;
+    private ServerData serviceTagData;
+    private int serviceTagLength;
 
 
     @Override
@@ -65,6 +69,9 @@ public class BrowseServicesActivity extends AppCompatActivity {
             event = savedInstanceState.getParcelable(EXTRA_BROWSE);
         }
         try {
+            serviceTagData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/service_tags", "GET", "ServiceTags");
+            serviceTags = serviceTagData.getServiceTags();
+            serviceTagLength = serviceTags.size();
             serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/services", "GET", "Services");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -220,13 +227,10 @@ public class BrowseServicesActivity extends AppCompatActivity {
                     searchBar.setText("");
                 }
 
-                if(browseOn)
-                {
+                if (browseOn) {
                     browseOn = false;
                     forceKeyboardClose();
-                }
-                else
-                {
+                } else {
                     browseOn = true;
                     searchBar.setShowSoftInputOnFocus(true);
                 }
@@ -274,20 +278,20 @@ public class BrowseServicesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Do something in response to button click
                 nameClicks++;
-                if(nameClicks%2 == 0) {
+                if (nameClicks % 2 == 0) {
                     nameParameter = "DESC";
-                } else if(nameClicks%2 == 1) {
+                } else if (nameClicks % 2 == 1) {
                     nameParameter = "ASC";
                 }
-                    // need to turn off other button... IE change its background back to white
-                    filterMode = 0;
+                // need to turn off other button... IE change its background back to white
+                filterMode = 0;
                 try {
-                    serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/services?order="+nameParameter, "GET", "Services");// Order by Name
+                    serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/services?order=" + nameParameter, "GET", "Services");// Order by Name
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 rePopulate(true);
-                    resetSelectedFilter();
+                resetSelectedFilter();
             }
         });
 
@@ -295,35 +299,35 @@ public class BrowseServicesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Do something in response to button click
                 idClicks++;
-                if(idClicks%2 == 0) {
+                if (idClicks % 2 == 0) {
                     idParameter = "DESC";
-                } else if(idClicks%2 == 1) {
+                } else if (idClicks % 2 == 1) {
                     idParameter = "ASC";
                 }
-                    // need to turn off other button... IE change its background back to white
-                    filterMode = 1;
+                // need to turn off other button... IE change its background back to white
+                filterMode = 1;
                 try {
-                    serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/services?order-by=id&order="+idParameter, "GET", "Services");// Order by ID
+                    serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/services?order-by=id&order=" + idParameter, "GET", "Services");// Order by ID
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 rePopulate(true);
-                    resetSelectedFilter();
+                resetSelectedFilter();
             }
         });
 
         serviceTagButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Do something in response to button click
-                    // need to turn off other button... IE change its background back to white
-                    filterMode = 2;
+                tagClicks++;
+                filterMode = 2;
                 try {
-                    serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/services?filter-tag-ids=13", "GET", "Services");// Order by ServiceTag
+                    serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/services?filter-tag-ids=" + (tagClicks % serviceTagLength), "GET", "Services");// Order by ServiceTag
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 rePopulate(true);
-                    resetSelectedFilter();
+                resetSelectedFilter();
             }
         });
 
