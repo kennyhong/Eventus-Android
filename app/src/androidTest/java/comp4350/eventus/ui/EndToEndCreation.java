@@ -85,16 +85,22 @@ public class EndToEndCreation {
         appCompatEditText4.perform(click());
 
         ViewInteraction appCompatButton2 = onView(
-                allOf(withId(android.R.id.button1), withText("OK")));
-        appCompatButton2.perform(scrollTo(), click());
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        withParent(allOf(withClassName(is("com.android.internal.widget.ButtonBarLayout")),
+                                withParent(withClassName(is("android.widget.LinearLayout"))))),
+                        isDisplayed()));
+        appCompatButton2.perform(click());
 
         ViewInteraction appCompatEditText5 = onView(
                 allOf(withId(R.id.eventTime), isDisplayed()));
         appCompatEditText5.perform(click());
 
         ViewInteraction appCompatButton3 = onView(
-                allOf(withId(android.R.id.button1), withText("OK")));
-        appCompatButton3.perform(scrollTo(), click());
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        withParent(allOf(withClassName(is("com.android.internal.widget.ButtonBarLayout")),
+                                withParent(withClassName(is("android.widget.LinearLayout"))))),
+                        isDisplayed()));
+        appCompatButton3.perform(click());
 
         ViewInteraction appCompatButton4 = onView(
                 allOf(withId(R.id.saveButton), withText("Save"), isDisplayed()));
