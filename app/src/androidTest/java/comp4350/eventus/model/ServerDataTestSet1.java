@@ -168,6 +168,33 @@ public class ServerDataTestSet1 {
     }
 
     @Test
+    public void deleteExternalEvent()
+    {// cleans up an event made from another activity.
+        ServerData data = vActivityRule.getActivity().accessServerData();
+        data = new ServerData();
+        int pre = data.getEvents().size();
+
+        ArrayList<Event> events = serverData.getEvents();
+        Assert.assertNotNull(events);
+
+        EventListAdapter eventListAdapter;
+        eventListAdapter = new EventListAdapter(vActivityRule.getActivity(), events);
+
+        Event temp = eventListAdapter.getEventByTitle("Test Event");
+        Assert.assertNotNull(temp);
+
+        String id = Integer.toString(temp.getID());
+
+        serverData = new ServerData(URL + id, "DELETE", "");
+        // great now get the fresh list, with the item remvoved
+
+        serverData.getAllEventsRequest();
+        int post = serverData.getEvents().size();
+
+        Assert.assertTrue(post < pre);
+    }
+
+    @Test
     public void failFindEvent() {
         ServerData data = vActivityRule.getActivity().accessServerData();
         data = new ServerData();

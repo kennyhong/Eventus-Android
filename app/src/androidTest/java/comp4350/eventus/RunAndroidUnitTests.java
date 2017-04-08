@@ -18,12 +18,12 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         EventTest.class,
-        ServerDataTestSet1.class,
         MainActivityTest.class,
         ViewEventActivityTest.class,
         CreateEventActivityTest.class,
         SignedInLandingPageTest.class,
         BrowseServicesTest.class,
         ViewServiceActivityTest.class,
+        ServerDataTestSet1.class,
         EventListAdapterTest.class})
 public class RunAndroidUnitTests {}
