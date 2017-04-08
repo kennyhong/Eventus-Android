@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class ViewEventActivity extends AppCompatActivity {
     public static final String EXTRA_EVENT = "event";
@@ -214,6 +215,9 @@ public class ViewEventActivity extends AppCompatActivity {
 
         TextView estimatedCostTextView = (TextView) findViewById(R.id.estimatedCostTextView);
         estimatedCostTextView.setText("Estimated Cost: $"+ getEventCost());
+
+        TextView dateTextView = (TextView) findViewById(R.id.dateView);
+        dateTextView.setText("Date: "+ event.getDate());
 
 
     }// end setupListeners

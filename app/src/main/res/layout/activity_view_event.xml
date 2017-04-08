@@ -135,4 +135,14 @@
         android:layout_alignParentEnd="true"
         android:textColor="@android:color/holo_red_dark"/>
 
+    <TextView
+        android:id="@+id/dateView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/estimatedCostTextView"
+        android:text="Date: "/>
+
 </RelativeLayout>
