@@ -158,7 +158,11 @@ public class ServerDataTestSet1 {
 
         String id = Integer.toString(temp.getID());
 
-        serverData = new ServerData(URL + id, "DELETE", "");
+        try {
+            serverData = new ServerData(URL + id, "DELETE", "");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         // great now get the fresh list, with the item remvoved
 
         serverData.getAllEventsRequest();
@@ -185,7 +189,11 @@ public class ServerDataTestSet1 {
 
         String id = Integer.toString(temp.getID());
 
-        serverData = new ServerData(URL + id, "DELETE", "");
+        try {
+            serverData = new ServerData(URL + id, "DELETE", "");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         // great now get the fresh list, with the item remvoved
 
         serverData.getAllEventsRequest();
