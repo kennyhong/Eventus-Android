@@ -27,7 +27,7 @@ public class ServerData {
         getAllServiceTagsRequest();
     }
 
-    public ServerData(String url, String requestCode, String data) {
+    public ServerData(String url, String requestCode, String data) throws JSONException{
         this.requestCode = requestCode;
         this.data = data;
         this.url = url;
@@ -37,6 +37,8 @@ public class ServerData {
             deleteRequest(url, requestCode);
         } else if(requestCode.equals("PUT")) {
             putRequest(url, requestCode, data);
+        } else if(requestCode.equals("GET")) {
+            getRequest(url, requestCode, data);
         }
     }
 
@@ -59,6 +61,22 @@ public class ServerData {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public void getRequest(String url, String requestCode, String data) throws JSONException {
+        try {
+            if(data.equals("Services")) {
+                serverInfo = new JSONFunctions().execute(url, requestCode, data).get();
+                parseJSONServices(serverInfo);
+            } else {
+                serverInfo = new JSONFunctions().execute(url, requestCode, data).get();
+                JSONObjId = getJSONId(serverInfo);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     public void putRequest(String url, String requestCode, String data) {

@@ -131,7 +131,11 @@ public class ViewEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (editOn) {
                     // then you need to send the code back to delete this event
-                    serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + Integer.toString(event.getID()), "DELETE", "");
+                    try {
+                        serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + Integer.toString(event.getID()), "DELETE", "");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     Intent intent = getIntent();
                     intent.putExtra(EXTRA_EVENT, event);
                     setResult(DELETE_CODE, intent);
@@ -347,7 +351,11 @@ public class ViewEventActivity extends AppCompatActivity {
                         if(event.getServices().get(i).getName().equals(serviceName))
                         {
                             event.getServices().remove(i);
-                            ServerData serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+event.getID()+"/services/"+service.getID(), "DELETE", "");
+                            try {
+                                ServerData serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+event.getID()+"/services/"+service.getID(), "DELETE", "");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         }
                     }
@@ -430,7 +438,11 @@ public class ViewEventActivity extends AppCompatActivity {
             // Then save the service to the event
             createNewServiceTextView(service);
 
-            ServerData serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+event.getID()+"/services/"+service.getID(), "POST", "");
+            try {
+                ServerData serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+event.getID()+"/services/"+service.getID(), "POST", "");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             //events = serverData.getEvents();
             //eventListAdapter.refresh(events);
 
