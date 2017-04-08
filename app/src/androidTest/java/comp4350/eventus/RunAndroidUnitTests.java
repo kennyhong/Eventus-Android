@@ -4,6 +4,9 @@ import comp4350.eventus.model.EventTest;
 import comp4350.eventus.model.ServerDataTestSet1;
 import comp4350.eventus.ui.BrowseServicesTest;
 import comp4350.eventus.ui.CreateEventActivityTest;
+import comp4350.eventus.ui.EndToEndCreation;
+import comp4350.eventus.ui.EndToEndDeletion;
+import comp4350.eventus.ui.EndToEndPrefabConfirm;
 import comp4350.eventus.ui.MainActivityTest;
 import comp4350.eventus.ui.PrefabTest1;
 import comp4350.eventus.ui.SignedInLandingPageTest;
@@ -27,5 +30,8 @@ import org.junit.runners.Suite;
         ViewServiceActivityTest.class,
         ServerDataTestSet1.class,
         PrefabTest1.class,
-        EventListAdapterTest.class})
+        EventListAdapterTest.class,
+        EndToEndCreation.class,
+        EndToEndPrefabConfirm.class,
+        EndToEndDeletion.class})
 public class RunAndroidUnitTests {}

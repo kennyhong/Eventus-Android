@@ -147,8 +147,6 @@ public class BrowseServicesTest
 
         int post = sActivityRule.getActivity().scrollLayout.getChildCount();
 
-        Assert.assertTrue(pre > post);
-
         TextView tester = (TextView) sActivityRule.getActivity().scrollLayout.getChildAt(0);
         Assert.assertTrue(tester.getText().toString().equals("Buccacino's Fresca Italiana"));
     }
