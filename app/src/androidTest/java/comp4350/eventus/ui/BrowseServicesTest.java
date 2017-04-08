@@ -64,7 +64,7 @@ public class BrowseServicesTest
         // initially, the list will have all available services
         int pre = sActivityRule.getActivity().scrollLayout.getChildCount();
 
-        onView(withId(R.id.searchBar)).perform(replaceText("4"));
+        onView(withId(R.id.searchBar)).perform(replaceText("5"));
 
         onView(withId(R.id.SearchButton)).perform(click());
 
@@ -74,7 +74,7 @@ public class BrowseServicesTest
 
         TextView element = (TextView) sActivityRule.getActivity().scrollLayout.getChildAt(0);
 
-        Assert.assertTrue(element.getText().toString().equals("A good time"));
+        Assert.assertTrue(element.getText().toString().equals("Empire Photography"));
 
     }
 
@@ -120,7 +120,7 @@ public class BrowseServicesTest
         // initially, the list will have all available services
         int pre = sActivityRule.getActivity().scrollLayout.getChildCount();
 
-        onView(withId(R.id.searchBar)).perform(replaceText("Magic"));
+        onView(withId(R.id.searchBar)).perform(replaceText("Barley Brothers"));
 
         onView(withId(R.id.SearchButton)).perform(click());
 
@@ -129,7 +129,7 @@ public class BrowseServicesTest
         Assert.assertTrue(pre > post);
 
         TextView tester = (TextView) sActivityRule.getActivity().scrollLayout.getChildAt(0);
-        Assert.assertTrue(tester.getText().toString().contains("Magic"));
+        Assert.assertTrue(tester.getText().toString().contains("Barley Brothers"));
     }
 
     @Test
@@ -141,7 +141,7 @@ public class BrowseServicesTest
         // initially, the list will have all available services
         int pre = sActivityRule.getActivity().scrollLayout.getChildCount();
 
-        onView(withId(R.id.searchBar)).perform(replaceText("Cameras"));
+        onView(withId(R.id.searchBar)).perform(replaceText("Catering"));
 
         onView(withId(R.id.SearchButton)).perform(click());
 
@@ -150,7 +150,7 @@ public class BrowseServicesTest
         Assert.assertTrue(pre > post);
 
         TextView tester = (TextView) sActivityRule.getActivity().scrollLayout.getChildAt(0);
-        Assert.assertTrue(tester.getText().toString().equals("Movie Magic"));
+        Assert.assertTrue(tester.getText().toString().equals("Buccacino's Fresca Italiana"));
     }
 
 }
