@@ -90,11 +90,5 @@ public class CreateEventActivityTest {
         // Attempt to save final round!
         onView(withId(R.id.saveButton)).perform(click());
 
-        // See if the item exists in the list
-        // It doesn't. I'm sure it has to do with a problem of passing intentions back in forth
-        // (no intention was passed to CreateEventActivity, so it doesn't display data?)
-        // Unless it's a problem with not notifyingDataSetChanged()? <-- will look into
-//        onView(withId(R.id.eventItemName)).check(matches(isDisplayed()));
-//        onView(withId(R.id.eventItemDescription)).check(matches(isDisplayed()));
     }
 }
