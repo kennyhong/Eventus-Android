@@ -364,6 +364,7 @@ public class ViewEventActivity extends AppCompatActivity {
                         }
                     }
 
+                    updateEstimatedCostLabel();
                     turnOffRemoveServiceMode();
                 } else {// turn it on
                     Intent intent = new Intent(ViewEventActivity.this, ViewServiceActivity.class);
@@ -372,6 +373,12 @@ public class ViewEventActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void updateEstimatedCostLabel()
+    {
+        TextView estimatedCostTextView = (TextView) findViewById(R.id.estimatedCostTextView);
+        estimatedCostTextView.setText("Estimated Cost: $"+ getEventCost());
     }
 
     public Service getServiceByID(int id)
