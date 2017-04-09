@@ -409,7 +409,7 @@ public class ViewEventActivity extends AppCompatActivity {
             event.setDescription(saveEventDescription);
             json.put("name", saveEventName);
             json.put("description", saveEventDescription);
-            json.put("date", "1000-01-01 00:00:00");
+            json.put("date", event.getDate());
             //If layout is empty, don't add anything to services, else, add services.
 
             eventData = json.toString();
