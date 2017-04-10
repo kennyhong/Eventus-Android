@@ -37,6 +37,6 @@ import org.junit.runners.Suite;
         EndToEndCreation.class,
         EndToEndPrefabConfirm.class,
         EndToEndViewServiceActivity.class,
-        EndToEndDeletion.class,
+        //EndToEndDeletion.class,
         ViewReceiptActivityTest.class})
 public class RunAndroidUnitTests {}

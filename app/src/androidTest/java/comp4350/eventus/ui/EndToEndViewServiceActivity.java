@@ -117,8 +117,6 @@ public class EndToEndViewServiceActivity {
 
         ViewInteraction appCompatButton3 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
-                        withParent(allOf(withClassName(is("com.android.internal.widget.ButtonBarLayout")),
-                                withParent(withClassName(is("android.widget.LinearLayout"))))),
                         isDisplayed()));
         appCompatButton3.perform(click());
 
@@ -128,8 +126,6 @@ public class EndToEndViewServiceActivity {
 
         ViewInteraction appCompatButton4 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
-                        withParent(allOf(withClassName(is("com.android.internal.widget.ButtonBarLayout")),
-                                withParent(withClassName(is("android.widget.LinearLayout"))))),
                         isDisplayed()));
         appCompatButton4.perform(click());
 

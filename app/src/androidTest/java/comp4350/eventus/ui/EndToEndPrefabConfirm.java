@@ -88,8 +88,6 @@ public class EndToEndPrefabConfirm {
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
-                        withParent(allOf(withClassName(is("com.android.internal.widget.ButtonBarLayout")),
-                                withParent(withClassName(is("android.widget.LinearLayout"))))),
                         isDisplayed()));
         appCompatButton2.perform(click());
 
@@ -99,8 +97,6 @@ public class EndToEndPrefabConfirm {
 
         ViewInteraction appCompatButton3 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
-                        withParent(allOf(withClassName(is("com.android.internal.widget.ButtonBarLayout")),
-                                withParent(withClassName(is("android.widget.LinearLayout"))))),
                         isDisplayed()));
         appCompatButton3.perform(click());
 
