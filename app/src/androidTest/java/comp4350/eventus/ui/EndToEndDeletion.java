@@ -57,7 +57,7 @@ public class EndToEndDeletion {
                         withParent(allOf(withId(R.id.activity_signed_in_landing_page),
                                 withParent(withId(android.R.id.content)))),
                         isDisplayed()));
-        recyclerView.perform(actionOnItemAtPosition(3, click()));
+        recyclerView.perform(actionOnItemAtPosition(0, click()));
 
         ViewInteraction appCompatImageButton = onView(
                 allOf(withId(R.id.editButton),
