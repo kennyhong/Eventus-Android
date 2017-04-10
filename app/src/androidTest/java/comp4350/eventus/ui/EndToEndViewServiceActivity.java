@@ -86,6 +86,8 @@ public class EndToEndViewServiceActivity {
                                 withParent(withId(R.id.addServicesScrollView))))));
         textView2.perform(scrollTo(), click());
 
+        pressBack();
+
         ViewInteraction textView3 = onView(
                 allOf(withText("Bailey's Hot Tub"),
                         withParent(allOf(withId(R.id.ServiceScrollLinearLayout),

@@ -2,17 +2,20 @@ package comp4350.eventus.ui;
 
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
@@ -59,24 +62,51 @@ public class EndToEndPrefabConfirm {
                         isDisplayed()));
         appCompatButton.perform(click());
 
-        ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.eventList_Viewer),
+        ViewInteraction imageButton = onView(
+                allOf(withId(R.id.addNewEventButton),
                         withParent(allOf(withId(R.id.activity_signed_in_landing_page),
                                 withParent(withId(android.R.id.content)))),
                         isDisplayed()));
-        recyclerView.perform(actionOnItemAtPosition(3, click()));
+        imageButton.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withText("Crystal Sound"),
+                allOf(withId(android.R.id.text1), withText("After-hours warehouse party"),
                         childAtPosition(
-                                allOf(withId(R.id.ServiceScrollLinearLayout),
-                                        childAtPosition(
-                                                withId(R.id.ServiceScrollView),
-                                                0)),
-                                0),
+                                allOf(withClassName(is("com.android.internal.app.AlertController$RecycleListView")),
+                                        withParent(withClassName(is("android.widget.FrameLayout")))),
+                                2),
                         isDisplayed()));
-        textView.check(matches(isDisplayed()));
+        textView.perform(click());
 
+        ViewInteraction appCompatEditText4 = onView(
+                allOf(withId(R.id.eventDescriptionEditText), isDisplayed()));
+        appCompatEditText4.perform(replaceText("Baby you're a firework!!"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText5 = onView(
+                allOf(withId(R.id.eventDay), isDisplayed()));
+        appCompatEditText5.perform(click());
+
+        ViewInteraction appCompatButton2 = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        withParent(allOf(withClassName(is("com.android.internal.widget.ButtonBarLayout")),
+                                withParent(withClassName(is("android.widget.LinearLayout"))))),
+                        isDisplayed()));
+        appCompatButton2.perform(click());
+
+        ViewInteraction appCompatEditText6 = onView(
+                allOf(withId(R.id.eventTime), isDisplayed()));
+        appCompatEditText6.perform(click());
+
+        ViewInteraction appCompatButton3 = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        withParent(allOf(withClassName(is("com.android.internal.widget.ButtonBarLayout")),
+                                withParent(withClassName(is("android.widget.LinearLayout"))))),
+                        isDisplayed()));
+        appCompatButton3.perform(click());
+
+        ViewInteraction appCompatButton4 = onView(
+                allOf(withId(R.id.saveButton), withText("Save"), isDisplayed()));
+        appCompatButton4.perform(click());
     }
 
     private static Matcher<View> childAtPosition(
