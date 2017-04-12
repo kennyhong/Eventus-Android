@@ -1,7 +1,9 @@
 package comp4350.eventus.ui;
 
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,23 +15,17 @@ public class ViewServiceActivity extends AppCompatActivity {
     public static final String EXTRA_SERVICE = "service";
 
     private TextView serviceName;
-    private TextView serviceDescription;
     private TextView servicePrice;
     private TextView serviceCreatedDate;
-    private TextView serviceUpdateDate;
-    private TextView serviceID;
-    private Service service;
+    public Service service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_service);
         serviceName = (TextView) findViewById(R.id.titleTextView);
-        serviceDescription = (TextView) findViewById(R.id.descriptionTag);
         servicePrice = (TextView) findViewById(R.id.priceTag);
         serviceCreatedDate = (TextView)findViewById(R.id.dateBookedTag);
-        serviceUpdateDate = (TextView)findViewById(R.id.dateUpdatedTag);
-        serviceID = (TextView)findViewById(R.id.productIDTag);
 
         if (savedInstanceState == null) {
             service = getIntent().getParcelableExtra(EXTRA_SERVICE);
@@ -40,19 +36,26 @@ public class ViewServiceActivity extends AppCompatActivity {
         if (service != null)
         {
             initializeFields();
-
+        } else {
+            service = new Service();
         }
         setupListeners();
     }
 
     public void initializeFields()
     {
-        serviceName.setText(service.getName());
-        serviceDescription.setText("Description: \n" + service.getDescription());
-        serviceUpdateDate.setText("Date Updated: "+ service.getUpdatedAt());
-        serviceCreatedDate.setText("Date Booked: "+ service.getCreatedAt());
-        serviceID.setText("Service ID: "+ service.getID());
-        servicePrice.setText("Price: "+ service.getCost());
+        setText(serviceName, service.getName());
+        setText(serviceCreatedDate, "Date Booked: "+ service.getCreatedAt());
+        setText(servicePrice, "Price: $"+ service.getCost());
+    }
+
+    private void setText(final TextView text,final String value){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                text.setText(value);
+            }
+        });
     }
 
     public void setupListeners() {
@@ -66,5 +69,10 @@ public class ViewServiceActivity extends AppCompatActivity {
 
             }
         });
+
+        TextView title = (TextView) findViewById(R.id.titleTextView);
+        title.setMovementMethod(new ScrollingMovementMethod());
+
+
     }
 }

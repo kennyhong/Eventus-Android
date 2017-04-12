@@ -20,7 +20,7 @@ public class ReceiptActivity extends AppCompatActivity
 
 
     private ArrayList<Service> eventServices;
-    LinearLayout scrollLayout = null;
+   public LinearLayout scrollLayout = null;
 
 
     private Event event;
@@ -42,9 +42,22 @@ public class ReceiptActivity extends AppCompatActivity
             eventServices = event.getServices();
         }
 
-        scrollLayout = (LinearLayout) findViewById(R.id.receipt_services_list);
 
         setupListeners();
+        int sum = calculateExpectedCost();
+        setEstimatedCost(sum);
+        initServiceViews();
+
+    }
+
+
+    public void initScrollLayout() {
+        scrollLayout = (LinearLayout) findViewById(R.id.receipt_services_list);
+    }
+
+    public void setEvent(Event eveeent)
+    {
+        event = eveeent;
     }
 
     public void setEstimatedCost(int sum )
@@ -55,7 +68,18 @@ public class ReceiptActivity extends AppCompatActivity
 
     }
 
-    public void setupListeners()
+    public void initServiceViews()
+    {
+        if (event != null)
+        {
+            for (Service service : event.getServices())
+            {
+                createNewServiceTextView(service);
+            }
+        }
+    }
+
+    public int calculateExpectedCost()
     {
         int sum = 0;
         //setup the services list , with associated costs
@@ -63,11 +87,20 @@ public class ReceiptActivity extends AppCompatActivity
         {
             for (Service service : event.getServices())
             {
-                   createNewServiceTextView(service);
-                   sum+= service.getCost();
+                sum+= service.getCost();
             }
         }
-        setEstimatedCost(sum);
+
+        return sum;
+    }
+
+
+    public void setupListeners()
+    {
+
+        initScrollLayout();
+
+
 
         // Initialize the back button, for navigating back to the event
 

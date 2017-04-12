@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class ViewEventActivity extends AppCompatActivity {
     public static final String EXTRA_EVENT = "event";
@@ -46,9 +47,11 @@ public class ViewEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_event);
-        eventName = (TextView) findViewById(R.id.titleTextView);
-        eventDescription = (TextView) findViewById(R.id.descriptionTextView);
 
+        eventName = (TextView) findViewById(R.id.titleTextView);
+        eventName.setMovementMethod(new ScrollingMovementMethod());
+
+        eventDescription = (TextView) findViewById(R.id.descriptionTextView);
         eventDescription.setMovementMethod(new ScrollingMovementMethod());
         resultCode = 0;
         if (savedInstanceState == null) {
@@ -129,7 +132,11 @@ public class ViewEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (editOn) {
                     // then you need to send the code back to delete this event
-                    serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + Integer.toString(event.getID()), "DELETE", "");
+                    try {
+                        serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/" + Integer.toString(event.getID()), "DELETE", "");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     Intent intent = getIntent();
                     intent.putExtra(EXTRA_EVENT, event);
                     setResult(DELETE_CODE, intent);
@@ -206,7 +213,25 @@ public class ViewEventActivity extends AppCompatActivity {
             }
         });
 
+        TextView estimatedCostTextView = (TextView) findViewById(R.id.estimatedCostTextView);
+        estimatedCostTextView.setText("Estimated Cost: $"+ getEventCost());
 
+        TextView dateTextView = (TextView) findViewById(R.id.dateView);
+        dateTextView.setText("Date: "+ event.getDate());
+
+
+    }// end setupListeners
+
+    public int getEventCost()
+    {
+        int result = 0;
+
+        for(int i = 0; i < event.getServices().size(); i++)
+        {
+            result += event.getServices().get(i).getCost();
+        }
+
+        return result;
     }
 
     public void setFieldsToEditable(boolean status)
@@ -330,17 +355,30 @@ public class ViewEventActivity extends AppCompatActivity {
                         if(event.getServices().get(i).getName().equals(serviceName))
                         {
                             event.getServices().remove(i);
-                            ServerData serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+event.getID()+"/services/"+service.getID(), "DELETE", "");
+                            try {
+                                ServerData serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+event.getID()+"/services/"+service.getID(), "DELETE", "");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             break;
                         }
                     }
 
+                    updateEstimatedCostLabel();
                     turnOffRemoveServiceMode();
                 } else {// turn it on
-                    startActivity(new Intent(ViewEventActivity.this, ViewServiceActivity.class));
+                    Intent intent = new Intent(ViewEventActivity.this, ViewServiceActivity.class);
+                    intent.putExtra(ViewServiceActivity.EXTRA_SERVICE, service);
+                    startActivity(intent);
                 }
             }
         });
+    }
+
+    public void updateEstimatedCostLabel()
+    {
+        TextView estimatedCostTextView = (TextView) findViewById(R.id.estimatedCostTextView);
+        estimatedCostTextView.setText("Estimated Cost: $"+ getEventCost());
     }
 
     public Service getServiceByID(int id)
@@ -378,7 +416,7 @@ public class ViewEventActivity extends AppCompatActivity {
             event.setDescription(saveEventDescription);
             json.put("name", saveEventName);
             json.put("description", saveEventDescription);
-            json.put("date", "1000-01-01 00:00:00");
+            json.put("date", event.getDate());
             //If layout is empty, don't add anything to services, else, add services.
 
             eventData = json.toString();
@@ -411,7 +449,11 @@ public class ViewEventActivity extends AppCompatActivity {
             // Then save the service to the event
             createNewServiceTextView(service);
 
-            ServerData serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+event.getID()+"/services/"+service.getID(), "POST", "");
+            try {
+                ServerData serverData = new ServerData("http://eventus.us-west-2.elasticbeanstalk.com/api/events/"+event.getID()+"/services/"+service.getID(), "POST", "");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             //events = serverData.getEvents();
             //eventListAdapter.refresh(events);
 

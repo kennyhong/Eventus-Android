@@ -27,7 +27,7 @@ public class ServerData {
         getAllServiceTagsRequest();
     }
 
-    public ServerData(String url, String requestCode, String data) {
+    public ServerData(String url, String requestCode, String data) throws JSONException{
         this.requestCode = requestCode;
         this.data = data;
         this.url = url;
@@ -37,6 +37,8 @@ public class ServerData {
             deleteRequest(url, requestCode);
         } else if(requestCode.equals("PUT")) {
             putRequest(url, requestCode, data);
+        } else if(requestCode.equals("GET")) {
+            getRequest(url, requestCode, data);
         }
     }
 
@@ -59,6 +61,23 @@ public class ServerData {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public void getRequest(String url, String requestCode, String data) throws JSONException {
+        try {
+            serverInfo = new JSONFunctions().execute(url, requestCode, data).get();
+            if(data.equals("Services")) {
+                parseJSONServices(serverInfo);
+            } else if(data.equals("ServiceTags")) {
+                parseJSONServiceTags(serverInfo);
+            } else {
+                JSONObjId = getJSONId(serverInfo);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     public void putRequest(String url, String requestCode, String data) {
@@ -108,14 +127,20 @@ public class ServerData {
 
     public JSONObject getJSONEventDetails(Event event) throws JSONException {
         JSONObject json = new JSONObject();
-        String id = Integer.toString(event.getID());
 
+        String eventId = Integer.toString(event.getID());
         String eventName = event.getName();
         String eventDescription = event.getDescription();
+        String eventDate = event.getDate();
+        String eventCreatedAt = event.getCreatedAt();
+        String eventUpdatedAt = event.getUpdatedAt();
 
+        json.put("id", eventId);
         json.put("name", eventName);
         json.put("description", eventDescription);
-        json.put("date", "1000-01-01 00:00:00");
+        json.put("date", eventDate);
+        json.put("created_at", eventCreatedAt);
+        json.put("updated_at", eventUpdatedAt);
         //If layout is empty, don't add anything to services, else, add services.
 
         return json;

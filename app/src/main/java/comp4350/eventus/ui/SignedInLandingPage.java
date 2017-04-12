@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import comp4350.eventus.R;
 import comp4350.eventus.model.Event;
 import comp4350.eventus.model.ServerData;
+import comp4350.eventus.model.Service;
 import comp4350.eventus.ui.adapter.EventListAdapter;
 
 import java.util.ArrayList;
@@ -171,7 +172,81 @@ public class SignedInLandingPage extends Activity {
         // for now, links to an empty Event page.
 
         Intent intent = new Intent(context, CreateEventActivity.class);
+
+        Event result = null;
+        ArrayList<String> suggestedServices = new ArrayList<String>();
+
+            if(prefabID != 0) // 0 is the default event, with nothing set
+            {
+                result = new Event();
+                result.setName(eventName);
+
+                switch(prefabID)
+                {
+                    case 1:
+                        // initialize some BBQ prefabs
+
+                        System.out.println("\n\n\n\n Test Point \n\n\n\n");
+
+                        suggestedServices.add("Ronnette's Catering Services");
+                        prefabServices(result,suggestedServices);
+                        break;
+
+                    case 2:
+                        // initialize some Warehouse Party prefabs
+
+                        suggestedServices.add("Crystal Sound");
+                        prefabServices(result,suggestedServices);
+
+                        break;
+                    case 3:
+                        // initialize some Wedding Prefabs
+                        suggestedServices.add("Crystal Sound");
+                        suggestedServices.add("In Full Bloom Florists");
+                        suggestedServices.add("Weston Bakeries Ltd");
+
+                        prefabServices(result,suggestedServices);
+                        break;
+                }
+            }
+
+
+        intent.putExtra(CreateEventActivity.EXTRA_PREFAB, result);
         startActivityForResult(intent, REQUEST_ADD_EVENT);
+
+    }
+
+    public void prefabServices(Event result, ArrayList<String> suggestedServices)
+    {
+        serverData = new ServerData();
+        ArrayList<Service> serviceList = serverData.getServices();
+        Service curr;
+
+        if(serviceList != null)
+        {
+            for(int i = 0 ; i < serviceList.size() && (suggestedServices.size() > 0 ); i++)
+            {
+                curr = serviceList.get(i);
+
+                for(int j = 0 ; j < suggestedServices.size(); j++)
+                {
+                    if(curr.getName().equals(suggestedServices.get(j)))
+                    {
+                        // Then the title of this service, matches one of the suggestions
+                        // so we add it to the prefab Event
+
+                        result.getServices().add(curr);
+                        suggestedServices.remove(j);
+                        j--;
+
+                    }
+                }
+
+
+
+            }
+
+        }
 
     }
 
